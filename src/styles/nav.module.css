@@ -1,0 +1,165 @@
+.navbar_wrapper{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.nav_title{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav_title > h1{
+  font-size: var(--fs-600);
+  font-weight: 700;
+}
+
+.nav_title > p{
+  background: linear-gradient(120deg,var(--clr-primary),var(--clr-accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+}
+
+.navbar{
+  background: var(--clr-accent);
+  padding-block: 1rem;
+  position: sticky;
+  top: 0;
+  font-size: var(--fs-300);
+  font-weight: 600;
+}
+
+.navbar_content{
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar ul{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar ul li{
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar ul:first-child li:first-child{
+  border-right: 0.2rem solid var(--clr-white);
+}
+
+.navbar ul li:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0.2rem;
+  background-color: #fff;
+  transition: width 0.3s ease; /* Add a smooth transition effect */
+}
+
+.navbar ul li:hover:after {
+  width: 100%;
+}
+
+.navbar ul:last-child li{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar ul:first-child{
+  overflow-x: clip;
+  white-space: nowrap;
+  text-overflow: clip;
+}
+
+.navbar ul:last-child li > span:first-child{
+  margin-right: 0.25rem;
+}
+
+.navbar_smallscreen_overlay{
+  position: fixed;
+  background-color: rgba(0,0,0,0.3);
+  top: 0;
+  left: 0;
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 9;
+}
+
+.navbar_smallscreen{
+  background-color: var(--clr-background);
+  width: min(100%, 25rem);
+  height: 100dvh;
+  overflow-y: auto;
+  font-size: var(--fs-300);
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+  padding-block: 2rem;
+  padding-inline: 1rem;
+}
+
+.navbar_smallscreen ul{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.navbar_smallscreen ul li{
+  position: relative;
+  cursor: pointer; 
+}
+
+.navbar_smallscreen ul li:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0.2rem;
+  background-color: var(--clr-primary);
+  transition: width 0.3s ease; /* Add a smooth transition effect */
+}
+
+.navbar_smallscreen ul li:hover:after {
+  width: 100%;
+}
+
+.navbar_smallscreen_button button {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--clr-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover state */
+.navbar_smallscreen_button button:hover {
+  background-color: var(--clr-accent);
+}
+
+.navbar_smallscreen_cancel_btn{
+  display: flex;
+  justify-content: flex-end;
+}
+.navbar_smallscreen_cancel_btn > img {
+  width: 1rem;
+  height: 1rem;
+}
