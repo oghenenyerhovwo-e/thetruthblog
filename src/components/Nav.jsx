@@ -60,7 +60,7 @@ const Nav = () => {
             <nav className={`${styles.navbar} full-width`}>
                 <div className={`${styles.navbar_content}`}>
                     <NavLink />
-                    <ul>
+                    <ul className={`${styles.more_button}`}>
                         <li onClick={toggleMenu}>
                             <span>More</span>
                             <span><FaAnglesDown /> </span>
@@ -91,7 +91,7 @@ const Nav = () => {
                                     onClick={closeMenu}
                                     initial={{ x: "-100vw", rotate: 0, opacity: 0, }}
                                     animate={{ x: "0vw", rotate: 360, opacity: 1, }}
-                                    exit={{ x: "0100vw", rotate: 0, opacity: 0, }}
+                                    exit={{ x: "100vw", rotate: 0, opacity: 0, }}
                                     className={`${styles.navbar_smallscreen_cancel_btn}`}
                                 >
                                     <Image src={closeIcon} alt="a close menu icon" />

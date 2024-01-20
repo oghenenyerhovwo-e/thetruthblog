@@ -34,6 +34,7 @@
 .navbar_content{
   display: flex;
   gap: 2rem;
+  container-type: inline-size;
 }
 
 .navbar ul{
@@ -162,4 +163,10 @@
 .navbar_smallscreen_cancel_btn > img {
   width: 1rem;
   height: 1rem;
+}
+
+@container (width >= 25rem){
+  .more_button{
+    display: none;
+  }
 }
