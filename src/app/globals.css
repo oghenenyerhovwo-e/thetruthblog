@@ -7,6 +7,7 @@
 
   --font-family: system-ui;
 
+  --fs-200: clamp(0.75rem, calc(0.73rem + 0.004vw), 0.79rem);
   --fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
   --fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
   --fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
@@ -54,4 +55,9 @@ h6,
 p,
 figure {
   margin: 0;
+}
+
+img{
+  font-size: var(--fs-300);
+  font-style: italic;
 }

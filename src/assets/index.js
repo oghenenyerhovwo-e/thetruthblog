@@ -8,6 +8,7 @@ import newsImg from "../../public/images/news.jpg"
 import politicsImg from "../../public/images/politics.jpg"
 import sportsImg from "../../public/images/sports.jpg"
 import technologyImg from "../../public/images/technology.jpg"
+import authorImg from "../../public/images/author.png"
 
 export {
     closeIcon,
@@ -20,4 +21,5 @@ export {
     politicsImg,
     sportsImg,
     technologyImg,
+    authorImg,
 }

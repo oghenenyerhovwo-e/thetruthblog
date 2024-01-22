@@ -13,15 +13,15 @@ const NavLink = () => {
   return (
     <ul className="">
         <li><Link href="/"> Home </Link></li>
-        <li><Link href="/"> Politics </Link></li>
-        <li><Link href="/"> Sport </Link></li>
-        <li><Link href="/"> Entertainment </Link></li>
-        <li><Link href="/"> Business </Link></li>
-        <li><Link href="/"> News </Link></li>
-        <li><Link href="/"> Technology </Link></li>
-        <li><Link href="/"> International </Link></li>
-        <li><Link href="/"> Features </Link></li>
-        <li><Link href="/"> Blogs Feed </Link></li>
+        <li><Link href="/category?">Politics </Link></li>
+        <li><Link href="/category">Sport </Link></li>
+        <li><Link href="/category">Entertainment </Link></li>
+        <li><Link href="/category">Business </Link></li>
+        <li><Link href="/category">News </Link></li>
+        <li><Link href="/category">Technology </Link></li>
+        <li><Link href="/category">International </Link></li>
+        <li><Link href="/category">Features </Link></li>
+        <li><Link href="/category">Blogs Feed </Link></li>
     </ul>
   )
 }

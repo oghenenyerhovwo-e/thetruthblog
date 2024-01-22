@@ -1,0 +1,109 @@
+  .article_card {
+    --_padding: 1rem;
+  
+    grid-row: span 3;
+  
+    display: grid;
+    grid-template-rows: subgrid;
+    gap: 1rem;
+    background: var(--clr-primary-700);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+  
+.article_card > img {
+  width: 100%;
+  max-height: 12rem;
+  object-fit: cover;
+}
+
+.article_card_body{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.article_card_body > h2{
+  font-size: var(--fs-500);
+  font-weight: 700;
+}
+
+.article_card_body > h4{
+  font-size: var(--fs-300);
+  font-weight: 500;
+  position: relative;
+}
+
+.article_card_body > h4:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.25rem;
+  width: 120%;
+  height: 0.2rem;
+  background-color: var(--clr-accent);
+  transition: width 0.3s ease; /* Add a smooth transition effect */
+}
+
+.article_card_body > p {
+  font-size: var(--fs-300);
+}
+
+.article_card_footer{
+  font-size: var(--fs-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.article_card_footer_author{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.article_card_footer_author > img{
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--clr-secondary);
+}
+
+.article_card_footer_author > p{
+  background-color: 2px solid var(--clr-secondary);
+}
+
+  
+  /* .article_card[data-featured="true"] {
+    @container (min-width: 850px) {
+      grid-column: span 2;
+      grid-template-columns: subgrid;
+  
+      > img {
+        grid-column: 1 / -1;
+      }
+  
+      > .article_card__title {
+        font-size: 2rem;
+        grid-column: 1 / -1;
+      }
+  
+      .article_card__description {
+        display: block;
+        margin-bottom: var(--_padding);
+      }
+    }
+  
+    @container (min-width: 1000px) {
+      grid-column: span 3;
+  
+      .article_card__description {
+        grid-column: span 2;
+      }
+    }
+  } */
+  
