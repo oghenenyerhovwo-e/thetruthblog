@@ -24,6 +24,11 @@ const getTimeAgo = (time) => {
     return moment(time).fromNow();
 }
 
+const toFirstLetterUpperCase  = (str) => {
+    return str[0].toUpperCase() + str.slice(1)
+}
+
 export {
-    getTimeAgo
+    getTimeAgo,
+    toFirstLetterUpperCase,
 }

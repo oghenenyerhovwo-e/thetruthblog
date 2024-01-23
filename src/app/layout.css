@@ -86,14 +86,14 @@
   }
 
   .spacing-lg{
-    margin-bottom: 2rem;
-  }
-
-  .spacing-xl{
     margin-bottom: 4rem;
   }
 
-  .spacing-xxl{
+  .spacing-xl{
     margin-bottom: 6rem;
+  }
+
+  .spacing-xxl{
+    margin-bottom: 8rem;
   }
   
