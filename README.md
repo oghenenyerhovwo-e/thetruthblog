@@ -50,3 +50,4 @@ Tags: An array of keywords for search purposes
 comments: an array of various objects which are the comments of users. Each comment object should contain an _id, username, email, text, date_published
 seoMetaData
 numberOfSocialMediaShares
+

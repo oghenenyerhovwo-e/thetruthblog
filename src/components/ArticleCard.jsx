@@ -1,4 +1,7 @@
+"use client"
+
 import Image from 'next/image'
+import { useRouter } from "next/navigation"
 
 import styles from "@/styles/articlecard.module.css"
 
@@ -7,14 +10,21 @@ import { getTimeAgo } from "@/helpers"
 
 const ArticleCard = props => {
     const { article } = props
+    const router = useRouter()
+
+    const gotoArticle = () => router.push(`/article/${article.slug}`)
+    const articleThumbnail = article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.formats && article.image.data.attributes.formats.thumbnail && article.image.data.attributes.formats.thumbnail.url
+
     return (
-        <div className={`${styles.article_card}`}>
+        <div onClick={gotoArticle} className={`${styles.article_card}`}>
             <Image
-                src={article.image}
-                alt={`An image describing ${article.seoMetaData && article.seoMetaData.metaTitle}`}
+                src={articleThumbnail}
+                alt={`An image of ${article.seoMetaDescription}`}
+                width={100}
+                height={80}
             />
             <div className={`${styles.article_card_body}`}>
-                <h4 className="spacing-sm">{article.category[0]} </h4>
+                <h4 className="spacing-sm">{article.category} </h4>
                 <h2 className="spacing-sm">{article.title} </h2>
                 <p>{article.headline} </p>
             </div>
@@ -27,7 +37,7 @@ const ArticleCard = props => {
                     <p>by Clifford Ndujihe JNR.</p>
                 </div>
                 <p className={`${styles.article_card_footer_date}date`}>
-                    {getTimeAgo(article.datePublished)}
+                    {getTimeAgo(article.createdAt)}
                 </p>
             </div>
         </div>

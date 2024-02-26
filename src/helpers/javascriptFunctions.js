@@ -1,6 +1,9 @@
 import moment from "moment"
 
-const getTimeAgo = (time) => {
+import { remark } from "remark"
+import html from "remark-html"
+
+export const getTimeAgo = (time) => {
     moment.updateLocale('en', {
         relativeTime : {
             future: "in %s",
@@ -24,11 +27,12 @@ const getTimeAgo = (time) => {
     return moment(time).fromNow();
 }
 
-const toFirstLetterUpperCase  = (str) => {
+export const toFirstLetterUpperCase  = (str) => {
     return str[0].toUpperCase() + str.slice(1)
 }
 
-export {
-    getTimeAgo,
-    toFirstLetterUpperCase,
+export const markdownToHTML = async (markdown) => {
+    const result = await remark().use(html).process(markdown)
+    return result.toString()
 }
+

@@ -2,9 +2,7 @@ import Image from 'next/image'
 
 import { truthHero }from "@/assets"
 
-import { Articles } from "@/components"
-
-import { data } from "@/helpers"
+import { AllArticles } from "@/components"
 
 import styles from "@/styles/home.module.css"
 
@@ -16,7 +14,7 @@ export default function Home() {
           <div className={`${styles.home_hero_text}`}>
             <h2>
               Insights <br />
-              that <span>Inspire</span>, <br />``
+              that <span>Inspire</span>, <br />
               News <br />
               that <span>Ignites</span>
             </h2>
@@ -28,7 +26,7 @@ export default function Home() {
         </div>
       </div>
       <div className={`${styles.articles_wrapper}`}>
-        <Articles data={data} />
+        <AllArticles />
       </div>
     </div>
   )

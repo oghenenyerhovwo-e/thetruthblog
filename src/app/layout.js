@@ -2,7 +2,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import "./layout.css"
 
-import { Nav, } from '@/components'
+import { Nav, ReduxProvider } from '@/components'
 
 export const metadata = {
   title: 'The Truth Blog',
@@ -13,12 +13,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <header>
-          <Nav />
-        </header>
-        <main>
-          {children}
-        </main>
+        <ReduxProvider>
+          <header>
+            <Nav />
+          </header>
+          <main>
+            {children}
+          </main>
+        </ReduxProvider>
       </body>
     </html>
   )
