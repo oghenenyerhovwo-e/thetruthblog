@@ -1,27 +1,20 @@
 "use client"
-import { Fragment, useEffect, useState } from "react"
-import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image'
+import { Fragment, useEffect, useState, useRef } from "react"
 import { useRouter } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion';
+
+// components
+import { ShareButtons, Comments, CommentForm } from "@/components"
+import Image from 'next/image'
+
+// functions
 import { 
     useGetArticlesBySlugQuery,
     usePostCommentMutation,
 } from "@/redux"
-
-import { 
-    BsWhatsapp,
-    BsFacebook,
-    BsTwitter,
-    BsLinkedin,
-    BsTelegram,
-    BsPinterest,
-} from "react-icons/bs"
-
-import { MdEmail, MdExpandMore } from "react-icons/md"
-import { GrTumblr } from "react-icons/gr"
-
 import { markdownToHTML } from "@/helpers"
 
+// styles
 import styles from "@/styles/articleslug.module.css"
 
 const ArticlePage = ({params}) => {
@@ -35,14 +28,17 @@ const ArticlePage = ({params}) => {
     const [postComment] = usePostCommentMutation()
     const { data } = useGetArticlesBySlugQuery(params.slug)
 
+    const commentSectionRef = useRef(null);   
+
     const [content, setContent] = useState("")
+    const [displayCommentSection, setDisplayCommentSection] = useState(false)
+    const [commentSectionContent, setCommentSectionContent] = useState("comments")
     const [commentForm, setCommentForm] = useState(initialCommentForm)
-    const [displayMoreButtons, setDisplayMoreButtons] = useState(false)
 
     const article = data && data.data && data.data[0] && data.data[0].attributes
     const articleImage = article && article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.url
-    const shareContent = "Great work"
-    const pageUrl = window.location.href
+    const articleSlug = article && article.slug
+    const pageUrl = articleSlug ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}/article/${articleSlug}` : `${process.env.NEXT_PUBLIC_FRONTEND_URL}/` 
 
     useEffect(() => {
         async function setMarkdownContent (){
@@ -52,6 +48,23 @@ const ArticlePage = ({params}) => {
         }
         data && data.data && data.data[0] && setMarkdownContent()
     }, [data])
+
+    useEffect(() => {
+        const handleCloseCommentSectionWhenClickOutside = (event) => {
+          // Close the navbar if it's open and the click is outside the navbar
+          if (displayCommentSection && commentSectionRef.current && !commentSectionRef.current.contains(event.target)) {
+            setDisplayCommentSection(false);
+          }
+        };
+    
+        // Add event listener to handle clicks outside the navbar
+        document.addEventListener('click', handleCloseCommentSectionWhenClickOutside);
+    
+        // Clean up the event listener on component unmount
+        return () => {
+          document.removeEventListener('click', handleCloseCommentSectionWhenClickOutside);
+        };
+      }, [displayCommentSection]);
 
     const handleCommentFormChange = e => {
         const {name, value}  = e.target
@@ -77,17 +90,16 @@ const ArticlePage = ({params}) => {
             .catch(error => console.log(error))
     }
 
-    const toggleDisplayMoreButtons = () => setDisplayMoreButtons(prevToggle => !prevToggle)
-    const shareFacebook = () => {
-        const facebookLink = "/djdj"
-        router.push(facebookLink)
-    }
+    const toggleCommentSection = () => setDisplayCommentSection(prevToggle => !prevToggle)
+    const showCommentsInCommentSection = () => setCommentSectionContent("comments") 
+    const showFormInCommentSection = () => setCommentSectionContent("form") 
+
     return (
         <>
             {
                 article && (
                     <div className={`content-grid ${styles.show_article_wrapper}`}>
-                        <div className={`${styles.show_article}`}>
+                        <div className={`${styles.show_article} spacing-md`}>
                             {
                                 articleImage && (
                                     <div className={`${styles.show_article_img} spacing-md`}>
@@ -107,102 +119,79 @@ const ArticlePage = ({params}) => {
                             </div>
                             <div className={`${styles.show_article_share}`}>
                                 <h4>Share this:</h4>
-                                <div className={`${styles.show_article_share_btn}`}>
-                                    <button className={`${styles.whatsapp_btn}`}>
-                                        <BsWhatsapp />
-                                        <span>Whatsapp</span>
-                                    </button>
-                                    <button className={`${styles.facebook_btn}`}>
-                                        <BsFacebook />
-                                        <span>Facebook</span>
-                                    </button>
-                                    <button className={`${styles.twitter_btn}`}>
-                                        <BsTwitter />
-                                        <span>Twitter</span>
-                                    </button>
-                                    <div className={`${styles.show_article_share_btn_more}`}>
-                                        <button onClick={toggleDisplayMoreButtons} className={`${styles.more_btn}`}>
-                                            <span>More</span>
-                                            <MdExpandMore />
-                                        </button>
-                                        <AnimatePresence mode="wait">
-                                            {
-                                                displayMoreButtons && (
-                                                    <motion.div
-                                                        initial={{ opacity: 0, top: "100%", }}
-                                                        animate={{ opacity: 1, top: "0%", }}
-                                                        exit={{ opacity: 0, top: "100%", }}
-                                                        transition={{ duration: 0.5 }}
-                                                    >
-                                                        <button className={`${styles.linkedin_btn}`}>
-                                                            <BsLinkedin />
-                                                            <span>Linkedin</span>
-                                                        </button>
-                                                        <button className={`${styles.telegram_btn}`}>
-                                                            <BsTelegram />
-                                                            <span>Telegram</span>
-                                                        </button>
-                                                        <button className={`${styles.tumblr_btn}`}>
-                                                            <GrTumblr />
-                                                            <span>Tumblr</span>
-                                                        </button>
-                                                        <button className={`${styles.pinterest_btn}`}>
-                                                            <BsPinterest />
-                                                            <span>Pinterest</span>
-                                                        </button>
-                                                        <button className={`${styles.email_btn}`}>
-                                                            <MdEmail />
-                                                            <span>Email</span>
-                                                        </button>
-                                                    </motion.div>
-                                                )
-                                            }
-                                        </AnimatePresence>
-                                    </div>
-                                </div>
+                                <ShareButtons 
+                                    url={pageUrl}
+                                    title={article.title}
+                                    tags={article.tags}
+                                    headline={article.headline}
+                                    source={article.source}
+                                />
                             </div>
                         </div>
-                        
-                        {
-                            article.comments && article.comments.data && (
-                                <div className={``}>
-                                    {
-                                        article.comments.data.length > 0 ? article.comments.data.map(comment => {
-                                            <Fragment key={comment.id}>
-                                                {comment.text}
-                                            </Fragment>
-                                        }) : (
-                                            <div>
 
+                        <div className={`${styles.show_article_comments} spacing-md`}>
+                            <button onClick={toggleCommentSection}>
+                                View 
+                                {" "}
+                                {(article.comments && article.comments.data && article.comments.data.length > 0) ? article.comments.data.length : ""}
+                                {" "}
+                                Comment(s)
+                            </button>
+                            <AnimatePresence mode="wait">
+                                {
+                                    displayCommentSection && (
+                                        <motion.div
+                                            ref={commentSectionRef}
+                                            initial={{ y: "100vh", opacity: 0, }}
+                                            animate={{ y: "0vh", opacity: 1, }}
+                                            exit={{ y: "100vh", opacity: 0, }}
+                                            transition={{ duration: 0.5 }}
+                                            className={`${styles.show_article_comment_section}`}
+                                        >
+                                            <div className={`${styles.show_article_comment_section_line}`}></div>
+                                            <div className={`${styles.show_article_comment_section_wrapper} content-grid`}>
+                                                <AnimatePresence mode="wait">
+                                                    {
+                                                        commentSectionContent === "comments" && (
+                                                            <motion.div
+                                                                initial={{ x: "100vw", opacity: 0, }}
+                                                                animate={{ x: "0vw", opacity: 1, }}
+                                                                exit={{ x: "100vw", opacity: 0, }}
+                                                                transition={{ duration: 0.5 }}
+                                                                className={`${styles.show_article_comment_section_comments}`}
+                                                            >
+                                                                <button className="spacing-md" onClick={showFormInCommentSection}>Add Comment</button>
+                                                                <Comments comments={(article.comments && article.comments.data) || []} />
+                                                            </motion.div>
+                                                        )
+                                                    }
+                                                </AnimatePresence>
+                                                <AnimatePresence mode="wait">
+                                                    {
+                                                        commentSectionContent === "form" && (
+                                                            <motion.div
+                                                                initial={{ x: "100vw", opacity: 0, }}
+                                                                animate={{ x: "0vw", opacity: 1, }}
+                                                                exit={{ x: "100vw", opacity: 0, }}
+                                                                transition={{ duration: 0.5 }}
+                                                                className={`${styles.show_article_comment_section_form}`}
+                                                            >
+                                                                <button className="spacing-md" onClick={showCommentsInCommentSection}>View Comments</button>
+                                                                <CommentForm 
+                                                                    onSubmit={submitComment}
+                                                                    commentForm={commentForm}
+                                                                    onChange={handleCommentFormChange}
+                                                                />
+                                                            </motion.div>
+                                                        )
+                                                    }
+                                                </AnimatePresence>
                                             </div>
-                                        )
-                                    }
-                                </div>
-                            )
-                        }
-                        <form onSubmit={submitComment}>
-                            <input 
-                                placeholder="username"
-                                type="text"
-                                name="username"
-                                value={commentForm.username}
-                                onChange={handleCommentFormChange}
-                            />
-                            <input 
-                                placeholder="email"
-                                type="email"
-                                name="email"
-                                value={commentForm.email}
-                                onChange={handleCommentFormChange}
-                            />
-                            <textarea 
-                                placeholder="text"
-                                name="text"
-                                value={commentForm.text}
-                                onChange={handleCommentFormChange}
-                            />
-                            <button type="submit">Post comment</button>
-                        </form>
+                                        </motion.div>
+                                    )
+                                }
+                            </AnimatePresence>
+                        </div>
                     </div>
                 )
             }

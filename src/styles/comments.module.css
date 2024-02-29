@@ -1,0 +1,15 @@
+.comments{
+    display: flex;
+    flex-direction: column;
+}
+
+.comments_none{
+    position: fixed;
+    bottom: 22%;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: var(--fs-400);
+}

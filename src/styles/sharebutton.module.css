@@ -1,0 +1,79 @@
+.share_btns{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.share_btns button,
+.share_btns .social_btn{
+    padding: 0.7em 1em;
+    font-size: var(--fs-200);
+    border-width: 1px;
+    border-radius: 0.2rem;
+    border-style: solid;
+    box-shadow: rgba(0,0,0,0.35) 0px 5px 15px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.share_btns_more{
+    position: relative;
+}
+
+.share_btns_more > div{
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 2rem
+}
+
+.whatsapp_btn{
+    border-color: #075e54;
+    color: #075e54;
+}
+
+.facebook_btn{
+    border-color: #316FF6;
+    color: #316FF6;
+}
+
+.twitter_btn{
+    border-color: #1DA1F2;
+    color: #1DA1F2;
+}
+
+.more_btn{
+    border-color: var(--clr-text);
+    color: var(--clr-text);
+}
+
+.linkedin_btn{
+    border-color: #0077b5;
+    color: #0077b5;
+}
+
+.telegram_btn{
+    border-color: #0088cc;
+    color: #0088cc;
+}
+
+.tumblr_btn{
+    border-color: #021A35;
+    color: #021A35;
+}
+
+.pinterest_btn{
+    border-color: #BD081C;
+    color: #BD081C;
+}
+
+.email_btn{
+    border-color: #BB001B;
+    color: #BB001B;
+}

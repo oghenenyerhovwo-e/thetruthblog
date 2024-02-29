@@ -11,10 +11,10 @@
 }
 
 .show_article_body{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
   
   .show_article_body > h2{
     font-size: var(--fs-600);
@@ -68,86 +68,65 @@
     text-align: justify;
   }
 
-.show_article_share_btn{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-}
-
 .show_article_share > h4{
-    font-size: var(--fs-300);
+    font-size: var(--fs-200);
     font-weight: 600;
 }
 
-.show_article_share_btn button{
+.show_article_comments{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.show_article_comments > button{
+  font-size: var(--fs-300);
+  font-weight: 600;
+  border-bottom: 1px solid var(--clr-primary);
+}
+
+.show_article_comment_section{
+  background: #fff;
+  box-shadow: rgba(0,0,0,0.35) 0px 5px 15px;
+  border-top-left-radius: 5rem;
+  border-top-right-radius: 5rem;
+
+  position: fixed;
+  top: 50%;
+  right: 0;
+  height: 50%;
+  width: 100%;
+  overflow-y: scroll;
+  z-index: 1;
+  right: 0;
+  padding-inline: 1.5rem;
+}
+
+.show_article_comment_section_line{
+  height: 0.5rem;
+  width: 100%;
+  background-color: var(--clr-primary);
+}
+
+
+.show_article_comment_section_wrapper{
+  padding: 2rem 1.5rem;
+}
+
+.show_article_comment_section_comments,
+.show_article_comment_section_form{
+  display: flex;
+  flex-direction: column;
+}
+
+.show_article_comment_section_comments > button,
+.show_article_comment_section_form > button{
     padding: 0.7em 1em;
-    font-size: var(--fs-200);
-    border-width: 1px;
+    font-size: var(--fs-300);
     border-radius: 0.2rem;
-    border-style: solid;
-    box-shadow: rgba(0,0,0,0.35) 0px 5px 15px;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-.show_article_share_btn_more{
-    position: relative;
-}
-
-.show_article_share_btn_more > div{
-    position: absolute;
-    left: 0;
-    top: 100%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 0.5rem
-}
-
-.whatsapp_btn{
-    border-color: #075e54;
-    color: #075e54;
-}
-
-.facebook_btn{
-    border-color: #316FF6;
-    color: #316FF6;
-}
-
-.twitter_btn{
-    border-color: #1DA1F2;
-    color: #1DA1F2;
-}
-
-.more_btn{
-    border-color: var(--clr-text);
-    color: var(--clr-text);
-}
-
-.linkedin_btn{
-    border-color: #0077b5;
-    color: #0077b5;
-}
-
-.telegram_btn{
-    border-color: #0088cc;
-    color: #0088cc;
-}
-
-.tumblr_btn{
-    border-color: #021A35;
-    color: #021A35;
-}
-
-.pinterest_btn{
-    border-color: #BD081C;
-    color: #BD081C;
-}
-
-.email_btn{
-    border-color: #BB001B;
-    color: #BB001B;
+    align-self: flex-end;
+    background-color: var(--clr-primary);
 }
