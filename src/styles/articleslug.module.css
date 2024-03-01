@@ -100,14 +100,8 @@
   z-index: 1;
   right: 0;
   padding-inline: 1.5rem;
+  border-top: 10px solid var(--clr-accent);
 }
-
-.show_article_comment_section_line{
-  height: 0.5rem;
-  width: 100%;
-  background-color: var(--clr-primary);
-}
-
 
 .show_article_comment_section_wrapper{
   padding: 2rem 1.5rem;

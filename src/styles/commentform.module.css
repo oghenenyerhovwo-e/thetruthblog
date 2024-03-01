@@ -2,11 +2,11 @@
 .comment_form textarea{
     font-size: var(--fs-300);
     padding: 1em 1.2em;
-    border: 1px solid var(--clr-text);
+    border: 1px solid rgba(6, 9, 7, 0.6);
     background-color: transparent;
     width: 100%;
     margin-bottom: 1rem;
-    border-radius: 0.2rem;
+    border-radius: 0.4rem;
 }
 
 .comment_form textarea{
@@ -22,6 +22,12 @@
     border-radius: 0.2rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     color: #fff;
+    transition: 0.5s;
+}
+
+.comment_form button:hover{
+    background-color: rgba(6, 9, 7, 0.8);
 }

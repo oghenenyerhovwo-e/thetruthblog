@@ -21,7 +21,7 @@ const CommentForm = (props) => {
                     onChange={onChange}
                 />
                 <textarea 
-                    placeholder="text"
+                    placeholder="What are your thoughts?"
                     name="text"
                     value={commentForm.text}
                     onChange={onChange}

@@ -1,3 +1,42 @@
 .comment_card{
-    
+    padding-block: 1rem;
+}
+
+.comment_card_head{
+    display: flex;
+    align-items: center;
+    row-gap: 1rem;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    justify-content: space-between;
+}
+
+.comment_card_head > div{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.comment_card_head > div > img{
+    height: 1.5rem;
+    width: 1.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid rgba(6, 9, 7,0.7);
+}
+
+.comment_card_head > div > h4{
+    font-size: var(--fs-300);
+    font-weight: 600;
+}
+
+.comment_card_head > h6{
+    font-size: var(--fs-200);
+}
+
+
+.comment_card > p{
+    font-size: var(--fs-300);
+    text-align: justify;
 }

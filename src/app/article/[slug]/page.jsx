@@ -148,7 +148,6 @@ const ArticlePage = ({params}) => {
                                             transition={{ duration: 0.5 }}
                                             className={`${styles.show_article_comment_section}`}
                                         >
-                                            <div className={`${styles.show_article_comment_section_line}`}></div>
                                             <div className={`${styles.show_article_comment_section_wrapper} content-grid`}>
                                                 <AnimatePresence mode="wait">
                                                     {
