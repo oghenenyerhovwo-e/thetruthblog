@@ -1,6 +1,7 @@
 import { Fragment } from "react"
 
 import ArticleCard from "./ArticleCard"
+import MessageBox from "./MessageBox"
 import { GrFormPrevious, GrFormNext } from "react-icons/gr"
 
 import styles from "@/styles/articles.module.css"
@@ -16,6 +17,7 @@ const Articles = (props) => {
 
     return (
         <div>
+            {data && data.data && data.data.length < 1 && <MessageBox message="No Article was found" />}
             <div className={`${styles.articles} spacing-md`}>
                 {
                     data && data.data && data.data.length > 0 && data.data.map(article => {

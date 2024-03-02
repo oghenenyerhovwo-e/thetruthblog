@@ -4,13 +4,12 @@ import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion';
 
 // components
-import { ShareButtons, Comments, CommentForm } from "@/components"
+import { ShareButtons, Comments, CommentForm, LoadingBox, MessageBox } from "@/components"
 import Image from 'next/image'
 
 // functions
 import { 
     useGetArticlesBySlugQuery,
-    usePostCommentMutation,
 } from "@/redux"
 import { markdownToHTML } from "@/helpers"
 
@@ -20,25 +19,24 @@ import styles from "@/styles/articleslug.module.css"
 const ArticlePage = ({params}) => {
     const router = useRouter()
 
-    const initialCommentForm = {
-        username: "",
-        email: "",
-        text: "",
-    }
-    const [postComment] = usePostCommentMutation()
-    const { data } = useGetArticlesBySlugQuery(params.slug)
+    const { data, isSuccess, isError } = useGetArticlesBySlugQuery(params.slug)
 
     const commentSectionRef = useRef(null);   
 
     const [content, setContent] = useState("")
+    const [comments, setComments] = useState()
     const [displayCommentSection, setDisplayCommentSection] = useState(false)
     const [commentSectionContent, setCommentSectionContent] = useState("comments")
-    const [commentForm, setCommentForm] = useState(initialCommentForm)
 
     const article = data && data.data && data.data[0] && data.data[0].attributes
     const articleImage = article && article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.url
     const articleSlug = article && article.slug
+    const articleId = data && data.data && data.data[0] && data.data[0].id
     const pageUrl = articleSlug ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}/article/${articleSlug}` : `${process.env.NEXT_PUBLIC_FRONTEND_URL}/` 
+
+    useEffect(() => {
+        setComments((data && data.data && data.data[0] && data.data[0].attributes && data.data[0].attributes.comments && data.data[0].attributes.comments.data) || [])
+    }, [data])
 
     useEffect(() => {
         async function setMarkdownContent (){
@@ -66,36 +64,15 @@ const ArticlePage = ({params}) => {
         };
       }, [displayCommentSection]);
 
-    const handleCommentFormChange = e => {
-        const {name, value}  = e.target
-        setCommentForm(prevForm => {
-            return {
-                ...prevForm,
-                [name]: value,  
-            }
-        })
-    }
-
-    const submitComment = e => {
-        e.preventDefault()
-        const body = {
-            data: {
-                ...commentForm,
-                Article: data && data.data && data.data[0] && data.data[0].id,
-            }
-        }
-        postComment(body)
-            .unwrap()
-            .then(() => setCommentForm(initialCommentForm))
-            .catch(error => console.log(error))
-    }
-
     const toggleCommentSection = () => setDisplayCommentSection(prevToggle => !prevToggle)
     const showCommentsInCommentSection = () => setCommentSectionContent("comments") 
     const showFormInCommentSection = () => setCommentSectionContent("form") 
 
     return (
         <>
+            <LoadingBox display={!isSuccess && !isError} />
+            {data && data.data && data.data.length < 1 && <MessageBox message="No Article was found" />}
+            {isError && <MessageBox message="Oops! something went wrong with the server" />}
             {
                 article && (
                     <div className={`content-grid ${styles.show_article_wrapper}`}>
@@ -160,7 +137,7 @@ const ArticlePage = ({params}) => {
                                                                 className={`${styles.show_article_comment_section_comments}`}
                                                             >
                                                                 <button className="spacing-md" onClick={showFormInCommentSection}>Add Comment</button>
-                                                                <Comments comments={(article.comments && article.comments.data) || []} />
+                                                                <Comments comments={comments} />
                                                             </motion.div>
                                                         )
                                                     }
@@ -177,9 +154,10 @@ const ArticlePage = ({params}) => {
                                                             >
                                                                 <button className="spacing-md" onClick={showCommentsInCommentSection}>View Comments</button>
                                                                 <CommentForm 
-                                                                    onSubmit={submitComment}
-                                                                    commentForm={commentForm}
-                                                                    onChange={handleCommentFormChange}
+                                                                    articleId={articleId} 
+                                                                    setCommentSectionContent={setCommentSectionContent}
+                                                                    articleSlug={articleSlug}
+                                                                    
                                                                 />
                                                             </motion.div>
                                                         )

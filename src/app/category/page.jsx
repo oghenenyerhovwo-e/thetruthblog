@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation"
 
 import { toFirstLetterUpperCase } from "@/helpers"
 
-import { Articles } from "@/components"
+import { Articles, LoadingBox, MessageBox } from "@/components"
 
 import styles from "@/styles/category.module.css"
 
@@ -16,10 +16,12 @@ const Category = () => {
     const searchedParamValue = searchParams.get("category")
     const category = searchedParamValue ? toFirstLetterUpperCase(searchedParamValue) : ""
     const [pageIndex, setPageIndex] = useState(1)
-    const { isLoading, isFetching, data, error } = useGetArticlesByCategoryQuery({pageIndex,category});
+    const { isSuccess, isError, data } = useGetArticlesByCategoryQuery({pageIndex,category});
 
     return (
       <div className={`${styles.category} content-grid`}>
+        <LoadingBox display={!isSuccess && !isError} />
+        {isError && <MessageBox message="Oops! something went wrong with the server" />}
         <div className={`${styles.category_title} spacing-md`}>
           <div></div>
           <h3>{category} </h3>

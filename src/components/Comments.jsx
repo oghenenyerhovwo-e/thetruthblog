@@ -7,9 +7,8 @@ import styles from "@/styles/comments.module.css"
 
 const Comments = (props)=> {
     const { comments } = props
-    console.log(comments)
 
-    const sortedComments = comments.length > 1 ? comments.slice().sort((a,b) => b.attributes.createdAt.getTime() - a.attributes.createdAt.getTime()) : comments.length > 0 ? comments: []
+    const sortedComments = comments.length > 1 ? comments.slice().sort((a,b) => new Date(b.attributes.createdAt) - new Date(a.attributes.createdAt)) : comments.length > 0 ? comments: []
 
     return (
         <div className={`${styles.comments}`}>

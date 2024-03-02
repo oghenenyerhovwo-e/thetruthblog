@@ -21,6 +21,7 @@ export const commentApi = createApi({
         body,
         header: {"Content-Type": "application/json"}
       }),
+      invalidatesTags: ["Articles"]
     }),
   })
 })

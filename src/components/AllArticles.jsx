@@ -4,11 +4,13 @@ import { Fragment,useState } from 'react'
 import { useGetArticlesQuery } from "@/redux"
 
 import Articles from "./Articles"
+import LoadingBox from "./LoadingBox"
+import MessageBox from "./MessageBox"
 
 const AllArticles = () => {
     const [pageIndex, setPageIndex] = useState(1)
 
-    const { isLoading, isFetching, data, error } = useGetArticlesQuery(pageIndex);
+    const { isSuccess, isError, data } = useGetArticlesQuery(pageIndex);
 
     return (
         <Fragment>
@@ -17,6 +19,8 @@ const AllArticles = () => {
                 pageIndex={pageIndex}
                 setPageIndex={setPageIndex}
             />
+            <LoadingBox display={!isSuccess && !isError} />
+            {isError && <MessageBox message="Oops! something went wrong with the server" />}
         </Fragment>
     )
 }

@@ -31,3 +31,9 @@
 .comment_form button:hover{
     background-color: rgba(6, 9, 7, 0.8);
 }
+
+.comment_form_spinner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

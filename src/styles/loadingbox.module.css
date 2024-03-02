@@ -1,0 +1,29 @@
+.loading_box{
+    background-color: rgba(255, 255, 255, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loadingspinner {
+	pointer-events: none;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 0.4em solid transparent;
+	border-color: #eee;
+	border-top-color: var(--clr-primary);
+	border-radius: 50%;
+	animation: loadingspin 1s linear infinite;
+}
+
+@keyframes loadingspin {
+	100% {
+		transform: rotate(360deg)
+	}
+}

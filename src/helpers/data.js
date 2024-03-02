@@ -555,5 +555,5 @@ const data = [
         "numberOfSocialMediaShares": 220
       },                                                      
   ]
-  
+
 export default data
