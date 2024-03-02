@@ -14,7 +14,8 @@ const ArticleCard = props => {
 
     const gotoArticle = () => router.push(`/article/${article.slug}`)
     const articleThumbnail = article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.formats && article.image.data.attributes.formats.thumbnail && article.image.data.attributes.formats.thumbnail.url
-
+    const author = article.author && article.author.data && article.author.data.attributes
+    console.log(article);
     return (
         <div onClick={gotoArticle} className={`${styles.article_card}`}>
             <Image
@@ -32,9 +33,9 @@ const ArticleCard = props => {
                 <div className={`${styles.article_card_footer_author}`}>
                     <Image
                         src={authorImg}
-                        alt="an image of the author"
+                        alt={`profile picture of ${author.fullName}`}
                     />
-                    <p>by Clifford Ndujihe JNR.</p>
+                    <p>by {author.fullName}</p>
                 </div>
                 <p className={`${styles.article_card_footer_date}date`}>
                     {getTimeAgo(article.createdAt)}

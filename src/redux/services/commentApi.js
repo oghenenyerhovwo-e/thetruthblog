@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import {
-  numberOfArticlesPerPage
-} from "@/helpers"
-
 export const commentApi = createApi({
   reducerPath: "commentApi",
   refetchOnFocus: true,
@@ -21,7 +17,6 @@ export const commentApi = createApi({
         body,
         header: {"Content-Type": "application/json"}
       }),
-      invalidatesTags: ["Articles"]
     }),
   })
 })

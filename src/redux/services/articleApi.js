@@ -15,13 +15,13 @@ export const articleApi = createApi({
   }),
   endpoints: builder => ({
     getArticles: builder.query({
-      query: (pageIndex) => `?pagination[page]=${pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
+      query: (pageIndex) => `?sort[0]=createdAt:desc&pagination[page]=${pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
     }),
     getArticlesBySlug: builder.query({
-      query: (slug) => `?filters[slug]=${slug}&populate=*`,
+      query: (params) => `?filters[slug]=${params.slug}&populate=*`,
     }),
     getArticlesByCategory: builder.query({
-      query: (data) => `?filters[category]=${data.category}&pagination[page]=${data.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
+      query: (data) => `?sort[0]=createdAt:desc&filters[category]=${data.category}&pagination[page]=${data.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
     }),
   })
 })

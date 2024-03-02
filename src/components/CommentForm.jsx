@@ -13,6 +13,7 @@ const CommentForm = (props) => {
     const { 
         articleId,
         setCommentSectionContent,
+        setNewComment,
     } = props
     const initialCommentForm = {
         username: "",
@@ -45,6 +46,7 @@ const CommentForm = (props) => {
             .unwrap()
             .then(() => {
                 setCommentForm(initialCommentForm)
+                setNewComment(body)
                 setCommentSectionContent("comments")
             })
             .catch(error => console.log(error))

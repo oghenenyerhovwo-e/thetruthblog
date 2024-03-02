@@ -19,14 +19,15 @@ import styles from "@/styles/articleslug.module.css"
 const ArticlePage = ({params}) => {
     const router = useRouter()
 
-    const { data, isSuccess, isError } = useGetArticlesBySlugQuery(params.slug)
-
     const commentSectionRef = useRef(null);   
 
     const [content, setContent] = useState("")
     const [comments, setComments] = useState()
+    const [newComment, setNewComment] = useState({})
     const [displayCommentSection, setDisplayCommentSection] = useState(false)
     const [commentSectionContent, setCommentSectionContent] = useState("comments")
+
+    const { data, isSuccess, isError } = useGetArticlesBySlugQuery({slug: params.slug, newComment: newComment})
 
     const article = data && data.data && data.data[0] && data.data[0].attributes
     const articleImage = article && article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.url
@@ -156,8 +157,7 @@ const ArticlePage = ({params}) => {
                                                                 <CommentForm 
                                                                     articleId={articleId} 
                                                                     setCommentSectionContent={setCommentSectionContent}
-                                                                    articleSlug={articleSlug}
-                                                                    
+                                                                    setNewComment={setNewComment}
                                                                 />
                                                             </motion.div>
                                                         )

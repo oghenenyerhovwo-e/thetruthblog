@@ -10,6 +10,11 @@ import {
     usePostCommentMutation,
 } from "./commentApi"
 
+import {
+    authorApi,
+    useGetAuthorByIdQuery,
+} from "./authorApi.js"
+
 export {
     articleApi,
     useGetArticlesQuery,
@@ -18,4 +23,7 @@ export {
 
     commentApi,
     usePostCommentMutation,
+
+    authorApi,
+    useGetAuthorByIdQuery,
 }

@@ -14,6 +14,8 @@ import {
     useGetArticlesByCategoryQuery,
 
     usePostCommentMutation,
+
+    useGetAuthorByIdQuery,
 } from "./services"
 
 export {
@@ -26,4 +28,6 @@ export {
     useGetArticlesBySlugQuery,
     useGetArticlesByCategoryQuery,
     usePostCommentMutation,
+
+    useGetAuthorByIdQuery,
 }

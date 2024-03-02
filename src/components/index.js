@@ -8,6 +8,7 @@ import CommentForm from "./CommentForm"
 import LoadingBox from "./LoadingBox"
 import Spinner from "./Spinner"
 import MessageBox from "./MessageBox"
+import AuthorPicture from "./AuthorPicture"
 
 export {
     Nav,
@@ -20,4 +21,5 @@ export {
     LoadingBox,
     Spinner,
     MessageBox,
+    AuthorPicture,
 }

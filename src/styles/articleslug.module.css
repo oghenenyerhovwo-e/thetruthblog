@@ -2,12 +2,16 @@
     margin-top: 2rem;
 }
 
-.show_article{
-
+.show_article_img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.show_article_img{
-
+.show_article_img > img{
+  width: min(95%, 15rem);
+  height: auto;
+  object-fit: cover;
 }
 
 .show_article_body{

@@ -1,9 +1,11 @@
 .message_box{
     position: fixed;
-    top: 80%;
+    top: 60vh;
     left: 0;
     right: 0;
     width: 100%;
+    height: 40vh;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
