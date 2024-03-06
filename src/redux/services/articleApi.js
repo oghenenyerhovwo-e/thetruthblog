@@ -21,7 +21,10 @@ export const articleApi = createApi({
       query: (params) => `?filters[slug]=${params.slug}&populate=*`,
     }),
     getArticlesByCategory: builder.query({
-      query: (data) => `?sort[0]=createdAt:desc&filters[category]=${data.category}&pagination[page]=${data.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
+      query: (params) => `?sort[0]=createdAt:desc&filters[category]=${params.category}&pagination[page]=${params.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
+    }),
+    getArticlesByUser: builder.query({
+      query: (params) => `?sort[0]=createdAt:desc&populate=*&filters[author][id]=${params.authorId}&pagination[page]=${params.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}`,
     }),
   })
 })
@@ -30,4 +33,5 @@ export const {
   useGetArticlesQuery, 
   useGetArticlesBySlugQuery,
   useGetArticlesByCategoryQuery,
+  useGetArticlesByUserQuery,
 } = articleApi;

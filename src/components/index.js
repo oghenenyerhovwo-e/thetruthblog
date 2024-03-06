@@ -9,6 +9,7 @@ import LoadingBox from "./LoadingBox"
 import Spinner from "./Spinner"
 import MessageBox from "./MessageBox"
 import AuthorPicture from "./AuthorPicture"
+import Pagination from "./Pagination"
 
 export {
     Nav,
@@ -22,4 +23,5 @@ export {
     Spinner,
     MessageBox,
     AuthorPicture,
+    Pagination,
 }

@@ -1,6 +1,6 @@
 "use client"
 import { Fragment, useEffect, useState, useRef } from "react"
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion';
 
 // components
@@ -18,6 +18,7 @@ import styles from "@/styles/articleslug.module.css"
 
 const ArticlePage = ({params}) => {
     const router = useRouter()
+    const pathname = usePathname()
 
     const commentSectionRef = useRef(null);   
 
@@ -33,7 +34,7 @@ const ArticlePage = ({params}) => {
     const articleImage = article && article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.url
     const articleSlug = article && article.slug
     const articleId = data && data.data && data.data[0] && data.data[0].id
-    const pageUrl = articleSlug ? `${process.env.NEXT_PUBLIC_FRONTEND_URL}/article/${articleSlug}` : `${process.env.NEXT_PUBLIC_FRONTEND_URL}/` 
+    const pageUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}${pathname}` 
 
     useEffect(() => {
         setComments((data && data.data && data.data[0] && data.data[0].attributes && data.data[0].attributes.comments && data.data[0].attributes.comments.data) || [])

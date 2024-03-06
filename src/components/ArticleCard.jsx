@@ -1,11 +1,13 @@
 "use client"
 
 import Image from 'next/image'
+import Link from 'next/link'
+
+import AuthorPicture from "./AuthorPicture"
 import { useRouter } from "next/navigation"
 
 import styles from "@/styles/articlecard.module.css"
 
-import { authorImg } from "@/assets"
 import { getTimeAgo } from "@/helpers"
 
 const ArticleCard = props => {
@@ -15,27 +17,29 @@ const ArticleCard = props => {
     const gotoArticle = () => router.push(`/article/${article.slug}`)
     const articleThumbnail = article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.formats && article.image.data.attributes.formats.thumbnail && article.image.data.attributes.formats.thumbnail.url
     const author = article.author && article.author.data && article.author.data.attributes
-    console.log(article);
+    const authorId = article.author && article.author.data && article.author.data.id
+
     return (
-        <div onClick={gotoArticle} className={`${styles.article_card}`}>
+        <div className={`${styles.article_card}`}>
             <Image
-                src={articleThumbnail}
+                src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + articleThumbnail}
                 alt={`An image of ${article.seoMetaDescription}`}
                 width={100}
                 height={80}
+                onClick={gotoArticle}
             />
             <div className={`${styles.article_card_body}`}>
                 <h4 className="spacing-sm">{article.category} </h4>
-                <h2 className="spacing-sm">{article.title} </h2>
-                <p>{article.headline} </p>
+                <h2 onClick={gotoArticle} className="spacing-sm">{article.title} </h2>
+                <p onClick={gotoArticle}>{article.headline} </p>
             </div>
             <div className={`${styles.article_card_footer} spacing-sm`}>
                 <div className={`${styles.article_card_footer_author}`}>
-                    <Image
-                        src={authorImg}
-                        alt={`profile picture of ${author.fullName}`}
-                    />
-                    <p>by {author.fullName}</p>
+                    <AuthorPicture authorId={authorId} />
+                    <p>
+                        by {" "}
+                        <Link href={{pathname: `/article/author/${authorId}`, query: {author: author.fullName}}}>{author.fullName} </Link>
+                    </p>
                 </div>
                 <p className={`${styles.article_card_footer_date}date`}>
                     {getTimeAgo(article.createdAt)}

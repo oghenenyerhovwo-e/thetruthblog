@@ -12,6 +12,7 @@ import {
     useGetArticlesQuery,
     useGetArticlesBySlugQuery,
     useGetArticlesByCategoryQuery,
+    useGetArticlesByUserQuery,
 
     usePostCommentMutation,
 
@@ -27,7 +28,9 @@ export {
     useGetArticlesQuery,
     useGetArticlesBySlugQuery,
     useGetArticlesByCategoryQuery,
-    usePostCommentMutation,
+    useGetArticlesByUserQuery,
 
     useGetAuthorByIdQuery,
+
+    usePostCommentMutation,
 }

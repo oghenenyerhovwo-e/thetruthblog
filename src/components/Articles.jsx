@@ -1,8 +1,10 @@
 import { Fragment } from "react"
 
+import { usePathname } from 'next/navigation'
+
 import ArticleCard from "./ArticleCard"
 import MessageBox from "./MessageBox"
-import { GrFormPrevious, GrFormNext } from "react-icons/gr"
+import Pagination from "./Pagination"
 
 import styles from "@/styles/articles.module.css"
 
@@ -10,10 +12,12 @@ const Articles = (props) => {
     const {
         data,
         setPageIndex,
+        pageIndex,
     } = props
 
-    const nextPage = () => setPageIndex(prevPageIndex => prevPageIndex + 1)
-    const previousPage = () => setPageIndex(prevPageIndex => prevPageIndex - 1)
+    const pathname = usePathname()
+
+    const controlPathname = pathname.includes("?") ? `${pathname}&` : `${pathname}?`
 
     return (
         <div>
@@ -29,29 +33,15 @@ const Articles = (props) => {
                     })
                 }
             </div>
-            <div className={`${styles.articles_page_button} spacing-md`}>
+            <div className={`${styles.articles_page_pagination} spacing-md`}>
                 {
-                    data && data.meta && data.meta.pagination.page > 1 && (
-                        <div className={`${styles.articles_page_button_previous}`}>
-                            <button 
-                                onClick={previousPage}
-                            >
-                                <GrFormPrevious />
-                                <span>Previous</span>
-                            </button>
-                        </div>
-                    )
-                }
-                {
-                    data && data.meta && data.meta.pagination.pageCount > data.meta.pagination.page && (
-                        <div className={`${styles.articles_page_button_next}`}>
-                            <button 
-                                onClick={nextPage}
-                            >
-                                <span>Next</span>
-                                <GrFormNext />
-                            </button>
-                        </div>
+                    data && data.meta && data.meta.pagination && (
+                        <Pagination
+                            pagination={data.meta.pagination}
+                            pageIndex={pageIndex}
+                            setPageIndex={setPageIndex}
+                            controlPathname={controlPathname}
+                        />
                     )
                 }
             </div>

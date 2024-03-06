@@ -3,6 +3,7 @@ import {
     useGetArticlesQuery,
     useGetArticlesBySlugQuery,
     useGetArticlesByCategoryQuery,
+    useGetArticlesByUserQuery,
 } from "./articleApi"
 
 import {
@@ -20,6 +21,7 @@ export {
     useGetArticlesQuery,
     useGetArticlesBySlugQuery,
     useGetArticlesByCategoryQuery,
+    useGetArticlesByUserQuery,
 
     commentApi,
     usePostCommentMutation,

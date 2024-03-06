@@ -1,0 +1,20 @@
+.author_article{
+    margin-block: 2rem;
+}
+
+.author_article_title{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author_article_title > h3{
+    font-size: var(-fs-400);
+    color: var(--clr-primary);
+}
+
+.author_article_title > div{
+    background: var(--clr-primary);
+    height: 0.25rem;
+    width: 100%;
+}

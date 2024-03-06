@@ -9,7 +9,6 @@
     background: var(--clr-primary-700);
     border-radius: 0.5rem;
     overflow: hidden;
-    cursor: pointer;
 }
   
 .article_card > img {
@@ -27,6 +26,8 @@
 .article_card_body > h2{
   font-size: var(--fs-500);
   font-weight: 700;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
 .article_card_body > h4{
@@ -48,6 +49,14 @@
 
 .article_card_body > p {
   font-size: var(--fs-300);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.article_card_body > h2:hover,
+.article_card_footer_author > p > a:hover,
+.article_card_body > p:hover{
+  text-decoration: underline;
 }
 
 .article_card_footer{
@@ -62,11 +71,11 @@
 .article_card_footer_author{
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 0.5rem;
+  overflow-x: hidden;
 }
 
-.article_card_footer_author > img{
+.article_card_footer_author > div > img{
   width: 1.5rem;
   height: 1.5rem;
   border-radius: 50%;
@@ -78,6 +87,9 @@
   background-color: 2px solid var(--clr-secondary);
 }
 
+.article_card_footer_author > p > a{
+  transition: 0.5s;
+}
   
   /* .article_card[data-featured="true"] {
     @container (min-width: 850px) {

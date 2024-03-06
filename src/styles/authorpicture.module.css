@@ -1,0 +1,7 @@
+.author_picture > img{
+    background-image: url("../../public/images/user.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    object-fit: cover;
+}
