@@ -1,0 +1,20 @@
+.category{
+    margin-block: 2rem;
+}
+
+.category_title{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.category_title > h3{
+    font-size: var(-fs-400);
+    color: var(--clr-primary);
+}
+
+.category_title > div{
+    background: var(--clr-primary);
+    height: 0.25rem;
+    width: 100%;
+}

@@ -1,0 +1,39 @@
+.comment_form input,
+.comment_form textarea{
+    font-size: var(--fs-300);
+    padding: 1em 1.2em;
+    border: 1px solid rgba(6, 9, 7, 0.6);
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 0.4rem;
+}
+
+.comment_form textarea{
+    min-height: 20rem;
+}
+
+.comment_form button{
+    width: 100%;
+    background-color: var(--clr-text);
+    padding: 0.7em 1em;
+    font-size: var(--fs-300);
+    border-width: 1px;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #fff;
+    transition: 0.5s;
+}
+
+.comment_form button:hover{
+    background-color: rgba(6, 9, 7, 0.8);
+}
+
+.comment_form_spinner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
