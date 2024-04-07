@@ -1,19 +1,30 @@
+import {
+    generateToken,
+    getDataFromToken,
+    isPasswordSafe,
+} from "./auth"
+
 import data from "./data.js"
 
 import {
     getTimeAgo,
     toFirstLetterUpperCase,
     markdownToHTML,
+    makeSlug,
 } from "./javascriptFunctions"
 
 import {
-    numberOfArticlesPerPage,
+    pageLimit,
 } from "./constants"
 
 export {
     data,
     getTimeAgo,
     toFirstLetterUpperCase,
-    numberOfArticlesPerPage,
+    pageLimit,
     markdownToHTML,
+    generateToken,
+    getDataFromToken,
+    isPasswordSafe,
+    makeSlug,
 }

@@ -15,6 +15,11 @@
   width: 100%;
   max-height: 12rem;
   object-fit: cover;
+
+  background-image: url("../../public/images/no_image.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
 }
 
 .article_card_body{
@@ -81,6 +86,11 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--clr-secondary);
+
+  background-image: url("../../public/images/user.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
 }
 
 .article_card_footer_author > p{

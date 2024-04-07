@@ -20,7 +20,12 @@ export default function Home() {
             </h2>
           </div>
           <div className={`${styles.home_hero_img}`}>
-            <Image src={truthHero} alt="An image of truth and accurate journalism" />
+            <Image 
+              src={truthHero} 
+              alt="An image of truth and accurate journalism" 
+              width={90}
+              height={60} 
+            />
             <div className={`${styles.home_hero_img_overlay}`}></div>       
           </div>
         </div>

@@ -1,28 +1,40 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+// components
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaAnglesDown,  } from "react-icons/fa6";
-import { motion, AnimatePresence } from 'framer-motion';
 
+// images
 import { closeIcon } from "@/assets"
 
+// functions
+import { 
+    useAppSelector,
+} from "@/redux"
+
+// css
 import styles from "@/styles/nav.module.css"
 
 const NavLink = () => {
-  return (
-    <ul className="">
-        <li><Link href="/"> Home </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "politics"}}}>Politics </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "sport"}}}>Sport </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "entertainment"}}}>Entertainment </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "business"}}}>Business </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "news"}}}>News </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "technology"}}}>Technology </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "international"}}}>International </Link></li>
-        <li><Link href={{pathname: "/category", query: {category: "features"}}}>Features </Link></li>
-    </ul>
-  )
+    const { currentUser } = useAppSelector(state => state.userStore)
+
+    return (
+        <ul className="">
+            <li><Link href="/"> Home </Link></li>
+            {currentUser._id && <li><Link href="/"> Dashboard </Link></li>}
+            <li><Link href={{pathname: "/articles/category", query: {category: "politics"}}}>Politics </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "sport"}}}>Sport </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "entertainment"}}}>Entertainment </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "business"}}}>Business </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "news"}}}>News </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "technology"}}}>Technology </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "international"}}}>International </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "features"}}}>Features </Link></li>
+        </ul>
+    )
 }
 
 const Nav = () => {
@@ -45,7 +57,7 @@ const Nav = () => {
         return () => {
           document.removeEventListener('click', handleMenuWhenClickOutside);
         };
-      }, [displayMenu]);
+    }, [displayMenu]);
 
     const toggleMenu = () => setDisplayMenu(prevToggle => !prevToggle)
     const closeMenu = () => setDisplayMenu(false)
@@ -99,9 +111,9 @@ const Nav = () => {
                                     <h1>The Truth</h1>
                                 </div>
                                 <NavLink />
-                                <div className={`${styles.navbar_smallscreen_button}`}>
+                                {/* <div className={`${styles.navbar_smallscreen_button}`}>
                                     <button>Subscribe</button>
-                                </div>
+                                </div> */}
                             </motion.div>
                         </motion.div>
                     )

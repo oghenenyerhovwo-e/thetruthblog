@@ -40,3 +40,71 @@
     font-size: var(--fs-300);
     text-align: justify;
 }
+
+.comment_card_delete{
+    display: flex;
+    justify-content: flex-end;
+    color: #ff0000;
+}
+
+
+.delete_menu_overlay{
+    position: fixed;
+    background-color: rgba(0,0,0,0.3);
+    top: 0;
+    left: 0;
+    min-height: 100dvh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9;
+  }
+  
+  .delete_menu{
+    background-color: var(--clr-background);
+    width: min(100%, 25rem);
+    min-height: 30dvh;
+    overflow-y: auto;
+    font-size: var(--fs-300);
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    padding-block: 2rem;
+    padding-inline: 1rem;
+  }
+
+  .delete_menu h4{
+    font-size: var(--fs-300);
+    font-weight: 600;
+  }
+
+  .delete_menu h4:hover{
+    text-decoration: underline;
+  }
+
+  .delete_menu_buttons{
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .delete_menu_buttons > button {
+    background-color: transparent;
+    padding: 0.7em 1em;
+    font-size: var(--fs-300);
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: 0.5s;
+  }
+
+  .delete_menu_buttons > button:last-child {
+    color: #ff0000;
+  }

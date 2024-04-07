@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import {
-  numberOfArticlesPerPage,
+  pageLimit,
 } from "@/helpers"
 
 export const articleApi = createApi({
@@ -11,27 +11,60 @@ export const articleApi = createApi({
   refetchOnMountOrArgChange: true,
   baseQuery: fetchBaseQuery({
     // Fill in your own server starting URL here
-    baseUrl: `${process.env.NEXT_PUBLIC_STRAPI_URL}/articles`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/articles`,
   }),
   endpoints: builder => ({
     getArticles: builder.query({
-      query: (pageIndex) => `?sort[0]=createdAt:desc&pagination[page]=${pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
+      query: (params) => `?pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
     }),
-    getArticlesBySlug: builder.query({
-      query: (params) => `?filters[slug]=${params.slug}&populate=*`,
+    getArticleBySlug: builder.query({
+      query: (params) => `/${params.slug}`,
+    }),
+    getRelatedArticlesBySlug: builder.query({
+      query: (params) => `/${params.slug}/related`,
     }),
     getArticlesByCategory: builder.query({
-      query: (params) => `?sort[0]=createdAt:desc&filters[category]=${params.category}&pagination[page]=${params.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}&populate=*`,
+      query: (params) => `/category/?category=${params.category}pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
     }),
-    getArticlesByUser: builder.query({
-      query: (params) => `?sort[0]=createdAt:desc&populate=*&filters[author][id]=${params.authorId}&pagination[page]=${params.pageIndex}&pagination[pageSize]=${numberOfArticlesPerPage}`,
+    getArticlesByAuthor: builder.query({
+      query: (params) => `/author/${params.authorId}?pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+    }),
+    postArticle: builder.mutation({
+      query: (params) => ({
+        url: `/`,
+        method: "POST",
+        body: params.body,
+        header: {"Content-Type": "application/json"}
+      }),
+    }),
+    deleteArticle: builder.mutation({
+      query: (params) => ({
+        url: `/${params.slug}`,
+        method: "DELETE",
+      }),
+    }),
+    updateArticle: builder.mutation({
+      query: (params) => ({
+        url: `/${params.slug}`,
+        method: "PUT",
+        body: params.body,
+        header: {"Content-Type": "application/json"}
+      }),
+    }),
+    searchArticles: builder.query({
+      query: (params) => `/search?searchText=${params.searchText}&pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
     }),
   })
 })
 
 export const { 
   useGetArticlesQuery, 
-  useGetArticlesBySlugQuery,
+  useGetArticleBySlugQuery,
+  useGetRelatedArticlesBySlugQuery,
   useGetArticlesByCategoryQuery,
-  useGetArticlesByUserQuery,
+  useGetArticlesByAuthorQuery,
+  useSearchArticlesQuery,
+  usePostArticleMutation,
+  useDeleteArticleMutation,
+  useUpdateArticleMutation,
 } = articleApi;

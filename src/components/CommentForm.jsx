@@ -1,12 +1,17 @@
 "use client"
 import { useState } from "react"
 
+// components
+import Spinner from "./Spinner"
+import Form from "./Form"
+import Alert from "./Alert"
+
+// functions and objects
 import { 
     usePostCommentMutation,
 } from "@/redux"
 
-import Spinner from "./Spinner"
-
+// css
 import styles from "@/styles/commentform.module.css"
 
 const CommentForm = (props) => {
@@ -16,11 +21,11 @@ const CommentForm = (props) => {
         setNewComment,
     } = props
     const initialCommentForm = {
-        username: "",
+        fullName: "",
         email: "",
         text: "",
     }
-    const [postComment, { isLoading }] = usePostCommentMutation()
+    const [postComment, { isLoading, isError, error }] = usePostCommentMutation()
 
     const [commentForm, setCommentForm] = useState(initialCommentForm)
 
@@ -36,13 +41,7 @@ const CommentForm = (props) => {
 
     const submitComment = e => {
         e.preventDefault()
-        const body = {
-            data: {
-                ...commentForm,
-                Article: articleId,
-            }
-        }
-        postComment(body)
+        postComment({body: commentForm, articleId: articleId})
             .unwrap()
             .then(() => {
                 setCommentForm(initialCommentForm)
@@ -56,27 +55,37 @@ const CommentForm = (props) => {
     return (
         <div className={`${styles.comment_form}`}>
             <form onSubmit={submitComment}>
-                <input 
-                    placeholder="username"
+                <Form.Input 
+                    placeholder="enter full name"
                     type="text"
-                    name="username"
-                    value={commentForm.username}
+                    name="fullName"
+                    value={commentForm.fullName}
                     onChange={handleCommentFormChange}
                 />
-                <input 
+                <Form.Input 
                     placeholder="email"
                     type="email"
                     name="email"
                     value={commentForm.email}
                     onChange={handleCommentFormChange}
                 />
-                <textarea 
+                <Form.Textarea 
                     placeholder="What are your thoughts?"
                     name="text"
                     value={commentForm.text}
                     onChange={handleCommentFormChange}
                     required={true}
                 />
+                {
+                    isError && error && error.data && error.data.error &&  (
+                        <div className={`spacing-sm`}>
+                            <Alert 
+                                message={error && error.data && error.data.error} 
+                                variant="danger" 
+                            />
+                        </div>
+                    )
+                }
                 {
                     !isLoading ? (
                         <button type="submit">Post comment</button>

@@ -1,0 +1,80 @@
+.dashboard{
+    margin-top: 2rem;
+    padding: 2rem;
+    width: min(40rem, 100%);
+    margin-inline: auto;
+    border: 1px solid rgba(79, 186, 140, 0.6);
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard_author{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    align-self: flex-end;
+    flex-wrap: wrap;
+}
+
+.dashboard_author > h4{
+    font-size: var(--fs-300);
+    font-weight: 600;
+}
+
+  .dashboard_author > img{
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--clr-secondary);
+  
+    background-image: url("../../public/images/user.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      object-fit: cover;
+  }
+
+.dashboard_links_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard_links{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dashboard_links > a{
+    background-color: var(--clr-background);
+    padding: 0.7em 1em;
+    font-size: var(--fs-300);
+    border: 1px solid rgba(79, 186, 140, 0.4);
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    transition: 0.5s;
+    margin-bottom: 1rem;
+}
+
+.dashboard_links > a:hover{
+    background-color: var(--clr-primary);
+}
+
+.dashboard_links > a:last-child{
+    border: 1px solid #ffe0e0e0;
+    color: #a02020; 
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+.dashboard_links > a:last-child:hover{
+    background-color: #a02020;
+    color: #fff;
+}

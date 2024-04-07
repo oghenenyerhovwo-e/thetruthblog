@@ -7,14 +7,21 @@ export const commentApi = createApi({
   refetchOnMountOrArgChange: true,
   baseQuery: fetchBaseQuery({
     // Fill in your own server starting URL here
-    baseUrl: `${process.env.NEXT_PUBLIC_STRAPI_URL}/comments`,
+    baseUrl: `${process.env.NEXT_PUBLIC_API_URL}/comments`,
   }),
   endpoints: builder => ({
     postComment: builder.mutation({
-      query: (body) => ({
-        url: `/`,
+      query: (params) => ({
+        url: `/${params.articleId}`,
         method: "POST",
-        body,
+        body: params.body,
+        header: {"Content-Type": "application/json"}
+      }),
+    }),
+    deleteComment: builder.mutation({
+      query: (params) => ({
+        url: `/${params.articleId}/${params.id}`,
+        method: "DELETE",
         header: {"Content-Type": "application/json"}
       }),
     }),
@@ -23,4 +30,5 @@ export const commentApi = createApi({
 
 export const { 
   usePostCommentMutation,
+  useDeleteCommentMutation,
 } = commentApi;

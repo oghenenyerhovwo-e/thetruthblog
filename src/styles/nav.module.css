@@ -98,7 +98,7 @@
 .navbar_smallscreen{
   background-color: var(--clr-background);
   width: min(100%, 25rem);
-  height: 100dvh;
+  min-height: 100dvh;
   overflow-y: auto;
   font-size: var(--fs-300);
   font-weight: 600;

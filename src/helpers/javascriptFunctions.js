@@ -36,3 +36,15 @@ export const markdownToHTML = async (markdown) => {
     return result.toString()
 }
 
+export const makeSlug = (str) => {
+    // Remove white spaces and replace with dash
+    const slug = str.replace(/\s+/g, '-');
+
+    // Remove special symbols using regex
+    const cleanSlug = slug.replace(/[^\w\s-]/g, '');
+
+    // Convert to lowercase
+    const formattedSlug = cleanSlug.toLowerCase();
+
+    return formattedSlug;
+}

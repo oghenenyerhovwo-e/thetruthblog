@@ -10,14 +10,33 @@ import {
 
 import {
     useGetArticlesQuery,
-    useGetArticlesBySlugQuery,
+    useGetArticleBySlugQuery,
     useGetArticlesByCategoryQuery,
-    useGetArticlesByUserQuery,
+    useGetArticlesByAuthorQuery,
+    usePostArticleMutation,
+    useDeleteArticleMutation,
+    useSearchArticlesQuery,
+    useGetRelatedArticlesBySlugQuery,
+    useUpdateArticleMutation,
 
     usePostCommentMutation,
+    useDeleteCommentMutation,
 
-    useGetAuthorByIdQuery,
+    useLoginMutation,
+    useSignupMutation,
+    useLogoutMutation,
+    useGetUserIdentityQuery,
+    useGetUserProfileQuery,
+    useUpdateUserProfileMutation,
+    useGetUsersQuery,
+    useChangeUserRoleMutation,
+    useSearchUsersQuery,
 } from "./services"
+
+import {
+    setCurrentUser, 
+    setIsIdentityLoadComplete,
+} from "./features"
 
 export {
     makeStore,
@@ -26,11 +45,28 @@ export {
     useAppStore,
 
     useGetArticlesQuery,
-    useGetArticlesBySlugQuery,
+    useGetArticleBySlugQuery,
     useGetArticlesByCategoryQuery,
-    useGetArticlesByUserQuery,
+    useGetArticlesByAuthorQuery,
+    usePostArticleMutation,
+    useDeleteArticleMutation,
+    useSearchArticlesQuery,
+    useGetRelatedArticlesBySlugQuery,
+    useUpdateArticleMutation,
 
-    useGetAuthorByIdQuery,
+    useLoginMutation,
+    useSignupMutation,
+    useLogoutMutation,
+    useGetUserIdentityQuery,
+    useGetUserProfileQuery,
+    useUpdateUserProfileMutation,
+    useGetUsersQuery,
+    useChangeUserRoleMutation,
+    useSearchUsersQuery,
 
     usePostCommentMutation,
+    useDeleteCommentMutation,
+
+    setCurrentUser, 
+    setIsIdentityLoadComplete,
 }

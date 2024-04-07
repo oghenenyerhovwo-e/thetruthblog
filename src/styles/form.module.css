@@ -1,0 +1,90 @@
+.form_field{
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.form_field label{
+    font-size: var(--fs-300);
+    width: 100%;
+}
+
+.form_field input,
+.form_field textarea{
+    font-size: var(--fs-300);
+    padding: 1em 1.2em;
+    background-color: transparent;
+    width: 100%;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(79, 186, 140, 0.4);
+    outline: none;
+}
+
+.form_field input:active,
+.form_field input:focus,
+.form_field input:focus-visible,
+.form_field textarea:active,
+.form_field textarea:focus,
+.form_field textarea:focus-visible{
+    border: 1px solid hsl(154, 44%, 52%);
+    outline: none;
+}
+
+.form_field textarea{
+    min-height: 20rem;
+}
+
+.form_field_password_icon{
+    width: 100%;
+    background: transparent;
+
+    font-size: var(--fs-300);
+    cursor: pointer;
+    
+    position: absolute;
+    z-index: 1;
+    left: 90%;
+    top: 49%;
+}
+
+.form_field input[type="text"],   
+.form_field input[type="password"], 
+.form_field input[type="number"], 
+.form_field textarea, 
+.form_field select{
+    outline: 0px!important;
+    outline: none;
+    border: 1px solid hsl(154, 44%, 52%);
+  }
+
+/* Chrome, Safari, Edge, Opera */
+.form_field input::-webkit-outer-spin-button,
+.form_field input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+     margin: 0;
+}
+
+.form_field_file_img{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_field_file_img > img{
+    width: min(90%, 10rem);
+    height: auto;
+
+    background-image: url("../../public/images/no_image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: cover;
+}
+
+/* Firefox */
+.form_field input[type=number] {
+  -moz-appearance: textfield;
+}

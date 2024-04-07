@@ -3,16 +3,18 @@ import { Fragment } from "react"
 import { usePathname } from 'next/navigation'
 
 import ArticleCard from "./ArticleCard"
-import MessageBox from "./MessageBox"
 import Pagination from "./Pagination"
 
 import styles from "@/styles/articles.module.css"
 
 const Articles = (props) => {  
     const {
-        data,
+        articles,
         setPageIndex,
         pageIndex,
+        pageCount,
+        disablePaginationQuery,
+        hidePagination,
     } = props
 
     const pathname = usePathname()
@@ -21,30 +23,34 @@ const Articles = (props) => {
 
     return (
         <div>
-            {data && data.data && data.data.length < 1 && <MessageBox message="No Article was found" />}
             <div className={`${styles.articles} spacing-md`}>
                 {
-                    data && data.data && data.data.length > 0 && data.data.map(article => {
+                    articles && articles.length > 0 && articles.map(article => {
                         return (
-                            <Fragment key={article.id}>
-                                <ArticleCard article={article.attributes} />
+                            <Fragment key={article._id}>
+                                <ArticleCard article={article} />
                             </Fragment>
                         )
                     })
                 }
             </div>
-            <div className={`${styles.articles_page_pagination} spacing-md`}>
-                {
-                    data && data.meta && data.meta.pagination && (
-                        <Pagination
-                            pagination={data.meta.pagination}
-                            pageIndex={pageIndex}
-                            setPageIndex={setPageIndex}
-                            controlPathname={controlPathname}
-                        />
-                    )
-                }
-            </div>
+            {
+                !hidePagination && (
+                    <div className={`${styles.articles_page_pagination} spacing-md`}>
+                        {
+                            pageCount && (
+                                <Pagination
+                                    pageCount={pageCount}
+                                    pageIndex={pageIndex}
+                                    setPageIndex={setPageIndex}
+                                    controlPathname={controlPathname}
+                                    disablePaginationQuery={disablePaginationQuery}
+                                />
+                            )
+                        }
+                    </div>
+                )
+            }
         </div>
     )
 }

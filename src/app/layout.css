@@ -96,4 +96,13 @@
   .spacing-xxl{
     margin-bottom: 8rem;
   }
-  
+
+  .back_to_dashboard{
+    display: flex;
+    justify-content: center;
+  }
+
+  .back_to_dashboard > a{
+    color: var(--clr-primary);
+    text-decoration: underline;
+  }

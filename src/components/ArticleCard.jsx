@@ -1,44 +1,46 @@
 "use client"
-
-import Image from 'next/image'
-import Link from 'next/link'
-
-import AuthorPicture from "./AuthorPicture"
 import { useRouter } from "next/navigation"
 
-import styles from "@/styles/articlecard.module.css"
+// components
+import Image from 'next/image'
+import Link from 'next/link'
+import AuthorPicture from "./AuthorPicture"
 
+// functions
 import { getTimeAgo } from "@/helpers"
+
+// css
+import styles from "@/styles/articlecard.module.css"
 
 const ArticleCard = props => {
     const { article } = props
     const router = useRouter()
 
-    const gotoArticle = () => router.push(`/article/${article.slug}`)
-    const articleThumbnail = article.image && article.image.data && article.image.data.attributes && article.image.data.attributes.formats && article.image.data.attributes.formats.thumbnail && article.image.data.attributes.formats.thumbnail.url
-    const author = article.author && article.author.data && article.author.data.attributes
-    const authorId = article.author && article.author.data && article.author.data.id
+    const gotoArticle = () => router.push(`/articles/${article.slug}`)
+    const articleThumbnail = article.image
+    const author = article.author
+    const authorId = article.author && article.author._id
 
     return (
         <div className={`${styles.article_card}`}>
             <Image
-                src={process.env.NEXT_PUBLIC_STRAPI_BASE_URL + articleThumbnail}
-                alt={`An image of ${article.seoMetaDescription}`}
+                src={articleThumbnail}
+                alt={`An image of ${article.headline}`}
                 width={100}
                 height={80}
                 onClick={gotoArticle}
             />
             <div className={`${styles.article_card_body}`}>
-                <h4 className="spacing-sm">{article.category} </h4>
+                <h4 className="spacing-sm">{article.category[0]} </h4>
                 <h2 onClick={gotoArticle} className="spacing-sm">{article.title} </h2>
                 <p onClick={gotoArticle}>{article.headline} </p>
             </div>
             <div className={`${styles.article_card_footer} spacing-sm`}>
                 <div className={`${styles.article_card_footer_author}`}>
-                    <AuthorPicture authorId={authorId} />
+                    <AuthorPicture author={author} />
                     <p>
                         by {" "}
-                        <Link href={{pathname: `/article/author/${authorId}`, query: {author: author.fullName}}}>{author.fullName} </Link>
+                        <Link href={{pathname: `/articles/author/${author.fullName}`, query: {authorId: authorId}}}>{author.fullName} </Link>
                     </p>
                 </div>
                 <p className={`${styles.article_card_footer_date}date`}>
