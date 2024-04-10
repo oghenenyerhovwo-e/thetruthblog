@@ -12,7 +12,7 @@ const AdminAuthorOnly = (props) => {
 
     useEffect(() => {
         if(isIdentityLoadComplete){
-            if(!currentUser.isAdmin && currentUser._id !== author){
+            if(!currentUser.isAdmin && String(currentUser._id) !== String(author)){
                 router.push("/users/login")
             }
         }
@@ -21,7 +21,7 @@ const AdminAuthorOnly = (props) => {
     return (
         <>
             {
-                currentUser.isAdmin || currentUser._id === author && (
+                currentUser.isAdmin || String(currentUser._id) === String(author) && (
                     <>{props.children} </>
                 ) 
             }

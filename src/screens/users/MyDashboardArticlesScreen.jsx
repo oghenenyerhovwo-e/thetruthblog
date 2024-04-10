@@ -29,7 +29,7 @@ const MyDashboardArticlesScreen = ({params}) => {
                 <LoadingBox display={!isSuccess && !isError} />
                 {isError && <MessageBox message="Oops! something went wrong with the server" />}
                 {
-                    data.articles && (
+                    data && data.articles && (
                         <AuthorOnly author={data.articles[0] && data.articles[0].author && data.articles[0].author._id}>
                             <div className={`${styles.dashboard}`}>
                                 <div className={`${styles.dashboard_author} spacing-md`}>
@@ -46,7 +46,7 @@ const MyDashboardArticlesScreen = ({params}) => {
                                 </div>
                                 <div className={`spacing-md`}>
                                     <DashboardArticles 
-                                        articles={data.articles}
+                                        articles={data && data.articles}
                                         pageIndex={pageIndex}
                                         setPageIndex={setPageIndex}
                                         pageCount={data && data.pageCount}

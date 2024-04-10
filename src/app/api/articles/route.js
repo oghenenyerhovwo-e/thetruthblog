@@ -7,6 +7,7 @@ import {
   import {
     getDataFromToken,
     makeSlug,
+    pageLimit,
   } from "@/helpers"
   
   import {
@@ -15,12 +16,11 @@ import {
 
 databaseConnection()
 
-export const GET = async (request) => {
-  const url  = new URL(request.url) 
-  const pageIndex = url.searchParams.get("pageIndex")
-  const pageLimit = url.searchParams.get("pageLimit")
-  
+export const GET = async (request) => {  
   try {
+      const url  = new URL(request.url) 
+      const pageIndex = url.searchParams.get("pageIndex") || 1
+
       const foundArticles = await Article
         .find({})
         .sort({
@@ -46,12 +46,16 @@ export const GET = async (request) => {
 }
 
 export const POST = async (request) => {
-    const data = await request.json();
-
     try {
+        const data = await request.json();
+
         const userId = await getDataFromToken(request);
         const foundUser = await User.findOne({_id: userId}).select("-password");
 
+        if(!foundUser){
+          return NextResponse.json({error: "No user found, Please login"}, {status: 400})
+        }     
+        
         if(!foundUser){
           return NextResponse.json({error: "No user found"}, {status: 400})
         }

@@ -7,13 +7,17 @@ import {
     databaseConnection,
   } from '@/config';
 
+  import {
+    pageLimit,
+} from "@/helpers"
+
 databaseConnection()
 
 export const GET = async (request, { params }) => {  
-    const url  = new URL(request.url) 
-    const pageIndex = url.searchParams.get("pageIndex")
-    const pageLimit = url.searchParams.get("pageLimit")
     try {
+        const url  = new URL(request.url) 
+        const pageIndex = url.searchParams.get("pageIndex") || 1
+
         const foundArticles = await Article
             .find({author: params.authorId})
             .sort({
@@ -27,7 +31,7 @@ export const GET = async (request, { params }) => {
             const pageCount = Math.ceil(totalArticles / pageLimit);
 
             const response = NextResponse.json({
-                message: "Article found successfully",
+                message: "Articles found successfully",
                 articles: foundArticles,
                 pageCount: pageCount,
             })

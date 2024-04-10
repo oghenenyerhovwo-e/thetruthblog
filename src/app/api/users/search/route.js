@@ -5,7 +5,8 @@ import {
   
   import {
     getDataFromToken,
-  } from "@/helpers"
+    pageLimit,
+} from "@/helpers"
   
   import {
     databaseConnection,
@@ -14,18 +15,21 @@ import {
 databaseConnection()
 
 export const GET = async (request) => {
-  const url  = new URL(request.url) 
-  const searchText = url.searchParams.get("searchText")
-  const pageIndex = url.searchParams.get("pageIndex")
-  const pageLimit = url.searchParams.get("pageLimit")
-
   try {
+    const url  = new URL(request.url) 
+    const searchText = url.searchParams.get("searchText")
+    const pageIndex = url.searchParams.get("pageIndex") || 1
+    
     if(!searchText){
       return NextResponse.json({error: "no text"}, {status: 400})
     }
     
     const userId = await getDataFromToken(request);
     const foundUser = await User.findOne({_id: userId}).select("-password");
+
+    if(!foundUser){
+      return NextResponse.json({error: "No user found, Please login"}, {status: 400})
+    } 
 
     if(!foundUser.isActive){
       return NextResponse.json({error: "user has been blocked, contact admin"}, {status: 400})
@@ -34,19 +38,30 @@ export const GET = async (request) => {
     if(!foundUser.isAdmin){
         return NextResponse.json({error: "You must be the admin to be able to fetch all users"}, {status: 400})
     }
-    // Case-insensitive search with $regex
-    const searchQuery = {
-      $or: [
-        { fullName: { $regex: searchText, $options: 'i' } }, // Case-insensitive search on fullName
-        { email: { $regex: searchText, $options: 'i' } }, // Case-insensitive search on email
-      ],
-    };
 
     // Pagination with skip and limit
     const skip = (pageIndex - 1) * pageLimit;
+    const searchQuery = {
+      $or: [
+        { fullName: { $regex: searchText, $options: 'i' } }, // Case-insensitive search for fullName
+        { email: { $regex: searchText, $options: 'i' } }, // Case-insensitive search for email
+      ],
+      $and: [
+        { fullName: { $ne: searchText } }, // Exclude exact matches for fullName
+        { email: { $ne: searchText } }, // Exclude exact matches for email
+      ],
+    }
+    const users = await User
+      .find(searchQuery)
+      .sort({
+          _id: -1,
+      })
+      .skip(skip)
+      .limit(pageLimit)
+      .select("-password")
 
-    const users = await User.find(searchQuery).skip(skip).limit(pageLimit);
     const totalUsers = await User.countDocuments(searchQuery);
+    const pageCount = Math.ceil(totalUsers / pageLimit);
 
     const response = NextResponse.json({
         message: "Users found successfully",

@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import {
-  pageLimit,
-} from "@/helpers"
-
 export const articleApi = createApi({
   reducerPath: "articleApi",
   refetchOnFocus: true,
@@ -15,7 +11,7 @@ export const articleApi = createApi({
   }),
   endpoints: builder => ({
     getArticles: builder.query({
-      query: (params) => `?pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+      query: (params) => `?pageIndex=${params.pageIndex}`,
     }),
     getArticleBySlug: builder.query({
       query: (params) => `/${params.slug}`,
@@ -24,10 +20,10 @@ export const articleApi = createApi({
       query: (params) => `/${params.slug}/related`,
     }),
     getArticlesByCategory: builder.query({
-      query: (params) => `/category/?category=${params.category}pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+      query: (params) => `/category/?category=${params.category}&pageIndex=${params.pageIndex}`,
     }),
     getArticlesByAuthor: builder.query({
-      query: (params) => `/author/${params.authorId}?pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+      query: (params) => `/author/${params.authorId}?pageIndex=${params.pageIndex}`,
     }),
     postArticle: builder.mutation({
       query: (params) => ({
@@ -52,7 +48,7 @@ export const articleApi = createApi({
       }),
     }),
     searchArticles: builder.query({
-      query: (params) => `/search?searchText=${params.searchText}&pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+      query: (params) => `/search?searchText=${params.searchText}&pageIndex=${params.pageIndex}`,
     }),
   })
 })

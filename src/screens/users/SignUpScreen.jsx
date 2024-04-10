@@ -32,6 +32,7 @@ const SignUpScreen = () => {
         password: "",
         profilePic: "",
         confirmPassword: "",
+        adminPassword: "",
     }
     const [form, setForm] = useState(initialFormState)
     const [formError, setFormError] = useState("")
@@ -113,6 +114,15 @@ const SignUpScreen = () => {
                             placeholder="confirm Password"
                             required={true}
                             name="confirmPassword"
+                        />
+
+                        <Form.Input
+                            value={form.adminPassword}
+                            type="password"
+                            onChange={handleFormChange}
+                            placeholder="Enter your admin password"
+                            required={true}
+                            name="adminPassword"
                         />
 
                         {

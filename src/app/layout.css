@@ -99,10 +99,11 @@
 
   .back_to_dashboard{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .back_to_dashboard > a{
     color: var(--clr-primary);
+    font-size: var(--fs-200);
     text-decoration: underline;
   }

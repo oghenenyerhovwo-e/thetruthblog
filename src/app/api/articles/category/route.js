@@ -7,17 +7,20 @@ import {
     databaseConnection,
 } from '@/config';
 
+import {
+    pageLimit,
+} from "@/helpers"
+
 databaseConnection()
 
-export const GET = async (request, { params }) => {  
-    const url  = new URL(request.url) 
-    const category = url.searchParams.get("category")
-    const pageIndex = url.searchParams.get("pageIndex")
-    const pageLimit = url.searchParams.get("pageLimit")
-    
+export const GET = async (request, { params }) => {      
     try {
+        const url  = new URL(request.url) 
+        const category = url.searchParams.get("category") || "Features"
+        const pageIndex = url.searchParams.get("pageIndex") || 1
+
         const foundArticles = await Article
-            .find({category: {$in: [category]}})
+            .find({ category: { $in: [category] } })
             .sort({
                 _id: -1,
             })
@@ -25,14 +28,14 @@ export const GET = async (request, { params }) => {
             .limit(pageLimit)
             .populate("author")
 
-            const totalArticles = await Article.countDocuments({category: {$in: [category]}})
-            const pageCount = Math.ceil(totalArticles / pageLimit);
+        const totalArticles = await Article.countDocuments({category: {$in: [category]}})
+        const pageCount = Math.ceil(totalArticles / pageLimit);
 
-            const response = NextResponse.json({
-                message: "Articles found successfully",
-                articles: foundArticles,
-                pageCount: pageCount,
-            })
+        const response = NextResponse.json({
+            message: "Articles found successfully",
+            articles: foundArticles,
+            pageCount: pageCount,
+        })
 
         return response;
     } catch (error) {

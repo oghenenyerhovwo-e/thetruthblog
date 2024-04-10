@@ -4,10 +4,6 @@ import {
   } from "@/models";
   
   import {
-    getDataFromToken,
-  } from "@/helpers"
-  
-  import {
     databaseConnection,
   } from '@/config';
 
@@ -18,6 +14,9 @@ export const GET = async (request, { params }) => {
         const foundArticle = await Article
             .findOne({slug: params.slug})
 
+        if(!foundArticle){
+          return NextResponse.json({error: "No article found"}, {status: 400})
+        }
         const { slug, category, tags } = foundArticle
 
         const relatedQuery = {
@@ -28,7 +27,10 @@ export const GET = async (request, { params }) => {
             ],
           };
       
-        const relatedArticles = await Article.find(relatedQuery).limit(6);
+        const relatedArticles = await Article
+          .find(relatedQuery)
+          .sort({ relevance: -1 })
+          .limit(6);
 
         const response = NextResponse.json({
             message: "Articles found successfully",

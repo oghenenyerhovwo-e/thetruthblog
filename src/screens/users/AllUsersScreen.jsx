@@ -48,7 +48,7 @@ const AllUsersScreen = (props) => {
                         <UsersSearch />
                     </div>
                     <DashboardUsers 
-                        users={data.users}
+                        users={data && data.users}
                         pageIndex={pageIndex}
                         setPageIndex={setPageIndex}
                         pageCount={data && data.pageCount}

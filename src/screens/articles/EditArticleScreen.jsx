@@ -17,7 +17,6 @@ import {
 import { 
     useUpdateArticleMutation,
     useGetArticleBySlugQuery,
-    useAppDispatch,
 } from "@/redux"
 
 // styles
@@ -46,7 +45,9 @@ const EditArticleScreen = ({params}) => {
     const initialFormState = {
         title: article.title || "", 
         headline: article.headline ||"",
-        category: article.category || null,
+        category: article.category ? article.category.map(category => {
+            return {label: category, value: category}
+        }): [],
         content: article.content || "",
         image: article.image || "",
         source: article.source || "",
@@ -54,6 +55,7 @@ const EditArticleScreen = ({params}) => {
     }
     const [form, setForm] = useState(initialFormState)
     const [formError, setFormError] = useState("")
+    const [content, setContent] = useState(`**Enter content**`);
 
     const handleFormChange = e => {
         const {name, value} = e.target
@@ -66,10 +68,16 @@ const EditArticleScreen = ({params}) => {
     const submitComment = e => {
         e.preventDefault()
         setFormError("")
-        updateArticle({body: form, slug: params.slug})
+        const body = {
+            ...form,
+            content,
+            category: form.category.length > 0? form.category.map(category => category.value): []
+        }
+        updateArticle({body, slug: params.slug})
             .unwrap()
             .then((res) => {
                 setForm(initialFormState)
+                setContent(`***Enter content here**`)
                 router.push(`/articles/${res.article.slug}`)
             })
             .catch(error => console.log(error))
@@ -120,9 +128,8 @@ const EditArticleScreen = ({params}) => {
                                     />
 
                                     <Form.MarkdownInput
-                                        name="content"
-                                        form={form}
-                                        setForm={setForm}
+                                        content={content}
+                                        setContent={setContent}
                                         required={true}
                                         label="Content"
                                     />

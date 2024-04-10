@@ -25,12 +25,12 @@ const articleSchema = new mongoose.Schema({
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "users",
         required: [true, "An Article must have an author"],
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
+        ref: "comments",
     }],
     content: {
         type: String,

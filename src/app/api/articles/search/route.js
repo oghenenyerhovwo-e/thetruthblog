@@ -7,15 +7,18 @@ import {
     databaseConnection,
   } from '@/config';
 
+import {
+  pageLimit,
+} from "@/helpers"
+
 databaseConnection()
 
 export const GET = async (request, { params }) => {
-  const url  = new URL(request.url) 
-  const searchText = url.searchParams.get("searchText")
-  const pageIndex = url.searchParams.get("pageIndex")
-  const pageLimit = url.searchParams.get("pageLimit")
-
   try {
+    const url  = new URL(request.url) 
+    const searchText = url.searchParams.get("searchText")
+    const pageIndex = url.searchParams.get("pageIndex") || 1
+    
     if(!searchText){
       return NextResponse.json({error: "no text"}, {status: 400})
     }
@@ -27,18 +30,25 @@ export const GET = async (request, { params }) => {
 
     // Full-text search using $text and $regex for flexibility
     const searchQuery = {
-      $text: { $search: searchText }, // Search across specified fields
-      $or: [ // Additional filtering if needed (optional)
-        { title: { $regex: searchText, $options: 'i' } }, // Case-insensitive title search (optional)
-        { headline: { $regex: searchText, $options: 'i' } }, // Case-insensitive headline search (optional)
+      $or: [
+        { title: { $regex: searchText, $options: 'i' } },
+        { content: { $regex: searchText, $options: 'i' } },
+        { headline: { $regex: searchText, $options: 'i' } },
+        { slug: { $regex: searchText, $options: 'i' } },
+        { category: { $regex: searchText, $options: 'i' } },
+        { source: { $regex: searchText, $options: 'i' } },
+        { tags: { $regex: searchText, $options: 'i' } },
       ],
-    };
+    }
 
     // Pagination with skip and limit
     const skip = (pageIndex - 1) * pageLimit;
 
-    const articles = await Article.find(searchQuery, { score: { $meta: 'textScore' } }). // Include search score
-      sort({ score: { $meta: 'textScore' } }).skip(skip).limit(pageLimit); // Sort by relevance and paginate
+    const articles = await Article
+      .find(searchQuery) // Include search score
+      .sort({ relevance: -1 })
+      .skip(skip)
+      .limit(pageLimit); // Sort by relevance and paginate
 
     const totalArticles = await Article.countDocuments(searchQuery); // Count total matching articles
     const pageCount = Math.ceil(totalArticles / pageLimit);

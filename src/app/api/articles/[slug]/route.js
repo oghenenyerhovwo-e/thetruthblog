@@ -1,15 +1,18 @@
 import { NextResponse } from "next/server";
 import {
     Article,
-  } from "@/models";
+    User,
+    Comment,
+} from "@/models";
   
-  import {
-    getDataFromToken,
-  } from "@/helpers"
+import {
+  getDataFromToken,
+  makeSlug,
+} from "@/helpers"
   
-  import {
-    databaseConnection,
-  } from '@/config';
+import {
+  databaseConnection,
+} from '@/config';
 
 databaseConnection()
 
@@ -24,35 +27,50 @@ export const GET = async (request, { params }) => {
             message: "Article found successfully",
             article: foundArticle,
         })
-
       return response;
   } catch (error) {
       return NextResponse.json({error: error.message}, {status: 400});
   }
 }
 
-export const PUT = async (request, { params }) => {
-    const data = await request.json();
-    
+export const PUT = async (request, { params }) => {    
     try {
+        const data = await request.json();
         const userId = await getDataFromToken(request);
 
         const foundUser = await User.findOne({_id: userId}).select("-password");
         const foundArticle = await Article.findOne({slug: params.slug})
 
+        if(!foundUser){
+          return NextResponse.json({error: "No user found, Please login"}, {status: 400})
+        }
+
+        if(!foundArticle){
+          return NextResponse.json({error: "No article found"}, {status: 400})
+        }
+        
         if(!foundUser.isActive){
           return NextResponse.json({error: "user has been blocked, contact admin"}, {status: 400})
         }
 
-        if(foundArticle.author !== foundUser._id){
+        if(String(foundArticle.author) !== String(foundUser._id)){
             return NextResponse.json({error: "You must be the author of this article to be able to edit it"}, {status: 400})
         }
+
+        foundArticle.title = data.title || foundArticle.title
+        foundArticle.slug = data.title ? makeSlug(foundArticle.title): foundArticle.slug
+        foundArticle.headline = data.headline || foundArticle.headline
+        foundArticle.category = data.category || foundArticle.category
+        foundArticle.content = data.content || foundArticle.content
+        foundArticle.image = data.image || foundArticle.image
+        foundArticle.source = data.source || foundArticle.source
+        foundArticle.tags = data.tags || foundArticle.tags
         
-        const updatedArticle = Article.findByIdAndUpdate(foundArticle._id, data)
+        const updatedArticle = await foundArticle.save()
 
         const response = NextResponse.json({
             message: "Article updated successfully",
-            articleId: updatedArticle._id,
+            articleSlug: updatedArticle.slug,
         })
 
       return response
@@ -68,19 +86,32 @@ export const DELETE = async (request, { params }) => {
         const foundUser = await User.findOne({_id: userId}).select("-password");
         const foundArticle = await Article.findOne({slug: params.slug})
 
+        if(!foundUser){
+          return NextResponse.json({error: "No user found, Please login"}, {status: 400})
+        }
+        
+        if(!foundArticle){
+          return NextResponse.json({error: "No article found"}, {status: 400})
+        }  
+
         if(!foundUser.isActive){
           return NextResponse.json({error: "user has been blocked contact admin"}, {status: 400})
         }
 
-        if(!foundUser.isAdmin && foundArticle.author !== foundUser._id){
+        if(!foundUser.isAdmin && String(foundArticle.author) !== String(foundUser._id)){
             return NextResponse.json({error: "You must be the admin or the author of this article to be able to delete it"}, {status: 400})
         }
-        
-        const deletedArticle = Article.findByIdAndDelete(foundArticle._id)
+
+        for (let i=0; i < foundArticle.comments.length; i++){
+          const comment = foundArticle.comments[i]
+          const deletedComment = await Comment.findByIdAndDelete(comment)
+        }
+
+        await Article.findByIdAndDelete(foundArticle._id)
         
         const response = NextResponse.json({
             message: "Article deleted successfully",
-            articleId: deletedArticle._id,
+            articleSlug: params.slug,
         })
 
       return response

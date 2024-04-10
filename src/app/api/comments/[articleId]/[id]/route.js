@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import {
     Article,
     Comment,
+    User,
   } from "@/models";
   
   import {
@@ -21,6 +22,10 @@ export const DELETE = async (request, { params }) => {
       const foundUser = await User.findOne({_id: userId}).select("-password");
       const foundArticle = await Article.findOne({_id: params.articleId})
 
+      if(!foundUser){
+        return NextResponse.json({error: "No user found, Please login"}, {status: 400})
+      }     
+
       if(!foundUser.isActive){
         return NextResponse.json({error: "user has been blocked, contact admin"}, {status: 400})
       }
@@ -29,12 +34,13 @@ export const DELETE = async (request, { params }) => {
           return NextResponse.json({error: "You must be the admin to be able to delete comment"}, {status: 400})
       }
 
-      const filteredComment = foundArticle.comments.filter(comment => comment._id !== params.id)
+      const filteredComment = foundArticle.comments.filter(comment => String(comment._id) !== String(params.id))
       foundArticle.comments = filteredComment
-      const savedArticles = foundArticle.save()
       
-      const deletedComment = Comment.findByIdAndDelete(params.id)
-      
+      const savedArticles = await foundArticle.save()
+
+      const deletedComment = await Comment.findByIdAndDelete(params.id)
+
       const response = NextResponse.json({
           message: "Comment deleted successfully",
           articleId: savedArticles._id,

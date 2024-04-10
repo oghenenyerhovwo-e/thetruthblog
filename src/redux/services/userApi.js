@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-
 export const userApi = createApi({
   reducerPath: "userApi",
   refetchOnFocus: true,
@@ -42,7 +41,7 @@ export const userApi = createApi({
       query: (params) => `/${params.id}`,
     }),
     getUsers: builder.query({
-      query: (params) => `?pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+      query: (params) => `?pageIndex=${params.pageIndex}`,
     }),
     updateUserProfile: builder.mutation({
       query: (params) => ({
@@ -61,7 +60,7 @@ export const userApi = createApi({
       }),
     }),
     searchUsers: builder.query({
-      query: (params) => `/search?searchText=${params.searchText}&pageLimit=${pageLimit}&pageIndex=${params.pageIndex}`,
+      query: (params) => `/search?searchText=${params.searchText}&pageIndex=${params.pageIndex}`,
     }),
   })
 })

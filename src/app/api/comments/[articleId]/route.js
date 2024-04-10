@@ -14,11 +14,11 @@ import {
 
 databaseConnection()
 
-export const POST = async (request) => {
-    const { text, fullName, email } = await request.json();
-    const data = { text, fullName, email }
-    
+export const POST = async (request, { params }) => {   
     try {
+        const { text, fullName, email } = await request.json();
+        const data = { text, fullName, email }
+
         const foundArticle = await Article.findOne({_id: params.articleId});
 
         if(!foundArticle){

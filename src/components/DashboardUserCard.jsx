@@ -90,7 +90,7 @@ const DashboardUserCard = props => {
             </div>article
             <div className={`${styles.dashboard_user_card_icons}`}>
                 {
-                    (currentUser.isAdmin || currentUser._id === user.author ) && (
+                    (currentUser.isAdmin || String(currentUser._id) === String(user._id) ) && (
                         <>
                             <Link onClick={toggleMenu} className={`${styles.edit}`} href="#">{user.active ? <MdBlock />: <FaKey /> } </Link>
                         </>

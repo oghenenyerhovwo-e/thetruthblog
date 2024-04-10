@@ -48,7 +48,7 @@ const AllDashboardArticlesScreen = ({params}) => {
                     </div>
                     <div className={`spacing-md`}>
                         <DashboardArticles 
-                            articles={data.articles}
+                            articles={data && data.articles}
                             pageIndex={pageIndex}
                             setPageIndex={setPageIndex}
                             pageCount={data && data.pageCount}

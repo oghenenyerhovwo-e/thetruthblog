@@ -78,7 +78,7 @@ const DashboardArticleCard = props => {
             </div>
             <div className={`${styles.dashboard_article_card_icons}`}>
                 {
-                    (currentUser.isAdmin || currentUser._id === article.author ) && (
+                    (currentUser.isAdmin || String(currentUser._id) === String(article.author && article.author._id) ) && (
                         <>
                             <Link className={`${styles.edit}`} href={`/articles/${article._id}`}><CiEdit /> </Link>
                             <Link onClick={toggleMenu} className={`${styles.delete}`} href="#"><FaTrash /> </Link>

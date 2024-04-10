@@ -19,7 +19,7 @@ export async function GET(request){
         const foundUser = await User.findOne({_id: userId}).select("-password");
         
         if(!foundUser){
-          return NextResponse.json({error: "No user found"}, {status: 400})
+          return NextResponse.json({error: "No user found, Please login"}, {status: 400})
         }     
         
         const response = NextResponse.json({
