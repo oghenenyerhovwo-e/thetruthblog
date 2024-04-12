@@ -1,10 +1,10 @@
 import { ArticlesCategoryScreen } from "@/screens"
 
 export async function generateMetadata({ params, searchParams }, parent) {
-  const category = searchParams.get("category")
+  const category = searchParams["category"] || "The Truth"
 
   return {
-    title: `${category} articles`,
+    title: `${category}`,
   }
 }
 

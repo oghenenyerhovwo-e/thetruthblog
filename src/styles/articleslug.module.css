@@ -87,7 +87,7 @@
 }
 
 .show_article_other_details_author > p{
-  font-size: (--fs-300);
+  font-size: (--fs-200);
 }
 
 .show_article_other_details_source > p{
@@ -126,26 +126,4 @@
     gap: 0.5rem;
     align-self: flex-end;
     background-color: var(--clr-primary);
-}
-
-.article_slug_related{
-  display: flex;
-  flex-direction: column;
-}
-
-.article_slug_related_heading{
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.article_slug_related_heading > h3{
-  font-size: var(-fs-400);
-  color: var(--clr-primary);
-}
-
-.article_slug_related_heading > div{
-  background: var(--clr-primary);
-  height: 0.25rem;
-  width: 100%;
 }

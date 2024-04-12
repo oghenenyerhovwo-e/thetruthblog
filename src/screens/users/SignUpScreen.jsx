@@ -89,7 +89,7 @@ const SignUpScreen = () => {
 
                         <Form.File
                             types={["JPG", "PNG"]}
-                            placeholder="Select profile picture"
+                            placeholder="Select profile picture or drag and drop"
                             name="profilePic"
                             required={true}
                             maxSize={5}
@@ -146,10 +146,13 @@ const SignUpScreen = () => {
                             )
                         }
                     </form>
-                    <div className={`${styles.form_links}`}>
+                    {/* <div className={`${styles.form_links}`}>
                         <Link href="/users/signup">Sign up</Link>
                         <div></div>
                         <Link href="/users/login">Login</Link>
+                    </div> */}
+                    <div className="back_to_dashboard">
+                        <Link href="/users/dashboard">Back</Link>
                     </div>
                 </div>
             </div>

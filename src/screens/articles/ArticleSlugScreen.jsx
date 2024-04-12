@@ -35,13 +35,14 @@ const ArticleSlugScreen = (props) => {
     const [content, setContent] = useState("")
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState({})
+    const [deletedComment, setDeletedComment] = useState("")
     const [displayCommentSection, setDisplayCommentSection] = useState(false)
     const [commentSectionContent, setCommentSectionContent] = useState("comments")
 
-    const { data, isSuccess, isError } = useGetArticleBySlugQuery({slug: params.slug, newComment: newComment})
+    const { data, isSuccess, isError } = useGetArticleBySlugQuery({slug: params.slug, newComment, deletedComment})
 
     const article = data && data.article
-    const articleImage = article && article.Image
+    const articleImage = article && article.image
     const articleId = article && article._id
     const pageUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}${pathname}` 
 
@@ -67,7 +68,7 @@ const ArticleSlugScreen = (props) => {
             {isSuccess && !article && <MessageBox message="No Article was found" />}
             {isError && <MessageBox message="Oops! something went wrong with the server" />}
             {
-                article && (
+                article && article._id && (
                     <div className={`content-grid ${styles.show_article_wrapper}`}>
                         <div className={`${styles.show_article} spacing-md`}>
                             {
@@ -75,9 +76,9 @@ const ArticleSlugScreen = (props) => {
                                     <div className={`${styles.show_article_img} spacing-md`}>
                                         <Image
                                             src={articleImage}
-                                            width={100}
-                                            height={100}
-                                            alt={`An image of ${article && article.headline}`}
+                                            width={400}
+                                            height={400}
+                                            alt={`image - ${article && article.headline}`}
                                         />
                                     </div>
                                 ) 
@@ -132,7 +133,12 @@ const ArticleSlugScreen = (props) => {
                                                     className={`${styles.show_article_comment_section_comments}`}
                                                 >
                                                     <button className="spacing-md" onClick={showFormInCommentSection}>Add Comment</button>
-                                                    <Comments articleId={articleId}  currentUser={currentUser} comments={comments} />
+                                                    <Comments 
+                                                        articleId={articleId}  
+                                                        currentUser={currentUser} 
+                                                        comments={comments}
+                                                        setDeletedComment={setDeletedComment}
+                                                    />
                                                 </motion.div>
                                             )
                                         }
@@ -161,16 +167,9 @@ const ArticleSlugScreen = (props) => {
                             </Popup>
                         </div>
 
-                        <div className={`${styles.article_slug_related}`}>
-                            <div className={`${styles.article_slug_related_heading} spacing-sm`}>
-                                <div></div>
-                                <h3>Related</h3>
-                                <div></div>
-                            </div>
-                            <RelatedArticles 
-                                slug={article.slug}
-                            />
-                        </div>
+                        <RelatedArticles 
+                            slug={article.slug}
+                        />
                     </div>
                 )
             }

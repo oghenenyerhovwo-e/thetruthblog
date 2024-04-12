@@ -35,7 +35,8 @@ const categoryList = [
     { label: 'Blogs Feed', value: 'Blogs Feed' }
   ];  
 
-const EditArticleScreen = ({params}) => {
+const EditArticleScreen = (props) => {
+    const { params } = props
     const router = useRouter()
 
     const { data, isSuccess: isGetArticleSuccess, isError: isGetArticleError } = useGetArticleBySlugQuery({slug: params.slug})
@@ -43,15 +44,15 @@ const EditArticleScreen = ({params}) => {
     const article = data && data.article
 
     const initialFormState = {
-        title: article.title || "", 
-        headline: article.headline ||"",
-        category: article.category ? article.category.map(category => {
+        title: (article && article.title) || "", 
+        headline: (article && article.headline) ||"",
+        category: (article && article.category && article.category.length > 0) ? article.category.map(category => {
             return {label: category, value: category}
         }): [],
-        content: article.content || "",
-        image: article.image || "",
-        source: article.source || "",
-        tags: article.tags ||"",
+        content: (article && article.content) || "",
+        image: (article && article.image) || "",
+        source: (article && article.source) || "",
+        tags: (article && article.tags) ||"",
     }
     const [form, setForm] = useState(initialFormState)
     const [formError, setFormError] = useState("")
@@ -86,10 +87,10 @@ const EditArticleScreen = ({params}) => {
     return (
         <>
             <LoadingBox display={!isGetArticleSuccess && !isGetArticleError} />
-            {!article && <MessageBox message="No Article was found" />}
+            {isGetArticleSuccess && !article && <MessageBox message="No Article was found" />}
             {isGetArticleError && <MessageBox message="Oops! something went wrong with the server" />}
             {
-                article && (
+                article && article._id && (
                     <AuthorOnly author={article.author && article.author._id}>
                         <div className="content-grid">
                             <div className={`${styles.form_screen}`}>
@@ -99,28 +100,26 @@ const EditArticleScreen = ({params}) => {
                                     className={`spacing-sm`}
                                 >
                                     <Form.Input
-                                        value={form.title}
+                                        value={form.title || article.title}
                                         type="text"
                                         onChange={handleFormChange}
                                         placeholder="enter title"
-                                        required={true}
                                         name="title"
                                         label="title"
                                     />
 
                                     <Form.Input
-                                        value={form.headline}
+                                        value={form.headline || article.headline}
                                         type="text"
                                         onChange={handleFormChange}
                                         placeholder="enter headline"
-                                        required={true}
                                         name="headline"
                                         label="headline"
                                     />
 
                                     <Form.MultiSelect
                                         name="category"
-                                        form={form}
+                                        form={form.category ? form: {...form, category: article.category}}
                                         setForm={setForm}
                                         required={true}
                                         label="Category"
@@ -128,37 +127,34 @@ const EditArticleScreen = ({params}) => {
                                     />
 
                                     <Form.MarkdownInput
-                                        content={content}
+                                        content={content || article.content}
                                         setContent={setContent}
-                                        required={true}
                                         label="Content"
                                     />
 
                                     <Form.File
                                         types={["JPG", "PNG"]}
-                                        placeholder="Select an image"
+                                        placeholder="Select an image or drag and drop"
                                         name="image"
                                         maxSize={10}
-                                        form={form}
+                                        form={form.image ? form: {...form, image: article.image}}
                                         setForm={setForm}
                                         setError={setFormError}
                                     />
 
                                     <Form.Input
-                                        value={form.source}
+                                        value={form.source || article.source}
                                         type="text"
                                         onChange={handleFormChange}
                                         placeholder="enter source"
-                                        required={true}
                                         name="source"
                                     /> 
 
                                     <Form.Input
-                                        value={form.tags}
+                                        value={form.tags || article.tags}
                                         type="text"
                                         onChange={handleFormChange}
                                         placeholder="enter tags"
-                                        required={true}
                                         name="tags"
                                     />
 

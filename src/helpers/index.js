@@ -4,8 +4,6 @@ import {
     isPasswordSafe,
 } from "./auth"
 
-import data from "./data.js"
-
 import {
     getTimeAgo,
     toFirstLetterUpperCase,
@@ -18,7 +16,6 @@ import {
 } from "./constants"
 
 export {
-    data,
     getTimeAgo,
     toFirstLetterUpperCase,
     pageLimit,

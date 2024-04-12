@@ -122,7 +122,7 @@ const NewArticleScreen = () => {
 
                         <Form.File
                             types={["JPG", "PNG"]}
-                            placeholder="Select an image"
+                            placeholder="Select an image or drag and drop"
                             name="image"
                             required={true}
                             maxSize={10}

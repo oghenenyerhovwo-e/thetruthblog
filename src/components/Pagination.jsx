@@ -31,7 +31,6 @@ const Pagination = props => {
         !disablePaginationQuery && router.push(`${controlPathname}pageNumber=${pageIndex - 1}`)
     }
 
-
     return (
         <div className={`${styles.pagination_container}`}>
             {

@@ -10,6 +10,7 @@ import {
     AdminOnly, 
     UsersSearch,
 } from "@/components"
+import Link from 'next/link'
 import Image from 'next/image'
 
 // functions and objects
@@ -19,7 +20,7 @@ import { useGetUsersQuery, useAppSelector } from "@/redux"
 import styles from "@/styles/dashboard.module.css"
 
 
-const AllUsersScreen = (props) => {
+const AllUsersScreen = () => {
     const searchParams = useSearchParams()
     const pageNumber = searchParams.get("pageNumber")
 
@@ -47,14 +48,19 @@ const AllUsersScreen = (props) => {
                     <div className={`spacing-md`}>
                         <UsersSearch />
                     </div>
-                    <DashboardUsers 
-                        users={data && data.users}
-                        pageIndex={pageIndex}
-                        setPageIndex={setPageIndex}
-                        pageCount={data && data.pageCount}
-                        currentUser={currentUser}
-                        setUserRoleChange={setUserRoleChange}
-                    />
+                    <div className={`spacing-md`}>
+                        <DashboardUsers 
+                            users={data && data.users}
+                            pageIndex={pageIndex}
+                            setPageIndex={setPageIndex}
+                            pageCount={data && data.pageCount}
+                            currentUser={currentUser}
+                            setUserRoleChange={setUserRoleChange}
+                        />
+                    </div>
+                    <div className="back_to_dashboard">
+                        <Link href="/users/dashboard">Back</Link>
+                    </div>
                 </div>
             </div>
         </AdminOnly>

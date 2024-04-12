@@ -26,7 +26,7 @@ const Date = (props) => {
 
     return (
             <div className={`${styles.form_field}`}>
-                <label>{label} {!required && "(optional)"} </label>
+                {label && <label>{label} {!required && "(optional)"} </label>}
                 <DatePicker 
                     selected={startDate} 
                     onChange={handleDate}

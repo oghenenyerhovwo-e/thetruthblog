@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation'
 
 import DashboardArticleCard from "./DashboardArticleCard"
 import Pagination from "./Pagination"
-import ArticlesSearch from "./ArticlesSearch"
+
+import styles from "@/styles/dashboard.module.css"
 
 const DashboardArticles = (props) => {  
     const {
@@ -14,6 +15,7 @@ const DashboardArticles = (props) => {
         pageCount,
         currentUser,
         disablePaginationQuery,
+        setDeletedArticle,
     } = props
 
     const pathname = usePathname()
@@ -23,20 +25,17 @@ const DashboardArticles = (props) => {
     return (
         <div>
             <div className={`spacing-md`}>
-                <div className={`spacing-sm`}>
-                    <ArticlesSearch name="dashboardArticles" />
-                </div>
                 {
                     articles && articles.length > 0 && articles.map(article => {
                         return (
                             <Fragment key={article._id}>
-                                <DashboardArticleCard article={article} currentUser={currentUser} />
+                                <DashboardArticleCard setDeletedArticle={setDeletedArticle} article={article} currentUser={currentUser} />
                             </Fragment>
                         )
                     })
                 }
             </div>
-            <div className={`${styles.articles_page_pagination} spacing-md`}>
+            <div className={`${styles.dashboard_page_pagination} spacing-md`}>
                 {
                     pageCount && (
                         <Pagination

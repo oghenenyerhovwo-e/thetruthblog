@@ -3,7 +3,7 @@ import {
     ArticleSlugScreen,
 } from "@/screens"
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata({ params }, parent) {
     try {
         // fetch data
         const { article } = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/articles/${params.slug}`).then((res) => res.json())

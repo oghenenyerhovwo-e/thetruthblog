@@ -1,7 +1,6 @@
 "use client"
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from "next/navigation"
 
 // components
 import Image from 'next/image'
@@ -21,7 +20,6 @@ import styles from "@/styles/dashboardusercard.module.css"
 const DashboardUserCard = props => {
     const { user, currentUser, setUserRoleChange } = props
 
-    const router = useRouter()
     const changeUserRoleMenuRef = useRef(null);
 
     const [changeUserRole, { isLoading, error, isError }] = useChangeUserRoleMutation()
@@ -37,7 +35,7 @@ const DashboardUserCard = props => {
         const handleMenuWhenClickOutside = (event) => {
           // Close the navbar if it's open and the click is outside the navbar
           if (displayChangeRoleMenu && changeUserRoleMenuRef.current && !changeUserRoleMenuRef.current.contains(event.target)) {
-            displayChangeRoleMenu(false);
+            setDisplayChangeRoleMenu(false);
           }
         };
     
@@ -50,8 +48,8 @@ const DashboardUserCard = props => {
         };
     }, [displayChangeRoleMenu]);
 
-    const toggleMenu = () => displayChangeRoleMenu(prevToggle => !prevToggle)
-    const closeMenu = () => displayChangeRoleMenu(false)
+    const toggleMenu = () => setDisplayChangeRoleMenu(prevToggle => !prevToggle)
+    const closeMenu = () => setDisplayChangeRoleMenu(false)
 
     const handleFormChange = e => {
         const {name, value} = e.target
@@ -73,29 +71,31 @@ const DashboardUserCard = props => {
     }
 
     return (
-        <div className={`${styles.dashboard_user_card}`}>
-            <div className={`${styles.dashboard_user_card_img}`}>
-                <Image
-                    src={userProfilePic}
-                    alt={`An image of ${user.fullName}`}
-                    width={20}
-                    height={20}
-                />
-            </div>
-            <div className={`${styles.dashboard_user_card_title}`}>
-                <h4>{user.fullName} </h4>
-            </div>
-            <div className={`${styles.dashboard_user_card_category}`}>
-                <p>{user.isActive ? "Active": "Blocked"} </p>
-            </div>article
-            <div className={`${styles.dashboard_user_card_icons}`}>
-                {
-                    (currentUser.isAdmin || String(currentUser._id) === String(user._id) ) && (
-                        <>
-                            <Link onClick={toggleMenu} className={`${styles.edit}`} href="#">{user.active ? <MdBlock />: <FaKey /> } </Link>
-                        </>
-                    )
-                }
+        <>
+            <div className={`${styles.dashboard_user_card}`}>
+                <div className={`${styles.dashboard_user_card_img}`}>
+                    <Image
+                        src={userProfilePic}
+                        alt={`An image of ${user.fullName}`}
+                        width={20}
+                        height={20}
+                    />
+                </div>
+                <div className={`${styles.dashboard_user_card_title}`}>
+                    <h4>{user.fullName} </h4>
+                </div>
+                <div className={`${styles.dashboard_user_card_category}`}>
+                    <p>{user.isActive ? "Active": "Blocked"} </p>
+                </div>
+                <div className={`${styles.dashboard_user_card_icons}`}>
+                    {
+                        (currentUser.isAdmin || String(currentUser._id) === String(user._id) ) && (
+                            <>
+                                <Link onClick={toggleMenu} className={`${styles.edit}`} href="#">{user.active ? <MdBlock />: <FaKey /> } </Link>
+                            </>
+                        )
+                    }
+                </div>
             </div>
             <AnimatePresence mode="wait">
                 {
@@ -130,20 +130,20 @@ const DashboardUserCard = props => {
                                 <div className={`${styles.change_role_menu_buttons}`}>
                                     <button onClick={closeMenu}>cancel</button>
                                     {
-                                    ((isError && error && error.data && error.data.error) || formError) &&  (
+                                    (isError && error && error.data && error.data.error) &&  (
                                         <div className={`spacing-sm`}>
                                             <Alert 
-                                                message={(formError || (error && error.data && error.data.error))} 
+                                                message={error && error.data && error.data.error} 
                                                 variant="danger" 
                                             />
                                         </div>
                                     )
                                 }
                                 <div className={`${styles.change_role_menu_buttons}`}>
-                                    <button onClick={closeMenu}>cancel</button>
+                                    <button className={`${styles.cancel}`} onClick={closeMenu}>cancel</button>
                                     {
                                         !isLoading ? (
-                                            <button onClick={handleChangeUserRole}>Change</button>
+                                            <button className={`${styles.change_role}`} onClick={handleChangeUserRole}>{user.isActive ? "Block account" : "Activate account"}</button>
                                         ) : (
                                             <div className={`${styles.form_screen_spinner}`}>
                                                 <Spinner />
@@ -157,7 +157,7 @@ const DashboardUserCard = props => {
                     )
                 }
             </AnimatePresence>
-        </div>
+        </>
     )
 }
 

@@ -1,0 +1,23 @@
+.article_related{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.article_related_heading{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+  
+.article_related_heading > h3{
+    font-size: var(-fs-400);
+    color: var(--clr-primary);
+}
+  
+.article_related_heading > div{
+    background: var(--clr-primary);
+    height: 0.25rem;
+    width: 100%;
+}

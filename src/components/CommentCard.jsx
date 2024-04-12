@@ -1,18 +1,26 @@
 "use client"
-import Image from "next/image"
-import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { userImg } from "@/assets"
-import { getTimeAgo } from "@/helpers"
-import styles from "@/styles/commentcard.module.css"
-import { FaTrash } from "react-icons/fa6";
 
+// components
+import { FaTrash } from "react-icons/fa6";
 import Spinner from "./Spinner"
 import Alert from "./Alert"
+import Image from "next/image"
+import Link from 'next/link'
+
+// functions and objects
+import { useDeleteCommentMutation } from "@/redux"
+import { getTimeAgo } from "@/helpers"
+
+// images
+import { userImg } from "@/assets"
+
+// css
+import styles from "@/styles/commentcard.module.css"
 
 const CommentCard = (props) => {
-    const { comment, currentUser, articleId } = props
+    const { comment, currentUser, articleId, setDeletedComment, } = props
 
     const deleteCommentMenuRef = useRef(null);
 
@@ -24,7 +32,7 @@ const CommentCard = (props) => {
         const handleMenuWhenClickOutside = (event) => {
           // Close the navbar if it's open and the click is outside the navbar
           if (displayDeleteCommentMenu && deleteCommentMenuRef.current && !deleteCommentMenuRef.current.contains(event.target)) {
-            displayDeleteCommentMenu(false);
+            setDisplayDeleteCommentMenu(false);
           }
         };
     
@@ -37,15 +45,15 @@ const CommentCard = (props) => {
         };
     }, [displayDeleteCommentMenu]);
 
-    const toggleMenu = () => displayDeleteCommentMenu(prevToggle => !prevToggle)
-    const closeMenu = () => displayDeleteCommentMenu(false)
+    const toggleMenu = () => setDisplayDeleteCommentMenu(prevToggle => !prevToggle)
+    const closeMenu = () => setDisplayDeleteCommentMenu(false)
 
-    const handleDelete = e => {
-        e.preventDefault()
+    const handleDelete = () => {
         deleteComment({articleId, id: comment._id})
             .unwrap()
             .then((res) => {
                 setDisplayDeleteCommentMenu(false)
+                setDeletedComment(res.commentId)
             })
             .catch(error => console.log(error))
     }
@@ -94,20 +102,20 @@ const CommentCard = (props) => {
                                 >
                                     <h4 className="spacing-sm"> Are you sure you want to delete this article permanently</h4>
                                     {
-                                        ((isError && error && error.data && error.data.error) || formError) &&  (
+                                        (isError && error && error.data && error.data.error) &&  (
                                             <div className={`spacing-sm`}>
                                                 <Alert 
-                                                    message={(formError || (error && error.data && error.data.error))} 
+                                                    message={error && error.data && error.data.error} 
                                                     variant="danger" 
                                                 />
                                             </div>
                                         )
                                     }
                                     <div className={`${styles.delete_menu_buttons}`}>
-                                        <button onClick={closeMenu}>cancel</button>
+                                        <button className={`${styles.cancel}`} onClick={closeMenu}>cancel</button>
                                         {
                                             !isLoading ? (
-                                                <button onClick={handleDelete}>Delete</button>
+                                                <button className={`${styles.delete}`} onClick={handleDelete}>Delete</button>
                                             ) : (
                                                 <div className={`${styles.form_screen_spinner}`}>
                                                     <Spinner />

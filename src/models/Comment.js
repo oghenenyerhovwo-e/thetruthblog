@@ -12,7 +12,9 @@ const commentSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-    },
+    }
+},{
+    timestamps: true,
 })
 
 const Comment = mongoose.models.comments || mongoose.model("comments", commentSchema);

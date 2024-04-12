@@ -26,15 +26,6 @@ const UsersSearch = () => {
 
     const { isLoading, data } = useSearchUsersQuery({pageIndex, searchText});
 
-    const SearchResultComponent = <DashboardUsers 
-            users={data.users}
-            pageIndex={pageIndex}
-            setPageIndex={setPageIndex}
-            pageCount={data && data.pageCount}
-            currentUser={currentUser}
-            disablePaginationQuery={true}
-        />
-
     const handleSearchChange = e => setSearchText(e.target.value)
 
     const showSearchComp = () => !isLoading && setDisplayPopUp(true)
@@ -54,14 +45,21 @@ const UsersSearch = () => {
         <Popup display={displayPopUp} setDisplay={setDisplayPopUp} >
           {
             data && data.users && data.users.length > 0 ? (
-              <SearchResultComponent />
+              <DashboardUsers 
+                  users={data && data.users}
+                  pageIndex={pageIndex}
+                  setPageIndex={setPageIndex}
+                  pageCount={data && data.pageCount}
+                  currentUser={currentUser}
+                  disablePaginationQuery={true}
+              />
             ): (
               <div className={`${styles.search_no_data}`}>
                 <h4>
                   <FaSearch /> {" "}
                   No result found for this search:
                 </h4>
-                <p>{form.text} </p>
+                <p>{searchText} </p>
               </div>
             )
           }

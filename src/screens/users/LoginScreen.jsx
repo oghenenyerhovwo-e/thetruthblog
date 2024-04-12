@@ -9,7 +9,6 @@ import {
     Alert,
     NonUserOnly,
 } from "@/components"
-import Link from 'next/link'
 
 // functions and objects
 import { useLoginMutation, useAppDispatch, setCurrentUser } from "@/redux"
@@ -94,11 +93,6 @@ const LoginScreen = () => {
                             )
                         }
                     </form>
-                    <div className={`${styles.form_links}`}>
-                        <Link href="/users/login">Login</Link>
-                        <div></div>
-                        <Link href="/users/signup">Sign up</Link>
-                    </div>
                 </div>
             </div>
         </NonUserOnly>

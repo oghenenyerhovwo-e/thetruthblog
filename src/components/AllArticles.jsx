@@ -18,7 +18,7 @@ const AllArticles = () => {
     return (
         <Fragment>
             <div className={`spacing-md`}>
-                <ArticlesSearch name="articles" />
+                <ArticlesSearch />
             </div>
             <Articles 
                 articles={data && data.articles}

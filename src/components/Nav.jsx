@@ -24,7 +24,7 @@ const NavLink = () => {
     return (
         <ul className="">
             <li><Link href="/"> Home </Link></li>
-            {currentUser._id && <li><Link href="/"> Dashboard </Link></li>}
+            {currentUser._id && <li><Link href="/users/dashboard"> Dashboard </Link></li>}
             <li><Link href={{pathname: "/articles/category", query: {category: "politics"}}}>Politics </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "sport"}}}>Sport </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "entertainment"}}}>Entertainment </Link></li>

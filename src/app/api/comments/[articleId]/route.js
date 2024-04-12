@@ -17,7 +17,11 @@ databaseConnection()
 export const POST = async (request, { params }) => {   
     try {
         const { text, fullName, email } = await request.json();
-        const data = { text, fullName, email }
+        const data = { 
+          text, 
+          fullName: fullName || "Anonymous", 
+          email,
+        }
 
         const foundArticle = await Article.findOne({_id: params.articleId});
 

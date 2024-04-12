@@ -14,7 +14,7 @@
     font-weight: 600;
 }
 
-.form_screen button{
+.form_screen button[type="submit"]{
     width: 100%;
     background-color: var(--clr-text);
     padding: 0.7em 1em;
@@ -29,7 +29,7 @@
     transition: 0.5s;
 }
 
-.form_screen button:hover{
+.form_screen  button[type="submit"]:hover{
     background-color: rgba(6, 9, 7, 0.8);
 }
 

@@ -25,10 +25,10 @@ export async function generateMetadata({ params, searchParams }, parent) {
 }
   
 
-const EditArticle = () => {
+const EditArticle = ({ params }) => {
     return (
         <>
-            <EditArticleScreen />
+            <EditArticleScreen params={params} />
         </>
     )
 }

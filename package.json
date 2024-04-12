@@ -13,7 +13,7 @@
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@trycourier/courier": "^6.0.3",
-    "@uiw/react-md-editor": "^4.0.4",
+    "@uiw/react-markdown-editor": "^6.1.0",
     "axios": "^1.6.5",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.3",

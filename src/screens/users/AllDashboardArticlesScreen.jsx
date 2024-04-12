@@ -8,7 +8,7 @@ import {
     LoadingBox, 
     MessageBox, 
     AdminOnly,
-    ArticlesSearch,
+    DashboardArticleSearch,
 } from "@/components"
 import Image from 'next/image'
 import Link from 'next/link'
@@ -26,7 +26,8 @@ const AllDashboardArticlesScreen = ({params}) => {
     const { currentUser } = useAppSelector(state => state.userStore)
 
     const [pageIndex, setPageIndex] = useState(pageNumber || 1)
-    const { isSuccess, isError, data } = useGetArticlesQuery({pageIndex});
+    const [deletedArticle, setDeletedArticle] = useState("")
+    const { isSuccess, isError, data } = useGetArticlesQuery({pageIndex,deletedArticle});
 
     return (
         <AdminOnly>
@@ -44,7 +45,7 @@ const AllDashboardArticlesScreen = ({params}) => {
                         />
                     </div>
                     <div className={`spacing-md`}>
-                        <ArticlesSearch name="dashboardArticles" />
+                        <DashboardArticleSearch />
                     </div>
                     <div className={`spacing-md`}>
                         <DashboardArticles 
@@ -53,6 +54,7 @@ const AllDashboardArticlesScreen = ({params}) => {
                             setPageIndex={setPageIndex}
                             pageCount={data && data.pageCount}
                             currentUser={currentUser}
+                            setDeletedArticle={setDeletedArticle}
                         />
                     </div>
                     <div className="back_to_dashboard">

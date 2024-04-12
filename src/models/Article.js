@@ -47,6 +47,8 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: [true, "Article must have tags"],
     },
+},{
+    timestamps: true,
 })
 
 const Article = mongoose.models.articles || mongoose.model("articles", articleSchema);

@@ -21,7 +21,10 @@ export const GET = async (request) => {
     const pageIndex = url.searchParams.get("pageIndex") || 1
     
     if(!searchText){
-      return NextResponse.json({error: "no text"}, {status: 400})
+      return NextResponse.json({
+        message: "Articles found successfully",
+        articles: [],
+      })
     }
     
     const userId = await getDataFromToken(request);

@@ -3,6 +3,9 @@ import { useState } from "react"
 import Image from 'next/image'
 import { FileUploader } from "react-drag-drop-files";
 
+// images
+import { closeIcon } from "@/assets"
+
 import styles from "@/styles/form.module.css"
 
 const File = (props) => {
@@ -19,11 +22,14 @@ const File = (props) => {
         setError,
     } = props
 
-    const [url, setUrl] = useState(0);
+    const [url, setUrl] = useState("");
+    const [filePlaceholder, setFilePlaceholder] = useState(placeholder);
 
+    const closePreview = () => setUrl("")
     const fileUpload = async file => {
         if(file){
             setError("")
+            setFilePlaceholder("uploading...")
             const data = new FormData();
             data.append("file", file);
             data.append(
@@ -47,9 +53,11 @@ const File = (props) => {
                   [name]: res.secure_url,
                 })
                 setUrl(res.secure_url)
+                setFilePlaceholder("file upload successfully")
             } catch (error) {
                 console.log(error)
                 setError("Error while uploading file")
+                setFilePlaceholder("Error while uploading file")
             }
         }
     }
@@ -59,8 +67,7 @@ const File = (props) => {
     }
 
     return (
-        <div className={`${styles.form_field}`}>
-            <label>{label} {!required && "(optional)"} </label>
+        <>
             {
                 !url ? (
                     <FileUploader 
@@ -68,25 +75,34 @@ const File = (props) => {
                         name={name} 
                         types={types} 
                         required={required}
-                        hoverTitle={placeholder}
-                        label={placeholder}
+                        hoverTitle={filePlaceholder}
+                        label={filePlaceholder}
                         maxSize={maxSize}
                         minSize={minSize}
                         onSizeError={handleSizeError}
-                    />
+                    >
+                        <div className={`${styles.form_field}`}>
+                            {label && <label>{label} {!required && "(optional)"} </label>}
+                            <div className={`${styles.form_file_input}`}>
+                                {filePlaceholder}
+                            </div>
+                        </div>
+                    </FileUploader>
                 ) : (
-                    <div className={`${styles.form_field_file_img}`}>
+                    <div className={`${styles.form_field_file_img_preview}`}>
                         <Image
                             src={url}
                             alt={`preview`}
                             width={20}
                             height={20}
                         />
+                        <div className={`${styles.form_field_file_img_cancel}`}>
+                            <Image onClick={closePreview} src={closeIcon} alt="a close menu icon" />
+                        </div>
                     </div>
                 )
             }
-            
-        </div>
+        </>
     )
 }
 

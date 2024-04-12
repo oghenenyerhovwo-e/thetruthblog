@@ -46,7 +46,7 @@ const DashboardScreen = () => {
     return (
         <UserOnly>
             <div className="content-grid">
-                <div className={`${styles.dashboard}`}>
+                <div className={`${styles.dashboard_main}`}>
                     <div className={`${styles.dashboard_author} spacing-md`}>
                         <h4>{currentUser.fullName} </h4>
                         <Image
@@ -80,7 +80,7 @@ const DashboardScreen = () => {
                                         <span>View All Articles</span>
                                     </Link>
                             }
-                            <Link href={`/users/${currentUser.id}/edit`}>
+                            <Link href={`/users/${currentUser._id}/edit`}>
                                 <FaUser />
                                 <span>Edit Profile</span>
                             </Link>

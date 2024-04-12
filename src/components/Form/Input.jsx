@@ -35,7 +35,7 @@ const Input = (props) => {
 
     return (
         <div className={`${styles.form_field}`}>
-            <label>{label} {!required && "(optional)"} </label>
+            {label && <label>{label} {!required && "(optional)"} </label>}
             <input
                 placeholder={placeholder}
                 name={name}

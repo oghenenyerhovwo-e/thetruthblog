@@ -94,7 +94,6 @@
   }
 
   .delete_menu_buttons > button {
-    background-color: transparent;
     padding: 0.7em 1em;
     font-size: var(--fs-300);
     border-radius: 0.2rem;
@@ -105,6 +104,11 @@
     transition: 0.5s;
   }
 
-  .delete_menu_buttons > button:last-child {
-    color: #ff0000;
+  .delete_menu_buttons .cancel {
+    border: 1px solid #cccaca;
+  }
+
+  .delete_menu_buttons .delete {
+    background-color: #ff0000;
+    color: #fff;
   }

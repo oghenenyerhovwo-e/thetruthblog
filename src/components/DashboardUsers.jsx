@@ -6,6 +6,8 @@ import DashboardUserCard from "./DashboardUserCard"
 import MessageBox from "./MessageBox"
 import Pagination from "./Pagination"
 
+import styles from "@/styles/dashboard.module.css"
+
 const DashboardUsers = (props) => {  
     const {
         users,
@@ -35,7 +37,7 @@ const DashboardUsers = (props) => {
                     })
                 }
             </div>
-            <div className={`${styles.users_page_pagination} spacing-md`}>
+            <div className={`${styles.dashboard_page_pagination} spacing-md`}>
                 {
                     pageCount && (
                         <Pagination

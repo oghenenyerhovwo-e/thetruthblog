@@ -43,9 +43,10 @@ const CommentForm = (props) => {
         e.preventDefault()
         postComment({body: commentForm, articleId: articleId})
             .unwrap()
-            .then(() => {
+            .then((res) => {
                 setCommentForm(initialCommentForm)
-                setNewComment(body)
+                setNewComment(res.commentId)
+                console.log(res.commentId)
                 setCommentSectionContent("comments")
             })
             .catch(error => console.log(error))

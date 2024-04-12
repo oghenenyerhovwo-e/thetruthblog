@@ -30,10 +30,10 @@ const ArticlesCategoryScreen = () => {
           <div></div>
         </div>
         <div className={`spacing-md`}>
-            <ArticlesSearch name="articles" />
+            <ArticlesSearch />
         </div>
         <Articles 
-            articles={data.articles}
+            articles={data && data.articles}
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}
             pageCount={data && data.pageCount}

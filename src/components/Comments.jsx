@@ -6,7 +6,7 @@ import { FaRegComment } from "react-icons/fa6"
 import styles from "@/styles/comments.module.css"
 
 const Comments = (props)=> {
-    const { comments, currentUser, articleId } = props
+    const { comments, currentUser, articleId, setDeletedComment, } = props
 
     const sortedComments = comments.length > 1 ? comments.slice().sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)) : comments.length > 0 ? comments: []
 
@@ -15,7 +15,7 @@ const Comments = (props)=> {
             {
                 sortedComments.length > 0 ? sortedComments.map(comment => (
                     <Fragment key={comment._id}>
-                        <CommentCard articleId={articleId}  currentUser={currentUser} comment={comment} />
+                        <CommentCard setDeletedComment={setDeletedComment} articleId={articleId}  currentUser={currentUser} comment={comment} />
                     </Fragment>
                 )) : (
                     <div className={`${styles.comments_none}`}>

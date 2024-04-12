@@ -25,6 +25,7 @@ import Popup from "./Popup"
 import ArticlesSearch from "./ArticlesSearch"
 import UsersSearch from "./UsersSearch"
 import RelatedArticles from "./RelatedArticles"
+import DashboardArticleSearch from "./DashboardArticleSearch"
 
 export {
     Nav,
@@ -54,4 +55,5 @@ export {
     UsersSearch,
     Popup,
     RelatedArticles,
+    DashboardArticleSearch,
 }

@@ -18,7 +18,7 @@ import { useDeleteArticleMutation } from "@/redux"
 import styles from "@/styles/dashboardarticlecard.module.css"
 
 const DashboardArticleCard = props => {
-    const { article, currentUser } = props
+    const { article, currentUser, setDeletedArticle } = props
 
     const router = useRouter()
     const deleteMenuRef = useRef(null);
@@ -33,7 +33,7 @@ const DashboardArticleCard = props => {
         const handleMenuWhenClickOutside = (event) => {
           // Close the navbar if it's open and the click is outside the navbar
           if (displayDeleteMenu && deleteMenuRef.current && !deleteMenuRef.current.contains(event.target)) {
-            displayDeleteMenu(false);
+            setDisplayDeleteMenu(false);
           }
         };
     
@@ -46,8 +46,8 @@ const DashboardArticleCard = props => {
         };
     }, [displayDeleteMenu]);
 
-    const toggleMenu = () => displayDeleteMenu(prevToggle => !prevToggle)
-    const closeMenu = () => displayDeleteMenu(false)
+    const toggleMenu = () => setDisplayDeleteMenu(prevToggle => !prevToggle)
+    const closeMenu = () => setDisplayDeleteMenu(false)
 
     const handleDelete = e => {
         e.preventDefault()
@@ -55,37 +55,41 @@ const DashboardArticleCard = props => {
             .unwrap()
             .then((res) => {
                 setDisplayDeleteMenu(false)
+                setDeletedArticle(res.articleSlug)
             })
             .catch(error => console.log(error))
     }
 
     return (
-        <div className={`${styles.dashboard_article_card}`}>
-            <div className={`${styles.dashboard_article_card_img}`}>
-                <Image
-                    src={articleThumbnail}
-                    alt={`An image of ${article.headline}`}
-                    width={20}
-                    height={20}
-                    onClick={gotoArticle}
-                />
+        <>
+            <div className={`${styles.dashboard_article_card}`}>
+                <div className={`${styles.dashboard_article_card_img}`}>
+                    <Image
+                        src={articleThumbnail}
+                        alt={`An image of ${article.headline}`}
+                        width={20}
+                        height={20}
+                        onClick={gotoArticle}
+                    />
+                </div>
+                <div onClick={gotoArticle} className={`${styles.dashboard_article_card_title}`}>
+                    <h4>{article.title} </h4>
+                </div>
+                <div className={`${styles.dashboard_article_card_category}`}>
+                    <p>{article.category[0]} </p>
+                </div>
+                <div className={`${styles.dashboard_article_card_icons}`}>
+                    {
+                        (currentUser.isAdmin || String(currentUser._id) === String(article.author && article.author._id) ) && (
+                            <>
+                                <Link className={`${styles.edit}`} href={`/articles/${article.slug}/edit`}><CiEdit /> </Link>
+                                <Link onClick={toggleMenu} className={`${styles.delete}`} href="#"><FaTrash /> </Link>
+                            </>
+                        )
+                    }
+                </div>
             </div>
-            <div onClick={gotoArticle} className={`${styles.dashboard_article_card_title}`}>
-                <h4>{article.title} </h4>
-            </div>
-            <div className={`${styles.dashboard_article_card_category}`}>
-                <p>{article.category[0]} </p>
-            </div>
-            <div className={`${styles.dashboard_article_card_icons}`}>
-                {
-                    (currentUser.isAdmin || String(currentUser._id) === String(article.author && article.author._id) ) && (
-                        <>
-                            <Link className={`${styles.edit}`} href={`/articles/${article._id}`}><CiEdit /> </Link>
-                            <Link onClick={toggleMenu} className={`${styles.delete}`} href="#"><FaTrash /> </Link>
-                        </>
-                    )
-                }
-            </div>
+
             <AnimatePresence mode="wait">
                 {
                     displayDeleteMenu && (
@@ -107,20 +111,20 @@ const DashboardArticleCard = props => {
                             >
                                 <h4 className="spacing-sm"> Are you sure you want to delete this article permanently</h4>
                                 {
-                                    ((isError && error && error.data && error.data.error) || formError) &&  (
+                                    (isError && error && error.data && error.data.error) &&  (
                                         <div className={`spacing-sm`}>
                                             <Alert 
-                                                message={(formError || (error && error.data && error.data.error))} 
+                                                message={error && error.data && error.data.error} 
                                                 variant="danger" 
                                             />
                                         </div>
                                     )
                                 }
                                 <div className={`${styles.delete_menu_buttons}`}>
-                                    <button onClick={closeMenu}>cancel</button>
+                                    <button className={`${styles.cancel}`} onClick={closeMenu}>cancel</button>
                                     {
                                         !isLoading ? (
-                                            <button onClick={handleDelete}>Delete</button>
+                                            <button className={`${styles.delete}`} onClick={handleDelete}>Delete</button>
                                         ) : (
                                             <div className={`${styles.form_screen_spinner}`}>
                                                 <Spinner />
@@ -133,7 +137,7 @@ const DashboardArticleCard = props => {
                     )
                 }
             </AnimatePresence>
-        </div>
+        </>
     )
 }
 

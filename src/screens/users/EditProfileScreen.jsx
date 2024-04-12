@@ -11,29 +11,30 @@ import {
     LoadingBox,
     MessageBox,
 } from "@/components"
+import Link from 'next/link'
 
 // functions and objects
 import { 
     useUpdateUserProfileMutation,
     useGetUserProfileQuery,
-    useAppDispatch,
 } from "@/redux"
 
 // styles
 import styles from "@/styles/formscreen.module.css"
 
-const EditProfileScreen = ({params}) => {
+const EditProfileScreen = (props) => {
     const router = useRouter()
-    const dispatch = useAppDispatch()
+    
+    const { params } = props
 
     const { data, isSuccess: isGetProfileSuccess, isError: isGetProfileError } = useGetUserProfileQuery({id: params.id})
     const [updateUserProfile, { isLoading, error, isError }] = useUpdateUserProfileMutation() 
-    const profile = data.user
+    const profile = data && data.user
 
     const initialFormState = {
-        fullName: profile.fullName || "",
-        email: profile.email || "",
-        profilePic: profile.profilePic || "",
+        fullName: (profile && profile.fullName) || "",
+        email: (profile && profile.email) || "",
+        profilePic: (profile && profile.profilePic) || "",
         oldPassword: "",
         newPassword: "",
         confirmNewPassword: "",
@@ -67,7 +68,7 @@ const EditProfileScreen = ({params}) => {
     return (
         <>
             <LoadingBox display={!isGetProfileSuccess && !isGetProfileError} />
-            {!profile && <MessageBox message="No User was found" />}
+            {isGetProfileSuccess && !profile && <MessageBox message="No User was found" />}
             {isGetProfileError && <MessageBox message="Oops! something went wrong with the server" />}
             {
                 profile && profile._id && (
@@ -80,17 +81,14 @@ const EditProfileScreen = ({params}) => {
                                     className={`spacing-sm`}
                                 >
                                     <Form.Input
-                                        value={form.fullName}
+                                        value={form.fullName || profile.fullName}
                                         type="text"
                                         onChange={handleFormChange}
                                         placeholder="enter full name"
-                                        required={true}
                                         name="fullName"
                                     />
-
                                     <Form.Input
-                                        value={form.email}
-                                        required={true}
+                                        value={form.email || profile.email}
                                         type="email"
                                         onChange={handleFormChange}
                                         placeholder="enter email"
@@ -99,10 +97,10 @@ const EditProfileScreen = ({params}) => {
 
                                     <Form.File
                                         types={["JPG", "PNG"]}
-                                        placeholder="change profile picture"
+                                        placeholder="change profile picture (drag and drop)"
                                         name="profilePic"
                                         maxSize={5}
-                                        form={form}
+                                        form={form.profilePic ? form: {...form, profilePic: profile.profilePic}}
                                         setForm={setForm}
                                         setError={setFormError}
                                     />
@@ -131,7 +129,6 @@ const EditProfileScreen = ({params}) => {
                                         placeholder="confirm new Password (if you want to change password)"
                                         name="confirmNewPassword"
                                     />
-
                                     {
                                         ((isError && error && error.data && error.data.error) || formError) &&  (
                                             <div className={`spacing-sm`}>
@@ -153,6 +150,9 @@ const EditProfileScreen = ({params}) => {
                                         )
                                     }
                                 </form>
+                                <div className="back_to_dashboard">
+                                    <Link href="/users/dashboard">Back</Link>
+                                </div>
                             </div>
                         </div>
                     </AuthorOnly>

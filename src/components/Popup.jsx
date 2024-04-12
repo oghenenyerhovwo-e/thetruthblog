@@ -44,9 +44,9 @@ const Popup = (props) => {
                         animate={{ y: "0vh", opacity: 1, }}
                         exit={{ y: "100vh", opacity: 0, }}
                         transition={{ duration: 0.5 }}
-                        className={`content-grid`}
+                        className={`${styles.popup}`}
                     >
-                        <div className={`${styles.popup}`}>
+                        <div className={`content-grid`}>
                             {props.children}
                         </div>
                     </motion.div>

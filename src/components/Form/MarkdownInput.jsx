@@ -1,6 +1,5 @@
 "use client"
-import MDEditor from '@uiw/react-md-editor';
-import rehypeSanitize from "rehype-sanitize";
+import MarkdownEditor from '@uiw/react-markdown-editor';
 
 import styles from "@/styles/form.module.css"
 
@@ -12,15 +11,14 @@ const MarkdownInput = (props) => {
         label,
     } = props
 
+    const handleChange = (value, viewUpdate) => setMarkdown(value)
+
     return (
         <div className={`${styles.form_field}`}>
-            <label>{label} {!required && "(optional)"} </label>
-            <MDEditor
+            {label && <label>{label} {!required && "(optional)"} </label>}
+            <MarkdownEditor
                 value={content}
-                onChange={setContent}
-                previewOptions={{
-                    rehypePlugins: [[rehypeSanitize]],
-                }}
+                onChange={handleChange}
                 required={required}
             />
         </div>

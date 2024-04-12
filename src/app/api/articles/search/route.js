@@ -20,7 +20,10 @@ export const GET = async (request, { params }) => {
     const pageIndex = url.searchParams.get("pageIndex") || 1
     
     if(!searchText){
-      return NextResponse.json({error: "no text"}, {status: 400})
+      return NextResponse.json({
+        message: "Articles found successfully",
+        articles: [],
+      })
     }
     // Create a text index for efficient searching
     const articleSchema = Article.schema; // Get the schema

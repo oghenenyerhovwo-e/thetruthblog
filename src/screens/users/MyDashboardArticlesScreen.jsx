@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useSearchParams } from "next/navigation"
 
 // components
-import { DashboardArticles, LoadingBox, MessageBox, AuthorOnly, ArticlesSearch } from "@/components"
+import { DashboardArticles, LoadingBox, MessageBox, AuthorOnly, DashboardArticleSearch } from "@/components"
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -21,7 +21,8 @@ const MyDashboardArticlesScreen = ({params}) => {
     const { currentUser } = useAppSelector(state => state.userStore)
 
     const [pageIndex, setPageIndex] = useState(pageNumber || 1)
-    const { isSuccess, isError, data } = useGetArticlesByAuthorQuery({pageIndex, authorId: authorId});
+    const [deletedArticle, setDeletedArticle] = useState("")
+    const { isSuccess, isError, data } = useGetArticlesByAuthorQuery({pageIndex, authorId: authorId, deletedArticle});
 
     return (
         <>
@@ -36,13 +37,13 @@ const MyDashboardArticlesScreen = ({params}) => {
                                     <h4>{currentUser.fullName} </h4>
                                     <Image
                                         src={currentUser.profilePic}
-                                        alt={`profile picture of ${author}`}
+                                        alt={`profile picture of ${currentUser.fullName}`}
                                         width={20}
                                         height={20}
                                     />
                                 </div>
                                 <div className={`spacing-md`}>
-                                    <ArticlesSearch name="dashboardArticles" />
+                                    <DashboardArticleSearch />
                                 </div>
                                 <div className={`spacing-md`}>
                                     <DashboardArticles 
@@ -51,6 +52,7 @@ const MyDashboardArticlesScreen = ({params}) => {
                                         setPageIndex={setPageIndex}
                                         pageCount={data && data.pageCount}
                                         currentUser={currentUser}
+                                        setDeletedArticle={setDeletedArticle}
                                     />
                                 </div>
                                 <div className="back_to_dashboard">

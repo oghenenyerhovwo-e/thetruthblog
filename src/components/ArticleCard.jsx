@@ -40,7 +40,7 @@ const ArticleCard = props => {
                     <AuthorPicture author={author} />
                     <p>
                         by {" "}
-                        <Link href={{pathname: `/articles/author/${author.fullName}`, query: {authorId: authorId}}}>{author.fullName} </Link>
+                        <Link href={{pathname: `/articles/author/${authorId}`, query: {authorName: author.fullName}}}>{author.fullName} </Link>
                     </p>
                 </div>
                 <p className={`${styles.article_card_footer_date}date`}>
