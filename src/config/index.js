@@ -1,4 +1,4 @@
-import databaseConnection from "./dbConfig"
+import databaseConnection from "./databaseconfig.js"
 import storage from "./storage"
 
 export {
