@@ -32,47 +32,53 @@ const Pagination = props => {
     }
 
     return (
-        <div className={`${styles.pagination_container}`}>
+        <>
             {
-                pageIndex > 1 && (
-                    <button 
-                        className={`${styles.active} ${styles.page_item}`}
-                        onClick={previousPage}
-                    >
-                        <GrFormPrevious />
-                        <span>Previous</span>
-                    </button>
+                pageCount > 1 && (
+                    <div className={`${styles.pagination_container}`}>
+                        {
+                            pageIndex > 1 && (
+                                <button 
+                                    className={`${styles.active} ${styles.page_item}`}
+                                    onClick={previousPage}
+                                >
+                                    <GrFormPrevious />
+                                    <span>Previous</span>
+                                </button>
+                            )
+                        }
+                        {pageNumbers.map(number => {
+                            const handlePageClick = () => {
+                                setPageIndex(number);
+                                !disablePaginationQuery && router.push(`${controlPathname}pageNumber=${number}`)
+                            };
+
+                            return (
+                                <button
+                                    key={number}
+                                    onClick={handlePageClick}
+                                    disabled={pageIndex === number}
+                                    className={`${styles.page_item} ${pageIndex === number && styles.disabled}`}
+                                >
+                                    {number}
+                                </button>
+                            )
+                        })}
+                        {
+                                pageCount > pageIndex && (
+                                    <button 
+                                        onClick={nextPage}
+                                        className={`${styles.active} ${styles.page_item}`}
+                                    >
+                                        <span>Next</span>
+                                        <GrFormNext />
+                                    </button>
+                                )
+                            }
+                    </div>
                 )
             }
-            {pageNumbers.map(number => {
-                const handlePageClick = () => {
-                    setPageIndex(number);
-                    !disablePaginationQuery && router.push(`${controlPathname}pageNumber=${number}`)
-                };
-
-                return (
-                    <button
-                        key={number}
-                        onClick={handlePageClick}
-                        disabled={pageIndex === number}
-                        className={`${styles.page_item} ${pageIndex === number && styles.disabled}`}
-                    >
-                        {number}
-                    </button>
-                )
-            })}
-            {
-                    pageCount > pageIndex && (
-                        <button 
-                            onClick={nextPage}
-                            className={`${styles.active} ${styles.page_item}`}
-                        >
-                            <span>Next</span>
-                            <GrFormNext />
-                        </button>
-                    )
-                }
-        </div>
+        </>
     )
 }
 
