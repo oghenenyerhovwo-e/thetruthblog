@@ -26,7 +26,10 @@ export const GET = async (request, { params }) => {
             })
             .skip(pageIndex - 1)
             .limit(pageLimit)
-            .populate("author")
+            .populate({
+                path: "author",
+                select: "-password",
+              })
 
         const totalArticles = await Article.countDocuments({category: {$in: [category]}})
         const pageCount = Math.ceil(totalArticles / pageLimit);

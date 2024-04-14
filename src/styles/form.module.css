@@ -85,11 +85,11 @@
     object-fit: cover;
 }
 
-.form_field_file_img_preview{
+.form_field_file_img_cancel{
     display: flex;
     justify-content: flex-end;
 }
-.form_field_file_img_preview > img {
+.form_field_file_img_cancel > img {
     width: 1rem;
     height: 1rem;
 }

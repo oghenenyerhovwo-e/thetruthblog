@@ -51,7 +51,11 @@ export const GET = async (request, { params }) => {
       .find(searchQuery) // Include search score
       .sort({ relevance: -1 })
       .skip(skip)
-      .limit(pageLimit); // Sort by relevance and paginate
+      .limit(pageLimit) // Sort by relevance and paginate
+      .populate({
+        path: "author",
+        select: "-password",
+      })
 
     const totalArticles = await Article.countDocuments(searchQuery); // Count total matching articles
     const pageCount = Math.ceil(totalArticles / pageLimit);

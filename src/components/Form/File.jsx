@@ -25,7 +25,10 @@ const File = (props) => {
     const [url, setUrl] = useState("");
     const [filePlaceholder, setFilePlaceholder] = useState(placeholder);
 
-    const closePreview = () => setUrl("")
+    const closePreview = () => {
+        setUrl("")
+        setFilePlaceholder(placeholder)
+    }
     const fileUpload = async file => {
         if(file){
             setError("")

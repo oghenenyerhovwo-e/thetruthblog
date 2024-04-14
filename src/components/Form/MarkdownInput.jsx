@@ -11,7 +11,7 @@ const MarkdownInput = (props) => {
         label,
     } = props
 
-    const handleChange = (value, viewUpdate) => setMarkdown(value)
+    const handleChange = (value, viewUpdate) => setContent(value)
 
     return (
         <div className={`${styles.form_field}`}>

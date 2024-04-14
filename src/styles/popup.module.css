@@ -13,5 +13,6 @@
     z-index: 1;
     right: 0;
     padding-inline: 1.5rem;
+    padding-block: 2rem;
     border-top: 10px solid var(--clr-accent);
 }

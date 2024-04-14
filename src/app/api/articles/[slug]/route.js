@@ -20,7 +20,10 @@ export const GET = async (request, { params }) => {
   try {
       const foundArticle = await Article
         .findOne({slug: params.slug})
-        .populate("author")
+        .populate({
+          path: "author",
+          select: "-password",
+        })
         .populate("comments")
 
         const response = NextResponse.json({
@@ -38,6 +41,7 @@ export const PUT = async (request, { params }) => {
         const data = await request.json();
         const userId = await getDataFromToken(request);
 
+        console.log(params.slug)
         const foundUser = await User.findOne({_id: userId}).select("-password");
         const foundArticle = await Article.findOne({slug: params.slug})
 

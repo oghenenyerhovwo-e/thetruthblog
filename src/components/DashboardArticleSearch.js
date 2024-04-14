@@ -23,11 +23,11 @@ const DashboardArticleSearch = () => {
     const [pageIndex, setPageIndex] = useState(1)
     const [displayPopUp, setDisplayPopUp] = useState(false)
 
-    const { isLoading, data } = useSearchArticlesQuery({pageIndex, searchText});
+    const { isLoading, isSuccess, isError, data } = useSearchArticlesQuery({pageIndex, searchText});
 
     const handleSearchChange = e => setSearchText(e.target.value)
 
-    const showSearchComp = () => !isLoading && setDisplayPopUp(true)
+    const showSearchComp = () => searchText && setDisplayPopUp(true)
 
     return (
       <div className={`${styles.search}`}>
@@ -39,12 +39,12 @@ const DashboardArticleSearch = () => {
               placeholder="search"
               required={true}
           />
-          <button onClick={showSearchComp}>{!isLoading ? <FaSearch />: <Spinner /> }</button>
+          <button disabled={!searchText} onClick={showSearchComp}><FaSearch /></button>
         </div>
         <Popup display={displayPopUp} setDisplay={setDisplayPopUp} >
           {
             data && data.articles && data.articles.length > 0 ? (
-                <DashboardArticles 
+              <DashboardArticles 
                     articles={data && data.articles}
                     pageIndex={pageIndex}
                     setPageIndex={setPageIndex}
@@ -52,13 +52,28 @@ const DashboardArticleSearch = () => {
                     currentUser={currentUser}
                     disablePaginationQuery={true}
                 />
-            ): (
+            ): isSuccess && !data ? (
               <div className={`${styles.search_no_data}`}>
                 <h4>
                   <FaSearch /> {" "}
                   No result found for this search:
                 </h4>
                 <p>{searchText} </p>
+              </div>
+            ): isError ? (
+              <div className={`${styles.search_no_data}`}>
+                <h4>
+                  <FaSearch /> {" "}
+                  Something went wrong with the server
+                </h4>
+              </div>
+            ) : (
+              <div className={`${styles.search_no_data}`}>
+                <h4>
+                  <FaSearch /> {" "}
+                  {isLoading && <Spinner />}{" "}
+                  Loading...
+                </h4>
               </div>
             )
           }

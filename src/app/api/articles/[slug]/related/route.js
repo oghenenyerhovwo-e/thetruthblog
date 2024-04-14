@@ -30,7 +30,11 @@ export const GET = async (request, { params }) => {
         const relatedArticles = await Article
           .find(relatedQuery)
           .sort({ relevance: -1 })
-          .limit(6);
+          .limit(6)
+          .populate({
+            path: "author",
+            select: "-password",
+          })
 
         const response = NextResponse.json({
             message: "Articles found successfully",
