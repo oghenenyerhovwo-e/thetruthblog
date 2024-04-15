@@ -40,11 +40,11 @@ const DashboardUserCard = props => {
         };
     
         // Add event listener to handle clicks outside the navbar
-        document.addEventListener('click', handleMenuWhenClickOutside);
+        document.body.addEventListener('click', handleMenuWhenClickOutside);
     
         // Clean up the event listener on component unmount
         return () => {
-          document.removeEventListener('click', handleMenuWhenClickOutside);
+          document.body.removeEventListener('click', handleMenuWhenClickOutside);
         };
     }, [displayChangeRoleMenu]);
 
@@ -59,13 +59,14 @@ const DashboardUserCard = props => {
         })
     }
 
-    const handleChangeUserRole = e => {
-        e.preventDefault()
+    const handleChangeUserRole = (e) => {
+        // e.stopPropagation()
         changeUserRole({id: user._id, body: {...form, isActive: !user.isActive}})
             .unwrap()
             .then((res) => {
                 setDisplayChangeRoleMenu(false)
                 setUserRoleChange({userId: res.userId})
+                setForm(initialFormState)
             })
             .catch(error => console.log(error))
     }
@@ -117,7 +118,7 @@ const DashboardUserCard = props => {
                                 className={`${styles.change_role_menu}`}
                             >
                                 <h4 className="spacing-sm"> Are you sure you want to {user.isActive ? "block" : "activate"} this account</h4>
-                                <div>
+                                <div className="spacing-sm">
                                     <Form.Input
                                         value={form.password}
                                         type="password"
@@ -127,9 +128,7 @@ const DashboardUserCard = props => {
                                         name="password"
                                     />
                                 </div>
-                                <div className={`${styles.change_role_menu_buttons}`}>
-                                    <button onClick={closeMenu}>cancel</button>
-                                    {
+                                {
                                     (isError && error && error.data && error.data.error) &&  (
                                         <div className={`spacing-sm`}>
                                             <Alert 
@@ -150,7 +149,6 @@ const DashboardUserCard = props => {
                                             </div>
                                         )
                                     }
-                                </div>
                                 </div>
                             </motion.div>
                         </motion.div>

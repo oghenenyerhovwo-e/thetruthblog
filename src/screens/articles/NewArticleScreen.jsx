@@ -91,7 +91,7 @@ const NewArticleScreen = () => {
                             placeholder="enter title"
                             required={true}
                             name="title"
-                            label="title"
+                            label="Title"
                         />
 
                         <Form.Input
@@ -101,7 +101,14 @@ const NewArticleScreen = () => {
                             placeholder="enter headline"
                             required={true}
                             name="headline"
-                            label="headline"
+                            label="Headline"
+                        />
+
+                        <Form.MarkdownInput
+                            content={content}
+                            setContent={setContent}
+                            required={true}
+                            label="Content"
                         />
 
                         <Form.MultiSelect
@@ -113,17 +120,11 @@ const NewArticleScreen = () => {
                             options={categoryList}
                         />
 
-                        <Form.MarkdownInput
-                            content={content}
-                            setContent={setContent}
-                            required={true}
-                            label="Content"
-                        />
-
                         <Form.File
                             types={["JPG", "PNG"]}
                             placeholder="Select an image or drag and drop"
                             name="image"
+                            label="Image"
                             required={true}
                             maxSize={10}
                             form={form}
@@ -138,6 +139,7 @@ const NewArticleScreen = () => {
                             placeholder="enter source"
                             required={true}
                             name="source"
+                            label="Source"
                         /> 
 
                         <Form.Input
@@ -147,6 +149,7 @@ const NewArticleScreen = () => {
                             placeholder="enter tags"
                             required={true}
                             name="tags"
+                            label="Tags"
                         />
 
                         {

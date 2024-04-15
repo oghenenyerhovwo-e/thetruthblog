@@ -51,11 +51,11 @@ const Nav = () => {
         };
     
         // Add event listener to handle clicks outside the navbar
-        document.addEventListener('click', handleMenuWhenClickOutside);
+        document.body.addEventListener('click', handleMenuWhenClickOutside);
     
         // Clean up the event listener on component unmount
         return () => {
-          document.removeEventListener('click', handleMenuWhenClickOutside);
+          document.body.removeEventListener('click', handleMenuWhenClickOutside);
         };
     }, [displayMenu]);
 

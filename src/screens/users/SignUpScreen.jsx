@@ -55,7 +55,7 @@ const SignUpScreen = () => {
             .unwrap()
             .then((res) => {
                 setForm(initialFormState)
-                router.push("/users/login")
+                router.push("/users")
             })
             .catch(error => console.log(error))
     }

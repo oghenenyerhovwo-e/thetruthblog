@@ -32,17 +32,17 @@ const DashboardArticleCard = props => {
     useEffect(() => {
         const handleMenuWhenClickOutside = (event) => {
           // Close the navbar if it's open and the click is outside the navbar
-          if (displayDeleteMenu && deleteMenuRef.current && !deleteMenuRef.current.contains(event.target)) {
+          if(displayDeleteMenu && deleteMenuRef.current && !deleteMenuRef.current.contains(event.target)) {
             setDisplayDeleteMenu(false);
           }
         };
     
         // Add event listener to handle clicks outside the navbar
-        document.addEventListener('click', handleMenuWhenClickOutside);
+        document.body.addEventListener('click', handleMenuWhenClickOutside);
     
         // Clean up the event listener on component unmount
         return () => {
-          document.removeEventListener('click', handleMenuWhenClickOutside);
+          document.body.removeEventListener('click', handleMenuWhenClickOutside);
         };
     }, [displayDeleteMenu]);
 
@@ -50,7 +50,7 @@ const DashboardArticleCard = props => {
     const closeMenu = () => setDisplayDeleteMenu(false)
 
     const handleDelete = e => {
-        e.preventDefault()
+        // e.stopPropagation()
         deleteArticle({slug: article.slug})
             .unwrap()
             .then((res) => {

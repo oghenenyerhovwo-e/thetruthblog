@@ -41,10 +41,10 @@ export const PUT = async (request, { params }) => {
         const data = await request.json();
         const userId = await getDataFromToken(request);
 
-        console.log(params.slug)
         const foundUser = await User.findOne({_id: userId}).select("-password");
-        const foundArticle = await Article.findOne({slug: params.slug})
-
+        const foundArticle = await Article
+        .findOne({slug: params.slug})
+      
         if(!foundUser){
           return NextResponse.json({error: "No user found, Please login"}, {status: 400})
         }
@@ -62,9 +62,9 @@ export const PUT = async (request, { params }) => {
         }
 
         foundArticle.title = data.title || foundArticle.title
-        foundArticle.slug = data.title ? makeSlug(foundArticle.title): foundArticle.slug
+        foundArticle.slug = data.title ? makeSlug(data.title): foundArticle.slug
         foundArticle.headline = data.headline || foundArticle.headline
-        foundArticle.category = data.category || foundArticle.category
+        foundArticle.category = (data.category && data.category.length > 0)? data.category : foundArticle.category
         foundArticle.content = data.content || foundArticle.content
         foundArticle.image = data.image || foundArticle.image
         foundArticle.source = data.source || foundArticle.source

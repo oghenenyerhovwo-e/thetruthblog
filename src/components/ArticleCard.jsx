@@ -31,9 +31,15 @@ const ArticleCard = props => {
                 onClick={gotoArticle}
             />
             <div className={`${styles.article_card_body}`}>
-                <h4 className="spacing-sm">{article.category[0]} </h4>
-                <h2 onClick={gotoArticle} className="spacing-sm">{article.title} </h2>
-                <p onClick={gotoArticle}>{article.headline} </p>
+                <h4 className="spacing-sm">
+                    <Link href={{pathname: "/articles/category", query: {category: article.category[0]}}}>{article.category[0]} </Link>
+                </h4>
+                <h2 className="spacing-sm">
+                    <Link href={`/articles/${article.slug}`}>{article.title}</Link>
+                </h2>
+                <p>
+                    <Link href={`/articles/${article.slug}`}>{article.headline}</Link>
+                </p>
             </div>
             <div className={`${styles.article_card_footer} spacing-sm`}>
                 <div className={`${styles.article_card_footer_author}`}>

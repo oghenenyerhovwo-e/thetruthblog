@@ -12,9 +12,10 @@ const MultiSelectComp = (props) => {
         required,
         label,
         options,
+        defaultValue,
     } = props
 
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState(defaultValue || []);
 
     const handleChange = value => {
         setForm({...form, [name]: value})

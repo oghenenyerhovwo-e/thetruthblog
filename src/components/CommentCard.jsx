@@ -49,6 +49,7 @@ const CommentCard = (props) => {
     const closeMenu = () => setDisplayDeleteCommentMenu(false)
 
     const handleDelete = () => {
+        // e.stopPropagation()
         deleteComment({articleId, id: comment._id})
             .unwrap()
             .then((res) => {

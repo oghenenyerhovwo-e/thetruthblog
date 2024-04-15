@@ -23,7 +23,6 @@ import {
 import styles from "@/styles/formscreen.module.css"
 
 const categoryList = [
-    { label: 'Home', value: 'Home' },
     { label: 'Politics', value: 'Politics' },
     { label: 'Sport', value: 'Sport' },
     { label: 'Entertainment', value: 'Entertainment' },
@@ -56,7 +55,7 @@ const EditArticleScreen = (props) => {
     }
     const [form, setForm] = useState(initialFormState)
     const [formError, setFormError] = useState("")
-    const [content, setContent] = useState(`**Enter content**`);
+    const [content, setContent] = useState((article && article.content) || "");
 
     const handleFormChange = e => {
         const {name, value} = e.target
@@ -71,15 +70,13 @@ const EditArticleScreen = (props) => {
         setFormError("")
         const body = {
             ...form,
-            content,
-            category: form.category.length > 0? form.category.map(category => category.value): []
+            content: content || article.content,
+            category: form.category.length > 0? form.category.map(category => category.value): article ? article.category : []
         }
         updateArticle({body, slug: params.slug})
             .unwrap()
             .then((res) => {
-                setForm(initialFormState)
-                setContent(`***Enter content here**`)
-                router.push(`/articles/${res.article.slug}`)
+                router.push(`/articles/${res.articleSlug}`)
             })
             .catch(error => console.log(error))
     }
@@ -105,7 +102,7 @@ const EditArticleScreen = (props) => {
                                         onChange={handleFormChange}
                                         placeholder="enter title"
                                         name="title"
-                                        label="title"
+                                        label="Title"
                                     />
 
                                     <Form.Input
@@ -114,22 +111,26 @@ const EditArticleScreen = (props) => {
                                         onChange={handleFormChange}
                                         placeholder="enter headline"
                                         name="headline"
-                                        label="headline"
+                                        label="Headline"
+                                    />
+
+                                    <Form.MarkdownInput
+                                        content={content}
+                                        setContent={setContent}
+                                        label="Content"
+                                        defaultValue={article.content}
                                     />
 
                                     <Form.MultiSelect
                                         name="category"
-                                        form={form.category ? form: {...form, category: article.category}}
+                                        form={form.category}
+                                        defaultValue={(article && article.category && article.category.length > 0) ? article.category.map(category => {
+                                            return {label: category, value: category}
+                                        }): []}
                                         setForm={setForm}
                                         required={true}
                                         label="Category"
                                         options={categoryList}
-                                    />
-
-                                    <Form.MarkdownInput
-                                        content={content || article.content}
-                                        setContent={setContent}
-                                        label="Content"
                                     />
 
                                     <Form.File
@@ -140,6 +141,7 @@ const EditArticleScreen = (props) => {
                                         form={form.image ? form: {...form, image: article.image}}
                                         setForm={setForm}
                                         setError={setFormError}
+                                        label="Image"
                                     />
 
                                     <Form.Input
@@ -148,14 +150,16 @@ const EditArticleScreen = (props) => {
                                         onChange={handleFormChange}
                                         placeholder="enter source"
                                         name="source"
+                                        label="Source"
                                     /> 
 
                                     <Form.Input
                                         value={form.tags || article.tags}
                                         type="text"
                                         onChange={handleFormChange}
-                                        placeholder="enter tags"
+                                        placeholder="enter tags e.g #sport, #politics"
                                         name="tags"
+                                        label="Tags"
                                     />
 
                                     {

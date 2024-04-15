@@ -26,11 +26,11 @@ const Popup = (props) => {
         };
     
         // Add event listener to handle clicks outside the navbar
-        document.addEventListener('click', handleCloseCommentSectionWhenClickOutside);
+        document.body.addEventListener('click', handleCloseCommentSectionWhenClickOutside);
     
         // Clean up the event listener on component unmount
         return () => {
-          document.removeEventListener('click', handleCloseCommentSectionWhenClickOutside);
+          document.body.removeEventListener('click', handleCloseCommentSectionWhenClickOutside);
         };
       }, [display, closeDisplay]);
 

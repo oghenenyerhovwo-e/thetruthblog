@@ -22,7 +22,7 @@ export async function POST(request){
 
         const userId = await getDataFromToken(request);
 
-        const foundUser = await User.findOne({_id: userId}).select("-password");
+        const foundUser = await User.findOne({_id: userId})
 
         if(!foundUser){
             return NextResponse.json({error: "No user found, Please login"}, {status: 400})
@@ -48,7 +48,7 @@ export async function POST(request){
         if(!isAdminPasswordValid){
             return NextResponse.json({error: "Invalid password"}, {status: 400})
         }
-
+        
         // check if password is safe
         if(!isPasswordSafe(password)){
             return NextResponse.json({error: "password must be at least 8 characters long and contain at least one capital letter, a special symbol and a number"}, {status: 400})

@@ -44,7 +44,7 @@ const ArticleSlugScreen = (props) => {
     const article = data && data.article
     const articleImage = article && article.image
     const articleId = article && article._id
-    const pageUrl = `${process.env.NEXT_PUBLIC_FRONTEND_URL}${pathname}` 
+    const pageUrl = `${process.env.NEXT_PUBLIC_BASE_URL}${pathname}` 
 
     useEffect(() => {
         setComments((article && article.comments) || [])

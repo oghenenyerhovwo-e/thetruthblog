@@ -22,7 +22,7 @@ const File = (props) => {
         setError,
     } = props
 
-    const [url, setUrl] = useState("");
+    const [url, setUrl] = useState(form[name] || "");
     const [filePlaceholder, setFilePlaceholder] = useState(placeholder);
 
     const closePreview = () => {
@@ -92,15 +92,18 @@ const File = (props) => {
                         </div>
                     </FileUploader>
                 ) : (
-                    <div className={`${styles.form_field_file_img_preview}`}>
-                        <Image
-                            src={url}
-                            alt={`preview`}
-                            width={20}
-                            height={20}
-                        />
-                        <div className={`${styles.form_field_file_img_cancel}`}>
-                            <Image onClick={closePreview} src={closeIcon} alt="a close menu icon" />
+                    <div className={`${styles.form_field}`}>
+                        {label && <label>{label} {!required && "(optional)"} </label>}
+                        <div className={`${styles.form_field_file_img_preview}`}>
+                            <Image
+                                src={url}
+                                alt={`preview`}
+                                width={20}
+                                height={20}
+                            />
+                            <div className={`${styles.form_field_file_img_cancel}`}>
+                                <Image onClick={closePreview} src={closeIcon} alt="a close menu icon" />
+                            </div>
                         </div>
                     </div>
                 )

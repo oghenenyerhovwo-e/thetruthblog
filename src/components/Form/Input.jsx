@@ -20,7 +20,8 @@ const Input = (props) => {
     const [showIcon, setShowIcon] = useState(false)
     const [inputType, setInputType] = useState("")
 
-    const handleIcon = () => {
+    const handleIcon = (e) => {
+        // e.stopPropagation()
         if(!showIcon){
             setInputType("text")
         } else{

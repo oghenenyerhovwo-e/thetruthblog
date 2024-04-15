@@ -1,7 +1,14 @@
 "use client"
-import MarkdownEditor from '@uiw/react-markdown-editor';
-
 import styles from "@/styles/form.module.css"
+
+import dynamic from 'next/dynamic';
+import '@uiw/react-markdown-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
+
+const MarkdownEditor = dynamic(
+  () => import("@uiw/react-markdown-editor").then((mod) => mod.default),
+  { ssr: false }
+);
 
 const MarkdownInput = (props) => {
     const {
@@ -9,6 +16,7 @@ const MarkdownInput = (props) => {
         content,
         required,
         label,
+        defaultValue,
     } = props
 
     const handleChange = (value, viewUpdate) => setContent(value)
@@ -17,7 +25,7 @@ const MarkdownInput = (props) => {
         <div className={`${styles.form_field}`}>
             {label && <label>{label} {!required && "(optional)"} </label>}
             <MarkdownEditor
-                value={content}
+                value={content || defaultValue}
                 onChange={handleChange}
                 required={required}
             />
