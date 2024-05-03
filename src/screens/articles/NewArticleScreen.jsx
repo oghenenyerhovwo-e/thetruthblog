@@ -24,6 +24,8 @@ const categoryList = [
     { label: 'Sport', value: 'Sport' },
     { label: 'Entertainment', value: 'Entertainment' },
     { label: 'Business', value: 'Business' },
+    { label: 'Environment', value: 'Environment' },
+    { label: 'Development', value: 'Development' },
     { label: 'News', value: 'News' },
     { label: 'Technology', value: 'Technology' },
     { label: 'International', value: 'International' },

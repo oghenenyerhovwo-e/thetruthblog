@@ -12,7 +12,9 @@ const commentSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-    }
+    },
+    publishedDate: { type: Date, default: Date.now },
+    modifiedDate: { type: Date, default: Date.now }
 },{
     timestamps: true,
 })

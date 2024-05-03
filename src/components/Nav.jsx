@@ -30,6 +30,8 @@ const NavLink = () => {
             <li><Link href={{pathname: "/articles/category", query: {category: "entertainment"}}}>Entertainment </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "business"}}}>Business </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "news"}}}>News </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "environment"}}}>Environment </Link></li>
+            <li><Link href={{pathname: "/articles/category", query: {category: "development"}}}>Development </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "technology"}}}>Technology </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "international"}}}>International </Link></li>
             <li><Link href={{pathname: "/articles/category", query: {category: "features"}}}>Features </Link></li>

@@ -1,4 +1,5 @@
 import moment from "moment"
+import sanitizeHtml from "sanitize-html"
 
 import { remark } from "remark"
 import html from "remark-html"
@@ -47,4 +48,36 @@ export const makeSlug = (str) => {
     const formattedSlug = cleanSlug.toLowerCase();
 
     return formattedSlug;
+}
+
+export const trimContent = (content, maxLength) => {
+    // Check if the content length is already less than or equal to maxLength
+    if (content.length <= maxLength) {
+        return content;
+    }
+
+    // Find the next complete word after maxLength characters
+    const nextWordIndex = content.indexOf(' ', maxLength);
+    const trimmedContent = content.substring(0, nextWordIndex) + '...';
+
+    return trimmedContent;
+}
+
+export const cleanHTML = (content) => {
+    sanitizeHtml(content, {
+        allowedTags: [
+            'p', 
+            'strong', 
+            'em', 
+            'a', 
+            "blockquote", 
+            "h1", 
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+        ], // Add more allowed tags as needed
+        allowedAttributes: { a: ['href'] }, // Allow href attribute for <a> tags
+    });
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion';
 import moment from "moment"
+import parse from 'html-react-parser';
 
 // components
 import { 
@@ -53,7 +54,7 @@ const ArticleSlugScreen = (props) => {
     useEffect(() => {
         async function setMarkdownContent (){
             const articleContent = article && await markdownToHTML(article.content)
-            setContent(articleContent)
+            setContent(parse(articleContent))
         }
         article && setMarkdownContent()
     }, [article])
@@ -100,7 +101,7 @@ const ArticleSlugScreen = (props) => {
                             </div>
                             <div className={`${styles.show_article_other_details}`}>
                                 <div className={`${styles.show_article_other_details_author} spacing-sm`}>
-                                    <p>Created by {article.author && article.author.fullName} on {moment(article.createdAt).format("MMMM Do YYYY")}  </p>
+                                    <p>Created by {article.author && article.author.fullName} on {moment(article.publishedDate).format("MMMM Do YYYY")}  </p>
                                 </div>
                                 {
                                     article.source && (

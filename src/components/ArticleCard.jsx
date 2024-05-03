@@ -7,7 +7,7 @@ import Link from 'next/link'
 import AuthorPicture from "./AuthorPicture"
 
 // functions
-import { getTimeAgo } from "@/helpers"
+import { getTimeAgo, trimContent } from "@/helpers"
 
 // css
 import styles from "@/styles/articlecard.module.css"
@@ -35,10 +35,10 @@ const ArticleCard = props => {
                     <Link href={{pathname: "/articles/category", query: {category: article.category[0]}}}>{article.category[0]} </Link>
                 </h4>
                 <h2 className="spacing-sm">
-                    <Link href={`/articles/${article.slug}`}>{article.title}</Link>
+                    <Link href={`/articles/${article.slug}`}>{trimContent(article.title, 180)}</Link>
                 </h2>
                 <p>
-                    <Link href={`/articles/${article.slug}`}>{article.headline}</Link>
+                    <Link href={`/articles/${article.slug}`}>{trimContent(article.headline, 280)}</Link>
                 </p>
             </div>
             <div className={`${styles.article_card_footer} spacing-sm`}>
@@ -50,7 +50,7 @@ const ArticleCard = props => {
                     </p>
                 </div>
                 <p className={`${styles.article_card_footer_date}date`}>
-                    {getTimeAgo(article.createdAt)}
+                    {getTimeAgo(article.publishedDate)}
                 </p>
             </div>
         </div>

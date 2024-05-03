@@ -6,7 +6,6 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide a title"],
         unique: true,
-        maxLength: [200, "Title cannot exceed 200 characters"],
     },
     slug: {
         type: String,
@@ -16,8 +15,6 @@ const articleSchema = new mongoose.Schema({
     headline: {
         type: String,
         required: [true, "Please provide a headline"],
-        minLength: [100, "Headline cannot be less than 100 characters"],
-        maxLength: [300, "Headline cannot exceed 300 characters"],
     },
     category: {
         type: Array,
@@ -47,6 +44,8 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: [true, "Article must have tags"],
     },
+    publishedDate: { type: Date, default: Date.now },
+    modifiedDate: { type: Date, default: Date.now }
 },{
     timestamps: true,
 })

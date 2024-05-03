@@ -8,6 +8,7 @@ import {
     getDataFromToken,
     makeSlug,
     pageLimit,
+    cleanHTML,
   } from "@/helpers"
   
   import {
@@ -74,6 +75,7 @@ export const POST = async (request) => {
         const newArticle = new Article({
             ...data,
             slug: makeSlug(data.title),
+            content: cleanHTML(data.content),
             author: userId,
         })
 

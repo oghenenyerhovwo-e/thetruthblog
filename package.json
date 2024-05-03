@@ -21,6 +21,7 @@
     "firebase": "^10.7.1",
     "framer-motion": "^10.18.0",
     "google-auth-library": "^9.4.2",
+    "html-react-parser": "^5.1.10",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.44",
@@ -47,6 +48,7 @@
     "rehype-sanitize": "^6.0.0",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
+    "sanitize-html": "^2.13.0",
     "swr": "^2.2.5"
   },
   "devDependencies": {

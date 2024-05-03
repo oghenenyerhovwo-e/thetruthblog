@@ -9,6 +9,8 @@ import {
     toFirstLetterUpperCase,
     markdownToHTML,
     makeSlug,
+    trimContent,
+    cleanHTML,
 } from "./javascriptFunctions"
 
 import {
@@ -24,4 +26,5 @@ export {
     getDataFromToken,
     isPasswordSafe,
     makeSlug,
+    trimContent,
 }

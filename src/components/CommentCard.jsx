@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 // functions and objects
 import { useDeleteCommentMutation } from "@/redux"
-import { getTimeAgo } from "@/helpers"
+import { getTimeAgo, trimContent } from "@/helpers"
 
 // images
 import { userImg } from "@/assets"
@@ -69,9 +69,9 @@ const CommentCard = (props) => {
                         width={20}
                         height={20}
                     />
-                    <h4>{comment.fullName} </h4>
+                    <h4>{trimContent(comment.fullName, 25)} </h4>
                 </div>
-                <h6>{getTimeAgo(comment.createdAt)} </h6>
+                <h6>{getTimeAgo(comment.publishedDate)} </h6>
             </div>
             <p>{comment.text} </p> 
             <div className={`${styles.comment_card_delete}`}>

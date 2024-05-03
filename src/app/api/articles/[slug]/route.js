@@ -8,6 +8,7 @@ import {
 import {
   getDataFromToken,
   makeSlug,
+  cleanHTML,
 } from "@/helpers"
   
 import {
@@ -65,10 +66,11 @@ export const PUT = async (request, { params }) => {
         foundArticle.slug = data.title ? makeSlug(data.title): foundArticle.slug
         foundArticle.headline = data.headline || foundArticle.headline
         foundArticle.category = (data.category && data.category.length > 0)? data.category : foundArticle.category
-        foundArticle.content = data.content || foundArticle.content
+        foundArticle.content = (data.content && cleanHTML(data.content)) || foundArticle.content
         foundArticle.image = data.image || foundArticle.image
         foundArticle.source = data.source || foundArticle.source
         foundArticle.tags = data.tags || foundArticle.tags
+        foundArticle.modifiedDate = new Date()
         
         const updatedArticle = await foundArticle.save()
 
