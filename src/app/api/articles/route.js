@@ -27,7 +27,7 @@ export const GET = async (request) => {
         .sort({
             _id: -1,
         })
-        .skip(pageIndex - 1)
+        .skip((pageIndex - 1) * pageLimit)
         .limit(pageLimit)
         .populate({
           path: "author",

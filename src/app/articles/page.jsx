@@ -1,7 +1,5 @@
 import Image from 'next/image'
 
-import { truthHero }from "@/assets"
-
 import { AllArticles } from "@/components"
 
 import styles from "@/styles/home.module.css"
@@ -21,7 +19,7 @@ export default function Home() {
           </div>
           <div className={`${styles.home_hero_img}`}>
             <Image 
-              src={truthHero} 
+              src={"https://res.cloudinary.com/dwxmqcikz/image/upload/v1714734744/thetruthblog/truth_hero_jj6jhl.jpg"} 
               alt="An image of truth and accurate journalism" 
               width={90}
               height={60} 

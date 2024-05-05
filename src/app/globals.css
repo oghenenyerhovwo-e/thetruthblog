@@ -60,4 +60,5 @@ figure {
 img{
   font-size: var(--fs-300);
   font-style: italic;
+  color: rgba(0,0,0,0);
 }
