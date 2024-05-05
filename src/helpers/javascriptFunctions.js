@@ -3,6 +3,7 @@ import sanitizeHtml from "sanitize-html"
 
 import { remark } from "remark"
 import html from "remark-html"
+import html2md from 'html-to-md'
 
 export const getTimeAgo = (time) => {
     moment.updateLocale('en', {
@@ -35,6 +36,10 @@ export const toFirstLetterUpperCase  = (str) => {
 export const markdownToHTML = async (markdown) => {
     const result = await remark().use(html).process(markdown)
     return result.toString()
+}
+
+export const htmlToMarkdown = async (htmlString) => {
+    return await html2md(htmlString)
 }
 
 export const makeSlug = (str) => {

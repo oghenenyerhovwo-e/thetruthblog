@@ -15,11 +15,12 @@ const Articles = (props) => {
         pageCount,
         disablePaginationQuery,
         hidePagination,
+        pathQuery,
     } = props
 
     const pathname = usePathname()
 
-    const controlPathname = pathname.includes("?") ? `${pathname}&` : `${pathname}?`
+    const controlPathname = pathQuery ? `${pathname}${pathQuery}&` : `${pathname}?`
 
     return (
         <div>

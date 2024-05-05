@@ -14,10 +14,13 @@ import styles from "@/styles/category.module.css"
 
 const ArticlesCategoryScreen = () => {
     const searchParams = useSearchParams()
-    const searchedParamValue = searchParams.get("category")
-    const category = searchedParamValue ? toFirstLetterUpperCase(searchedParamValue) : ""
-    const [pageIndex, setPageIndex] = useState(1)
+    const pageNumber = searchParams.get("pageNumber")
+    const searchedCategory = searchParams.get("category")
+
+    const category = searchedCategory ? toFirstLetterUpperCase(searchedCategory) : ""
+    const [pageIndex, setPageIndex] = useState(pageNumber || 1)
     const { isSuccess, isError, data } = useGetArticlesByCategoryQuery({pageIndex,category});
+    const pathQuery = `?category=${searchedCategory}&`
 
     return (
       <div className={`${styles.category} content-grid`}>
@@ -37,6 +40,7 @@ const ArticlesCategoryScreen = () => {
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}
             pageCount={data && data.pageCount}
+            pathQuery={pathQuery}
         />
       </div>
     )

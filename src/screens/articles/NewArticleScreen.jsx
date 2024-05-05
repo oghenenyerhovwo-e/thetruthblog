@@ -16,6 +16,10 @@ import {
     usePostArticleMutation,
 } from "@/redux"
 
+import {
+    markdownToHTML,
+} from "@/helpers"
+
 // styles
 import styles from "@/styles/formscreen.module.css"
 
@@ -61,10 +65,16 @@ const NewArticleScreen = () => {
 
     const submitComment = e => {
         e.preventDefault()
+
+        const convertMarkdownToHTML = async (markdownContent) => {
+            const htmlContent = await markdownToHTML(markdownContent)
+            return htmlContent
+        }
+
         setFormError("")
         const body = {
             ...form,
-            content,
+            content: content ? convertMarkdownToHTML(content): "",
             category: form.category.length > 0? form.category.map(category => category.value): []
         }
         postArticle({body})

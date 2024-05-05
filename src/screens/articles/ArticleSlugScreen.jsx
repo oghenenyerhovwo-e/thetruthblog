@@ -22,7 +22,6 @@ import {
     useGetArticleBySlugQuery,
     useAppSelector,
 } from "@/redux"
-import { markdownToHTML } from "@/helpers"
 
 // styles
 import styles from "@/styles/articleslug.module.css"
@@ -33,7 +32,6 @@ const ArticleSlugScreen = (props) => {
 
     const { currentUser } = useAppSelector(state => state.userStore)
 
-    const [content, setContent] = useState("")
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState({})
     const [deletedComment, setDeletedComment] = useState("")
@@ -49,14 +47,6 @@ const ArticleSlugScreen = (props) => {
 
     useEffect(() => {
         setComments((article && article.comments) || [])
-    }, [article])
-
-    useEffect(() => {
-        async function setMarkdownContent (){
-            const articleContent = article && await markdownToHTML(article.content)
-            setContent(parse(articleContent))
-        }
-        article && setMarkdownContent()
     }, [article])
 
     const toggleCommentSection = () => setDisplayCommentSection(prevToggle => !prevToggle)
@@ -87,7 +77,9 @@ const ArticleSlugScreen = (props) => {
                             <div className={`${styles.show_article_body} spacing-md`}>
                                 <h4 className="spacing-sm">{article.category[0]} </h4>
                                 <h2 className="spacing-sm">{article.title} </h2>
-                                <div className={`${styles.show_article_body_content}`} dangerouslySetInnerHTML={{__html: content}}></div>
+                                <div className={`${styles.show_article_body_content}`}>
+                                    {parse(article.content)}
+                                </div>
                             </div>
                             <div className={`${styles.show_article_share} spacing-md`}>
                                 <h4>Share this:</h4>

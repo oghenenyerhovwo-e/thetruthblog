@@ -1,5 +1,6 @@
 "use client";
 import { Fragment,useState } from 'react'
+import { useSearchParams } from "next/navigation"
 
 // components
 import Articles from "./Articles"
@@ -11,8 +12,11 @@ import MessageBox from "./MessageBox"
 import { useGetArticlesQuery } from "@/redux"
 
 const AllArticles = () => {
-    const [pageIndex, setPageIndex] = useState(1)
+    const searchParams = useSearchParams()
+    const pageNumber = searchParams.get("pageNumber")
 
+    const [pageIndex, setPageIndex] = useState(pageNumber || 1)
+    
     const { isSuccess, isError, data } = useGetArticlesQuery({pageIndex});
 
     return (

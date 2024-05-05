@@ -18,6 +18,7 @@ const ArticlesAuthorScreen = ({params}) => {
 
     const [pageIndex, setPageIndex] = useState(pageNumber || 1)
     const { isSuccess, isError, data } = useGetArticlesByAuthorQuery({authorId: params.authorId, pageIndex});
+    const pathQuery = `?authorName=${authorName}&`
 
     return (
       <div className={`${styles.author_article} content-grid`}>
@@ -37,6 +38,7 @@ const ArticlesAuthorScreen = ({params}) => {
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}
             pageCount={data && data.pageCount}
+            pathQuery={pathQuery}
         />
       </div>
     )
