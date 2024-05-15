@@ -3,7 +3,7 @@ import Textarea from "./Textarea"
 import File from "./File"
 import MultiSelect from "./MultiSelect"
 import Date from "./Date"
-import MarkdownInput from "./MarkdownInput"
+import TextEditor from "./TextEditor"
 
 const Form = {
     Input,
@@ -11,7 +11,7 @@ const Form = {
     File,
     MultiSelect,
     Date,
-    MarkdownInput,
+    TextEditor,
 }
 
 export default Form

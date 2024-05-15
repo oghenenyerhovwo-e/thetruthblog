@@ -65,9 +65,9 @@ export const PUT = async (request, { params }) => {
         }
 
         // check if password is safe
-        if(!isPasswordSafe(newPassword)){
+        if(newPassword && !isPasswordSafe(newPassword)){
           return NextResponse.json({error: "password must be at least 8 characters long and contain at least one capital letter, a special symbol and a number"}, {status: 400})
-      }
+        }
 
         //check if old password is correct
         const isPasswordValid = await bcryptjs.compare(oldPassword, foundProfile.password)

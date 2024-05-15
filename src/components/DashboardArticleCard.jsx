@@ -74,7 +74,7 @@ const DashboardArticleCard = props => {
                 </div>
                 <div className={`${styles.dashboard_article_card_title}`}>
                     <h4>
-                        <Link href={`/articles/${article.slug}`}>{trimContent(article.title, 180)}</Link>
+                        <Link href={`/articles/${article.slug}`}>{article.title}</Link>
                     </h4>
                 </div>
                 <div className={`${styles.dashboard_article_card_category}`}>

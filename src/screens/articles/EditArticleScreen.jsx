@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 // components
@@ -17,11 +17,6 @@ import {
     useUpdateArticleMutation,
     useGetArticleBySlugQuery,
 } from "@/redux"
-
-import {
-    markdownToHTML,
-    htmlToMarkdown,
-} from "@/helpers"
 
 // styles
 import styles from "@/styles/formscreen.module.css"
@@ -61,17 +56,7 @@ const EditArticleScreen = (props) => {
     }
     const [form, setForm] = useState(initialFormState)
     const [formError, setFormError] = useState("")
-    const [content, setContent] = useState("");
-
-    useEffect(() => {
-      const covertHTMLToMarkdown = async () => {
-        const htmlContent = article && await htmlToMarkdown(article.content)
-        console.log("parse(htmlContent)")
-        console.log(parse(htmlContent))
-        setContent(parse(htmlContent))
-      }
-      article && covertHTMLToMarkdown()
-    }, [article])
+    const [content, setContent] = useState((article && article.content) || "");
     
     const handleFormChange = e => {
         const {name, value} = e.target
@@ -87,7 +72,7 @@ const EditArticleScreen = (props) => {
         setFormError("")
         const body = {
             ...form,
-            content: content ? await markdownToHTML(content): article.content,
+            content,
             category: form.category.length > 0? form.category.map(category => category.value): article ? article.category : []
         }
         updateArticle({body, slug: params.slug})
@@ -131,11 +116,10 @@ const EditArticleScreen = (props) => {
                                         label="Headline"
                                     />
 
-                                    <Form.MarkdownInput
-                                        content={content}
+                                    <Form.TextEditor
+                                        content={content || article.content || `<p><strong>Enter Content here</strong></p>`}
                                         setContent={setContent}
                                         label="Content"
-                                        defaultValue={content}
                                     />
 
                                     <Form.MultiSelect

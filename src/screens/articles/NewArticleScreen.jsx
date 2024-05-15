@@ -16,10 +16,6 @@ import {
     usePostArticleMutation,
 } from "@/redux"
 
-import {
-    markdownToHTML,
-} from "@/helpers"
-
 // styles
 import styles from "@/styles/formscreen.module.css"
 
@@ -53,7 +49,7 @@ const NewArticleScreen = () => {
     }
     const [form, setForm] = useState(initialFormState)
     const [formError, setFormError] = useState("")
-    const [content, setContent] = useState(`**Enter content**`);
+    const [content, setContent] = useState(`<p><strong>Enter Content here</strong></p>`);
 
     const handleFormChange = e => {
         const {name, value} = e.target
@@ -69,16 +65,14 @@ const NewArticleScreen = () => {
         setFormError("")
         const body = {
             ...form,
-            content: content ? await markdownToHTML(content): "",
+            content,
             category: form.category.length > 0? form.category.map(category => category.value): []
         }
-        console.log("body")
-        console.log(body)
         postArticle({body})
             .unwrap()
             .then((res) => {
                 setForm(initialFormState)
-                setContent(`***Enter content here**`)
+                setContent(`<p><strong>Enter Content here</strong></p>`)
                 router.push(`/articles/${res.articleSlug}`)
             })
             .catch(error => console.log(error))
@@ -113,7 +107,7 @@ const NewArticleScreen = () => {
                             label="Headline"
                         />
 
-                        <Form.MarkdownInput
+                        <Form.TextEditor
                             content={content}
                             setContent={setContent}
                             required={true}
@@ -146,7 +140,6 @@ const NewArticleScreen = () => {
                             type="text"
                             onChange={handleFormChange}
                             placeholder="enter source"
-                            required={true}
                             name="source"
                             label="Source"
                         /> 
@@ -156,7 +149,6 @@ const NewArticleScreen = () => {
                             type="text"
                             onChange={handleFormChange}
                             placeholder="enter tags"
-                            required={true}
                             name="tags"
                             label="Tags"
                         />

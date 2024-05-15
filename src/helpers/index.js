@@ -7,8 +7,6 @@ import {
 import {
     getTimeAgo,
     toFirstLetterUpperCase,
-    markdownToHTML,
-    htmlToMarkdown,
     makeSlug,
     trimContent,
     cleanHTML,
@@ -22,8 +20,6 @@ export {
     getTimeAgo,
     toFirstLetterUpperCase,
     pageLimit,
-    markdownToHTML,
-    htmlToMarkdown,
     generateToken,
     getDataFromToken,
     isPasswordSafe,

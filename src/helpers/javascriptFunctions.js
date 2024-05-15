@@ -1,10 +1,6 @@
 import moment from "moment"
 import sanitizeHtml from "sanitize-html"
 
-import { remark } from "remark"
-import html from "remark-html"
-import html2md from 'html-to-md'
-
 export const getTimeAgo = (time) => {
     moment.updateLocale('en', {
         relativeTime : {
@@ -31,15 +27,6 @@ export const getTimeAgo = (time) => {
 
 export const toFirstLetterUpperCase  = (str) => {
     return str[0].toUpperCase() + str.slice(1)
-}
-
-export const markdownToHTML = async (markdown) => {
-    const result = await remark().use(html).process(markdown)
-    return result.toString()
-}
-
-export const htmlToMarkdown = async (htmlString) => {
-    return await html2md(htmlString)
 }
 
 export const makeSlug = (str) => {
@@ -69,9 +56,7 @@ export const trimContent = (content, maxLength) => {
 }
 
 export const cleanHTML = (content) => {
-    console.log("content")
-    console.log(content)
-    sanitizeHtml(content, {
+    return sanitizeHtml(content, {
         allowedTags: [
             'p', 
             'strong', 

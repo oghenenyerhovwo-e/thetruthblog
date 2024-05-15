@@ -38,6 +38,24 @@
     min-height: 20rem;
 }
 
+.form_text_editor{
+    min-height: 20rem;
+    font-size: var(--fs-300);
+    padding: 1em 1.2em;
+    background-color: transparent;
+    width: 100%;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(79, 186, 140, 0.4);
+    outline: none;
+}
+
+.form_text_editor:active,
+.form_text_editor:focus,
+.form_text_editor:focus-visible{
+    border: 1px solid hsl(154, 44%, 52%);
+    outline: none;
+}
+
 .form_field_password_icon{
     width: 100%;
     background: transparent;
