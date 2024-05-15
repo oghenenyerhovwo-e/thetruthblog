@@ -69,6 +69,8 @@ export const trimContent = (content, maxLength) => {
 }
 
 export const cleanHTML = (content) => {
+    console.log("content")
+    console.log(content)
     sanitizeHtml(content, {
         allowedTags: [
             'p', 

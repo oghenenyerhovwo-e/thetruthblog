@@ -52,7 +52,8 @@ export const GET = async (request) => {
 export const POST = async (request) => {
     try {
         const data = await request.json();
-
+      console.log("cleanHTML(data.content)")
+      console.log(cleanHTML(data.content))
         const userId = await getDataFromToken(request);
         const foundUser = await User.findOne({_id: userId}).select("-password");
 

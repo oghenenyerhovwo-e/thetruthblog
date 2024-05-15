@@ -19,22 +19,22 @@ import {
 import styles from "@/styles/nav.module.css"
 
 const NavLink = () => {
-    const { currentUser } = useAppSelector(state => state.userStore)
+    const { currentUser, closeMenu } = useAppSelector(state => state.userStore)
 
     return (
         <ul className="">
-            <li><Link href="/"> Home </Link></li>
-            {currentUser._id && <li><Link href="/users/dashboard"> Dashboard </Link></li>}
-            <li><Link href={{pathname: "/articles/category", query: {category: "politics"}}}>Politics </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "sport"}}}>Sport </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "entertainment"}}}>Entertainment </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "business"}}}>Business </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "news"}}}>News </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "environment"}}}>Environment </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "development"}}}>Development </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "technology"}}}>Technology </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "international"}}}>International </Link></li>
-            <li><Link href={{pathname: "/articles/category", query: {category: "features"}}}>Features </Link></li>
+            <li><Link onClick={closeMenu} href="/"> Home </Link></li>
+            {currentUser._id && <li><Link onClick={closeMenu} href="/users/dashboard"> Dashboard </Link></li>}
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "politics"}}}>Politics </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "sport"}}}>Sport </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "entertainment"}}}>Entertainment </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "business"}}}>Business </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "news"}}}>News </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "environment"}}}>Environment </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "development"}}}>Development </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "technology"}}}>Technology </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "international"}}}>International </Link></li>
+            <li><Link onClick={closeMenu} href={{pathname: "/articles/category", query: {category: "features"}}}>Features </Link></li>
         </ul>
     )
 }
@@ -72,7 +72,7 @@ const Nav = () => {
             </div>
             <nav className={`${styles.navbar} full-width`}>
                 <div className={`${styles.navbar_content}`}>
-                    <NavLink />
+                    <NavLink closeMenu={closeMenu} />
                     <ul className={`${styles.more_button}`}>
                         <li onClick={toggleMenu}>
                             <span>More</span>
@@ -112,7 +112,7 @@ const Nav = () => {
                                 <div className={`${styles.nav_title} spacing-sm`}>
                                     <h1>The Truth</h1>
                                 </div>
-                                <NavLink />
+                                <NavLink closeMenu={closeMenu} />
                                 {/* <div className={`${styles.navbar_smallscreen_button}`}>
                                     <button>Subscribe</button>
                                 </div> */}

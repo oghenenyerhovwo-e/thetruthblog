@@ -72,8 +72,10 @@ const DashboardArticleCard = props => {
                         onClick={gotoArticle}
                     />
                 </div>
-                <div onClick={gotoArticle} className={`${styles.dashboard_article_card_title}`}>
-                    <h4>{article.title} </h4>
+                <div className={`${styles.dashboard_article_card_title}`}>
+                    <h4>
+                        <Link href={`/articles/${article.slug}`}>{trimContent(article.title, 180)}</Link>
+                    </h4>
                 </div>
                 <div className={`${styles.dashboard_article_card_category}`}>
                     <p>{article.category[0]} </p>

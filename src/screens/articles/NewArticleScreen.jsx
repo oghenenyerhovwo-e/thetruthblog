@@ -63,20 +63,17 @@ const NewArticleScreen = () => {
         })
     }
 
-    const submitComment = e => {
+    const submitComment = async e => {
         e.preventDefault()
-
-        const convertMarkdownToHTML = async (markdownContent) => {
-            const htmlContent = await markdownToHTML(markdownContent)
-            return htmlContent
-        }
 
         setFormError("")
         const body = {
             ...form,
-            content: content ? convertMarkdownToHTML(content): "",
+            content: content ? await markdownToHTML(content): "",
             category: form.category.length > 0? form.category.map(category => category.value): []
         }
+        console.log("body")
+        console.log(body)
         postArticle({body})
             .unwrap()
             .then((res) => {

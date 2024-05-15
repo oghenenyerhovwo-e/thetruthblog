@@ -66,11 +66,12 @@ const EditArticleScreen = (props) => {
     useEffect(() => {
       const covertHTMLToMarkdown = async () => {
         const htmlContent = article && await htmlToMarkdown(article.content)
+        console.log("parse(htmlContent)")
+        console.log(parse(htmlContent))
         setContent(parse(htmlContent))
       }
       article && covertHTMLToMarkdown()
     }, [article])
-    
     
     const handleFormChange = e => {
         const {name, value} = e.target
@@ -80,18 +81,13 @@ const EditArticleScreen = (props) => {
         })
     }
 
-    const submitComment = e => {
+    const submitComment = async e => {
         e.preventDefault()
-
-        const convertMarkdownToHTML = async (markdownContent) => {
-            const htmlContent = await markdownToHTML(markdownContent)
-            return htmlContent
-        }
 
         setFormError("")
         const body = {
             ...form,
-            content: content ? convertMarkdownToHTML(content) : article.content,
+            content: content ? await markdownToHTML(content): article.content,
             category: form.category.length > 0? form.category.map(category => category.value): article ? article.category : []
         }
         updateArticle({body, slug: params.slug})
